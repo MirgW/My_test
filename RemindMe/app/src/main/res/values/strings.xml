@@ -2,4 +2,6 @@
     <string name="app_name">RemindMe Beta</string>
     <string name="search_title">Search</string>
     <string name="menu_iten_natification">Напоминание</string>
+    <string name="vew_navigation_open">OPEN</string>
+    <string name="view_navigation_close">CLOSE</string>
 </resources>
