@@ -4,4 +4,8 @@
     <string name="menu_iten_natification">Напоминание</string>
     <string name="vew_navigation_open">OPEN</string>
     <string name="view_navigation_close">CLOSE</string>
+    <string name="tab_item_history">History</string>
+    <string name="tab_item_ideas">Ideas</string>
+    <string name="tab_item_todo">TODO</string>
+    <string name="tab_item_birthdays">Birthdays</string>
 </resources>
