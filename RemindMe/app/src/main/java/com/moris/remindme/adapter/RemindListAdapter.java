@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moris.remindme.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,7 +34,12 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
     public void onBindViewHolder(@NonNull RemindViewHolder holder, int position) {
         RemindDTO item = data.get(position);
         holder.title.setText(item.getTitle());
-    }
+        holder.doc.setText(item.getDoc_DTO());
+           Picasso.get().load("http://www.adm-tavda.ru/"+item.getImg_DTO())
+                .placeholder(R.drawable.ic_action_name)
+                .error(R.drawable.ic_action_name)
+                .into(holder.img);
+        }
 
     @Override
     public int getItemCount() {
@@ -42,12 +49,15 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
     public class RemindViewHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         TextView title;
+        TextView doc;
+        ImageView img;
 
         public RemindViewHolder(View itemView) {
             super(itemView);
             cardView=(CardView) itemView.findViewById(R.id.cardView);
             title= (TextView) itemView.findViewById(R.id.title);
-
+            doc= (TextView) itemView.findViewById(R.id.doc);
+            img = (ImageView) itemView.findViewById(R.id.item_img);
         }
     }
 }

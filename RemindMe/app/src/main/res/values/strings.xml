@@ -1,11 +1,20 @@
 <resources>
-    <string name="app_name">RemindMe Beta</string>
+
     <string name="search_title">Search</string>
     <string name="menu_iten_natification">Напоминание</string>
     <string name="vew_navigation_open">OPEN</string>
     <string name="view_navigation_close">CLOSE</string>
-    <string name="tab_item_history">History</string>
-    <string name="tab_item_ideas">Ideas</string>
-    <string name="tab_item_todo">TODO</string>
-    <string name="tab_item_birthdays">Birthdays</string>
+    <string name="tab_item_history">Новости</string>
+    <string name="tab_item_ideas">Справочник</string>
+    <string name="tab_item_todo">Афиша</string>
+    <string name="tab_item_birthdays">Обьявления</string>
+
+    <string name="app_name">Тавда</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Тавда Живая</string>
+    <string name="nav_header_subtitle">mail@tavda.pro</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Настройки</string>
+
 </resources>
