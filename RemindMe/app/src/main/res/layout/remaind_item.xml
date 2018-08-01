@@ -18,40 +18,70 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/Base.CardView"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:text="ssssss"
-                android:textColor="@color/colorBlack"
-                android:textSize="12dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/item_img"
-                    android:layout_width="89dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_action_name"
+                    app:civ_border_color="#5c6bc0"
+                    app:civ_border_width="1dp"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="false"
-                    android:layout_centerVertical="false"
-                    android:scaleType="fitStart"/>
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="96dp"
+                    android:fontFamily="@font/work_sans_bold"
+                    android:paddingBottom="8dp"
+                    android:text="JJJJJJJJ"
+                    android:textColor="#232F34"
+                    android:textSize="12dp"
+                    android:maxLines="4"
+                    android:layout_marginLeft="96dp"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/data"
+                    android:layout_below="@id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="96dp"
+                    android:fontFamily="@font/work_sans_bold"
+                    android:layout_marginTop="8dp"
+                    android:text="Чт, 26/07/2018 - 15:24"
+                    android:textColor="#232F34"
+                    android:textSize="8dp"
+                    android:layout_marginLeft="96dp" />
 
                 <TextView
                     android:id="@+id/doc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="90dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="90dp"
+                    android:fontFamily="@font/rubik_regular"
                     android:text="TEST"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="90dp" />
+                    android:textColor="#232F34"
+                    android:textSize="12dp"
+                    android:theme="@style/CardView.Light" />
             </RelativeLayout>
 
         </LinearLayout>

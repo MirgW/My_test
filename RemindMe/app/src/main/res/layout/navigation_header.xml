@@ -8,13 +8,14 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="5dp"
-    android:background="@color/colorDark">
+    android:background="@color/colorDark"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        />
 
     <TextView
         android:id="@+id/textView"

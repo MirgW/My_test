@@ -82,8 +82,9 @@ public class HistoryFragment extends AbstractTabFragment {
             try {
                 document = Jsoup.connect("http://www.adm-tavda.ru/").get();
                 Elements elements = document.select(".node.story.promote");
+                data.clear();
                 for (Element element:elements){
-                    data.add(new RemindDTO(element.select("h2").text(),element.select("p").text(),element.select("img").attr("src")));
+                    data.add(new RemindDTO(element.select("h2").text(),element.select("p").text(),element.select("img").attr("src"),element.select("span.art-postdateicon").text()));
                 }
 
             } catch (IOException e) {

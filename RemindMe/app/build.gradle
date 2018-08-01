@@ -12,8 +12,13 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+//            minifyEnabled true
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+        }
+        debug {
+            minifyEnabled false
         }
     }
     productFlavors {
@@ -29,8 +34,8 @@ dependencies {
     //    implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
     //    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
     implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    //implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 
 repositories {

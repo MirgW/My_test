@@ -35,6 +35,7 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
         RemindDTO item = data.get(position);
         holder.title.setText(item.getTitle());
         holder.doc.setText(item.getDoc_DTO());
+        holder.day.setText(item.getData_DTO());
            Picasso.get().load("http://www.adm-tavda.ru/"+item.getImg_DTO())
                 .placeholder(R.drawable.ic_action_name)
                 .error(R.drawable.ic_action_name)
@@ -50,6 +51,7 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
         CardView cardView;
         TextView title;
         TextView doc;
+        TextView day;
         ImageView img;
 
         public RemindViewHolder(View itemView) {
@@ -57,6 +59,7 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
             cardView=(CardView) itemView.findViewById(R.id.cardView);
             title= (TextView) itemView.findViewById(R.id.title);
             doc= (TextView) itemView.findViewById(R.id.doc);
+            day= (TextView) itemView.findViewById(R.id.data);
             img = (ImageView) itemView.findViewById(R.id.item_img);
         }
     }
