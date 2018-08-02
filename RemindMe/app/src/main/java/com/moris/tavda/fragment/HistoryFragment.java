@@ -1,4 +1,4 @@
-package com.moris.remindme.fragment;
+package com.moris.tavda.fragment;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.moris.remindme.R;
-import com.moris.remindme.adapter.RemindListAdapter;
+import com.moris.tavda.R;
+import com.moris.tavda.adapter.RemindListAdapter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

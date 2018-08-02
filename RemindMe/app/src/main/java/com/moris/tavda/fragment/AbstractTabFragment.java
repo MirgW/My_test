@@ -1,4 +1,4 @@
-package com.moris.remindme.fragment;
+package com.moris.tavda.fragment;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

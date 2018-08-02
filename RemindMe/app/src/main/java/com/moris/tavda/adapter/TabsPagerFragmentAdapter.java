@@ -1,4 +1,4 @@
-package com.moris.remindme.adapter;
+package com.moris.tavda.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.moris.remindme.fragment.AbstractTabFragment;
-import com.moris.remindme.fragment.BirthdaysFragment;
-import com.moris.remindme.fragment.HistoryFragment;
-import com.moris.remindme.fragment.IdeasFragment;
-import com.moris.remindme.fragment.TODOFragment;
+import com.moris.tavda.fragment.AbstractTabFragment;
+import com.moris.tavda.fragment.BirthdaysFragment;
+import com.moris.tavda.fragment.HistoryFragment;
+import com.moris.tavda.fragment.IdeasFragment;
+import com.moris.tavda.fragment.TODOFragment;
 
 import java.util.HashMap;
 import java.util.Map;

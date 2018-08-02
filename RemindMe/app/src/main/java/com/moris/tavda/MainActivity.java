@@ -1,4 +1,4 @@
-package com.moris.remindme;
+package com.moris.tavda;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,15 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.moris.remindme.adapter.TabsPagerFragmentAdapter;
+import com.moris.tavda.R;
+import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
- private static final int LAYOUT = R.layout.activity_maun;
- private Toolbar toolbar;
- private DrawerLayout drawerLayout;
- private TabLayout tabLayout;
- private ViewPager viewPager;
+    private static final int LAYOUT = R.layout.activity_maun;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
@@ -45,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         initTabs();
 
 
-
     }
 
     @Override
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id =item.getItemId();
+        int id = item.getItemId();
         if (id == R.id.search) {
 
             return true;
@@ -90,14 +91,15 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.vew_navigation_open, R.string.view_navigation_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView= findViewById(R.id.navigation);
+        NavigationView navigationView = findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 drawerLayout.closeDrawers();
- //               int V=item.getItemId();
-                switch (item.getItemId()){
-                    case R.id.actionNotificationItem: showNatificationTab();
+                //               int V=item.getItemId();
+                switch (item.getItemId()) {
+                    case R.id.actionNotificationItem:
+                        showNatificationTab();
                 }
                 return false;
             }
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void showNatificationTab(){
+    private void showNatificationTab() {
         viewPager.setCurrentItem(constants.TAB_ONE);
     }
 

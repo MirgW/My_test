@@ -1,4 +1,4 @@
-package com.moris.remindme;
+package com.moris.tavda;
 
 public class constants {
     public static final int TAB_ONE = 0;

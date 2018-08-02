@@ -38,7 +38,7 @@
 -dontwarn com.squareup.okhttp.**
 
 
-#-keep public class com.moris.remindme.MainActivity
+#-keep public class com.moris.tavda.MainActivity
 
 #-keepclassmembers class ** {
 #   public static *** pure(...);

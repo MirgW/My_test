@@ -1,4 +1,4 @@
-package com.moris.remindme.adapter;
+package com.moris.tavda.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.moris.remindme.R;
+import com.moris.tavda.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
