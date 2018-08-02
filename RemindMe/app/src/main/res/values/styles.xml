@@ -3,6 +3,5 @@
     <style name="AppDefault" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorDark</item>
-        <item name="android:colorControlNormal">@color/colorWhite</item>
     </style>
 </resources>

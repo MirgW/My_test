@@ -56,11 +56,11 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
 
         public RemindViewHolder(View itemView) {
             super(itemView);
-            cardView=(CardView) itemView.findViewById(R.id.cardView);
-            title= (TextView) itemView.findViewById(R.id.title);
-            doc= (TextView) itemView.findViewById(R.id.doc);
-            day= (TextView) itemView.findViewById(R.id.data);
-            img = (ImageView) itemView.findViewById(R.id.item_img);
+            cardView= itemView.findViewById(R.id.cardView);
+            title= itemView.findViewById(R.id.title);
+            doc= itemView.findViewById(R.id.doc);
+            day= itemView.findViewById(R.id.data);
+            img = itemView.findViewById(R.id.item_img);
         }
     }
 }
