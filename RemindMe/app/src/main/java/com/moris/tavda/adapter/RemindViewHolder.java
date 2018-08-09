@@ -13,6 +13,7 @@ public class RemindViewHolder extends RecyclerView.ViewHolder {
     TextView title;
     TextView doc;
     TextView day;
+    TextView url_doc;
     ImageView img;
 
     public RemindViewHolder(View itemView) {

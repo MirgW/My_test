@@ -5,6 +5,7 @@ public class RemindDTO {
     private String doc_DTO;
     private String img_DTO;
     private String data_DTO;
+    private String url_DTO;
 
     public String getImg_DTO() {
         return img_DTO;
@@ -26,11 +27,12 @@ public class RemindDTO {
 
 
 
-    public RemindDTO(String title,String doc_DTO,String img_DTO,String data_DTO) {
+    public RemindDTO(String title,String doc_DTO,String img_DTO,String data_DTO,String url_DTO) {
         this.title = title;
         this.doc_DTO = doc_DTO;
         this.img_DTO = img_DTO;
         this.data_DTO = data_DTO;
+        this.url_DTO = url_DTO;
     }
 
     public String getTitle() {
@@ -47,5 +49,13 @@ public class RemindDTO {
 
     public void setData_DTO(String data_DTO) {
         this.data_DTO = data_DTO;
+    }
+
+    public String getUrl_DTO() {
+        return url_DTO;
+    }
+
+    public void setUrl_DTO(String url_DTO) {
+        this.url_DTO = url_DTO;
     }
 }

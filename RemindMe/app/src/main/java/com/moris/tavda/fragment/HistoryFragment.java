@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -131,7 +128,8 @@ public class HistoryFragment extends AbstractTabFragment implements
     @Override
     public void onItemClick(View view, int position) {
         String str;
-        str = adapter.getItemData(position).getTitle().toString();
+//        str = adapter.getItemData(position).getTitle().toString();
+        str = adapter.getItemData(position).getUrl_DTO().toString();
         Toast.makeText(view.getContext(), str , Toast.LENGTH_SHORT).show();
 //        getActivity().invalidateOptionsMenu();
 //   ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("ssssssssss");
@@ -151,11 +149,12 @@ public class HistoryFragment extends AbstractTabFragment implements
                 Elements elements = document.select(".node.story.promote");
                 data.clear();
                 for (Element element : elements) {
-                    data.add(new RemindDTO(element.select("h2").text(), element.select("p").text(), element.select("img").attr("src"), element.select("span.art-postdateicon").text()));
+                    data.add(new RemindDTO(element.select("h2").text(), element.select("p").text(), element.select("img").attr("src"), element.select("span.art-postdateicon").text(), element.select("h2.art-postheader.a").attr("href")));
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
+                data=creatMockData();
             }
             return data;
         }
@@ -171,13 +170,13 @@ public class HistoryFragment extends AbstractTabFragment implements
     }
 
     private List<RemindDTO> creatMockData() {
-        List<RemindDTO> data = new ArrayList<>();
-        data.add(new RemindDTO("Item 1","zzzz","","lorem"));
-        data.add(new RemindDTO("Item 2","zzzz","","lorem"));
-        data.add(new RemindDTO("Item 3","zzzz","","lorem"));
-        data.add(new RemindDTO("Item 4","zzzz","","lorem"));
-        data.add(new RemindDTO("Item 5","zzzz","","lorem"));
-        data.add(new RemindDTO("Item 6","zzzz","","lorem"));
+//        List<RemindDTO> data = new ArrayList<>();
+        data.add(new RemindDTO("Item 1", "zzzz", "", "lorem", "http://www.mail.ru"));
+        data.add(new RemindDTO("Item 3", "zzzz", "", "lorem", "http://www.mail.ru"));
+        data.add(new RemindDTO("Item 4", "zzzz", "", "lorem", "http://www.mail.ru"));
+        data.add(new RemindDTO("Item 5", "zzzz", "", "lorem", "http://www.mail.ru"));
+        data.add(new RemindDTO("Item 6", "zzzz", "", "lorem", "http://www.ya.ru"));
+        data.add(new RemindDTO("Item 2", "zzzz", "", "lorem", "http://www.google.ru"));
 //        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ddddd");
 //        (MainActivity) getActivity().setToolbarTitle("ssss");
 //        getActivity().invalidateOptionsMenu();
