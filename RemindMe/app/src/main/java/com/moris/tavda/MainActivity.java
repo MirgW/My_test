@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        if (data == null) {return;}
 //        String name = data.getStringExtra("name");
-        invalidateOptionsMenu();
     }
 
 
@@ -67,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-            menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getTheme()));
+     menu.findItem(R.id.search).setIcon(R.drawable.ic_account_check);
+     //            menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getTheme()));
             return true;
     }
 
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.inflateMenu(R.menu.menu);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

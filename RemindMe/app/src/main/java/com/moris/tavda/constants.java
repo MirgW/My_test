@@ -7,6 +7,7 @@ public class constants {
     public static final int TAB_FOUR = 3;
 }
 
+//TODO "реакция на нажатия списка https://www.youtube.com/watch?v=x-TQ8Zcup4U"
 //TODO "Иконка на главный экран"
 //TODO "Первый экран - пример материал дез. https://www.youtube.com/watch?v=-gCxI3G_GkY&index=8&list=PLrCZzMib1e9ptI7bPXFG8X5xEiCBt5qYE"
 //TODO  реклама в оповешении

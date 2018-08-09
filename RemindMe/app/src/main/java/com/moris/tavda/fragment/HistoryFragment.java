@@ -6,15 +6,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.moris.tavda.R;
+import com.moris.tavda.adapter.ClickRecyclerAdapter;
 import com.moris.tavda.adapter.RemindListAdapter;
 
 import org.jsoup.Jsoup;
@@ -28,7 +33,8 @@ import java.util.List;
 
 import dto.RemindDTO;
 
-public class HistoryFragment extends AbstractTabFragment {
+public class HistoryFragment extends AbstractTabFragment implements
+        ClickRecyclerAdapter.OnItemClickListener{
     private static final int LAYOUT = R.layout.fragment_history;
 
     //    public Element element;
@@ -54,7 +60,7 @@ public class HistoryFragment extends AbstractTabFragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getActivity().getTheme()));
+//        menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getActivity().getTheme()));
     }
 
     public static HistoryFragment getInstance(Context context) {
@@ -79,9 +85,10 @@ public class HistoryFragment extends AbstractTabFragment {
         List<RemindDTO> remindDTOList = new ArrayList<>();
         parse = new Parse();
         parse.execute(0);
-        adapter = new RemindListAdapter(data);
+//        adapter = new RemindListAdapter(getLayoutInflater(),data);
+        adapter = new ClickRecyclerAdapter(getLayoutInflater(),data,this);
         rv.setLayoutManager(new LinearLayoutManager(context));
-
+        rv.setHasFixedSize(true); // неизменый экран
 //        LinearLayout linearLayout =  (LinearLayout) rv.findViewById(R.id.recyclerView);
 //
 //        linearLayout.setOnClickListener(new View.OnClickListener(){
@@ -119,6 +126,17 @@ public class HistoryFragment extends AbstractTabFragment {
 //        rv.setAdapter(adapter);
 //        rv.setAdapter(new RemindListAdapter(creatMockData()));
         return view;
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        String str;
+        str = adapter.getItemData(position).getTitle().toString();
+        Toast.makeText(view.getContext(), str , Toast.LENGTH_SHORT).show();
+//        getActivity().invalidateOptionsMenu();
+//   ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("ssssssssss");
+//        Toolbar toolbar = (Toolbar)((AppCompatActivity)getActivity()).getSupportActionBar().;
+//        toolbar.setOverflowIcon(R.drawable.ic_account_check);;
     }
 
 
@@ -162,7 +180,7 @@ public class HistoryFragment extends AbstractTabFragment {
         data.add(new RemindDTO("Item 6","zzzz","","lorem"));
 //        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ddddd");
 //        (MainActivity) getActivity().setToolbarTitle("ssss");
-        getActivity().invalidateOptionsMenu();
+//        getActivity().invalidateOptionsMenu();
         return data;
     }
 }
