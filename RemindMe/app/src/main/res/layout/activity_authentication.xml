@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/sign_in"
-                android:theme="@style/ThemeOverlay.MyDarkButton"
+
                 android:visibility="visible" />
 
             <Button
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/create_account"
-                android:theme="@style/ThemeOverlay.MyDarkButton"
+
                 android:visibility="visible" />
         </LinearLayout>
 
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/sign_out"
-                android:theme="@style/ThemeOverlay.MyDarkButton"
+
                 android:visibility="visible" />
 
             <Button
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/verify_email"
-                android:theme="@style/ThemeOverlay.MyDarkButton"
+
                 android:visibility="invisible" />
 
         </LinearLayout>

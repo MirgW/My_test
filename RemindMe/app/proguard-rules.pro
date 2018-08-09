@@ -38,8 +38,26 @@
 -dontwarn com.squareup.okhttp.**
 
 
-#-keep public class com.moris.tavda.MainActivity
+# Basic ProGuard rules for Firebase Android SDK 2.0.0+
+-keep class com.firebase.** { *; }
+-keep class org.apache.** { *; }
+-keepnames class com.fasterxml.jackson.** { *; }
+-keepnames class javax.servlet.** { *; }
+-keepnames class org.ietf.jgss.** { *; }
+-dontwarn org.apache.**
+-dontwarn org.w3c.dom.**
 
-#-keepclassmembers class ** {
-#   public static *** pure(...);
-#}
+-keep class com.firebase.** { *; }
+-dontwarn com.fasterxml.**
+
+# support constraint
+-dontwarn android.support.constraint.**
+-keep class android.support.constraint.** { *; }
+-keep interface android.support.constraint.** { *; }
+-keep public class android.support.constraint.R$* { *; }
+
+-keep public class com.moris.tavda.MainActivity
+
+-keepclassmembers class ** {
+   public static *** pure(...);
+}

@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -228,12 +227,16 @@ public class Authentication extends AppCompatActivity implements
     @Override
     public void onClick(View view) {
         int i = view.getId();
-        if (i == R.id.email_create_account_button) {
-            CreateAccaunt(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.email_sign_in_button) {
-            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.sign_out_button) {
-            signOut();
+        switch (i) {
+            case R.id.email_create_account_button:
+                CreateAccaunt(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                break;
+            case R.id.email_sign_in_button:
+                signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                break;
+            case R.id.sign_out_button:
+                signOut();
+                break;
         }
     }
 

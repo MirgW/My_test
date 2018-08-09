@@ -36,7 +36,7 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
         holder.title.setText(item.getTitle());
         holder.doc.setText(item.getDoc_DTO());
         holder.day.setText(item.getData_DTO());
-           Picasso.get().load("http://www.adm-tavda.ru/"+item.getImg_DTO())
+             Picasso.get().load("http://www.adm-tavda.ru/"+item.getImg_DTO().replaceAll("http://www.adm-tavda.ru/", "").replaceAll("http://adm-tavda.ru/", ""))
                 .placeholder(R.drawable.ic_action_name)
                 .error(R.drawable.ic_action_name)
                 .into(holder.img);

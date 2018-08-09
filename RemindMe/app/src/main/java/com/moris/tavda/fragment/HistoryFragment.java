@@ -5,11 +5,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.moris.tavda.R;
 import com.moris.tavda.adapter.RemindListAdapter;
@@ -26,15 +29,17 @@ import java.util.List;
 import dto.RemindDTO;
 
 public class HistoryFragment extends AbstractTabFragment {
-    private static final int LAYOUT =R.layout.fragment_history;
+    private static final int LAYOUT = R.layout.fragment_history;
 
-//    public Element element;
+    //    public Element element;
 //    public ArrayList<RemindDTO> remindDTOArrayList = new ArrayList <RemindDTO>();
 //    private ArrayAdapter adapter;
 //    private
     private RecyclerView rv;
     private RemindListAdapter adapter;
     private List<RemindDTO> data = new ArrayList<>();
+    private Parse parse;
+    private Integer Num = 0;
 
     @Nullable
     @Override
@@ -44,6 +49,12 @@ public class HistoryFragment extends AbstractTabFragment {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getActivity().getTheme()));
     }
 
     public static HistoryFragment getInstance(Context context) {
@@ -58,31 +69,71 @@ public class HistoryFragment extends AbstractTabFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(LAYOUT,container,false);
+        view = inflater.inflate(LAYOUT, container, false);
         rv = view.findViewById(R.id.recyclerView);
+        //Toolbar toolbar =  view.findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+//       ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+//        setHasOptionsMenu(true);
+
         List<RemindDTO> remindDTOList = new ArrayList<>();
-        Parse parse = new Parse();
-        parse.execute();
+        parse = new Parse();
+        parse.execute(0);
         adapter = new RemindListAdapter(data);
         rv.setLayoutManager(new LinearLayoutManager(context));
+
+//        LinearLayout linearLayout =  (LinearLayout) rv.findViewById(R.id.recyclerView);
+//
+//        linearLayout.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+////                Snackbar.make(rv, "You clicked the Linear Layout", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//            }
+//        });
+
+        Button nexButton = view.findViewById(R.id.nex);
+        nexButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Num = Num + 1;
+                Snackbar.make(view, "Страница "+ Num, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                parse = new Parse();
+                parse.execute(Num);
+            }
+        });
+
+        Button topButton = view.findViewById(R.id.pre);
+        topButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Num != 0) Num = Num - 1;
+                Snackbar.make(view, "Страница "+ Num, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                parse = new Parse();
+                parse.execute(Num);
+            }
+        });
+
 //        rv.setAdapter(adapter);
 //        rv.setAdapter(new RemindListAdapter(creatMockData()));
         return view;
     }
 
 
-    class Parse extends AsyncTask<Void,Void,List<RemindDTO>>{
+    class Parse extends AsyncTask<Integer, Void, List<RemindDTO>> {
 
         @Override
-        protected List<RemindDTO> doInBackground(Void... voids) {
+        protected List<RemindDTO> doInBackground(Integer... arg) {
             Document document;
 
             try {
-                document = Jsoup.connect("http://www.adm-tavda.ru/").get();
+                document = Jsoup.connect("http://www.adm-tavda.ru/node?page=" + arg[0].toString()).get();
                 Elements elements = document.select(".node.story.promote");
                 data.clear();
-                for (Element element:elements){
-                    data.add(new RemindDTO(element.select("h2").text(),element.select("p").text(),element.select("img").attr("src"),element.select("span.art-postdateicon").text()));
+                for (Element element : elements) {
+                    data.add(new RemindDTO(element.select("h2").text(), element.select("p").text(), element.select("img").attr("src"), element.select("span.art-postdateicon").text()));
                 }
 
             } catch (IOException e) {
@@ -93,19 +144,25 @@ public class HistoryFragment extends AbstractTabFragment {
 
         @Override
         protected void onPostExecute(List<RemindDTO> remindDTOS) {
-//            super.onPostExecute(remindDTOS);
-           rv.setAdapter(adapter);
+            super.onPostExecute(remindDTOS);
+            rv.setAdapter(adapter);
+//            rv.setAdapter(new RemindListAdapter(creatMockData()));
+//            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ddddd");
+//            (MainActivity) rv.getActivity().setToolbarTitle("ssss")''
         }
     }
 
-//    private List<RemindDTO> creatMockData() {
-//        List<RemindDTO> data = new ArrayList<>();
-//        data.add(new RemindDTO("Item 1"));
-//        data.add(new RemindDTO("Item 2"));
-//        data.add(new RemindDTO("Item 3"));
-//        data.add(new RemindDTO("Item 4"));
-//        data.add(new RemindDTO("Item 5"));
-//        data.add(new RemindDTO("Item 6"));
-//        return data;
-//    }
+    private List<RemindDTO> creatMockData() {
+        List<RemindDTO> data = new ArrayList<>();
+        data.add(new RemindDTO("Item 1","zzzz","","lorem"));
+        data.add(new RemindDTO("Item 2","zzzz","","lorem"));
+        data.add(new RemindDTO("Item 3","zzzz","","lorem"));
+        data.add(new RemindDTO("Item 4","zzzz","","lorem"));
+        data.add(new RemindDTO("Item 5","zzzz","","lorem"));
+        data.add(new RemindDTO("Item 6","zzzz","","lorem"));
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ddddd");
+//        (MainActivity) getActivity().setToolbarTitle("ssss");
+        getActivity().invalidateOptionsMenu();
+        return data;
+    }
 }
