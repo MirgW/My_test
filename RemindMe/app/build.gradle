@@ -1,5 +1,11 @@
+import java.text.SimpleDateFormat
 apply plugin: 'com.android.application'
 
+def buildTime() {
+    def df = new SimpleDateFormat("yyyyMMddHHmm") // you can change it
+    df.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return df.format(new Date())
+}
 android {
     signingConfigs {
         config {
@@ -16,7 +22,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
-        versionName "2.0"
+//        versionName "2.0"
     }
     buildTypes {
         release {
@@ -35,14 +41,33 @@ android {
         free {
             applicationIdSuffix ".free"
             versionName "1.0"
+//            versionNameSuffix "-beta-build-${buildTime()}"
             dimension "tier"
         }
         pro {
             applicationIdSuffix ".pro"
-            versionName "1.0-pro"
+            versionName "1.0"
+//            versionNameSuffix "-beta-build-${buildTime()}"
             dimension "tier"
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def project = "Tavda"
+            def SEP = "_"
+            def flavor = variant.productFlavors[0].name
+            def buildType = variant.variantData.variantConfiguration.buildType.name
+            def version = variant.versionName
+            def date = new Date();
+            def formattedDate = date.format('ddMMyyHHmm')
+
+            def newApkName = project + SEP + flavor + SEP + buildType + SEP + version + SEP + formattedDate + ".apk"
+
+            outputFileName = new File(newApkName)
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/license.txt'
