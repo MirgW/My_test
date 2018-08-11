@@ -1,6 +1,7 @@
 package com.moris.tavda.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.moris.tavda.ActivityWebview;
+import com.moris.tavda.BuildConfig;
 import com.moris.tavda.R;
 import com.moris.tavda.adapter.ClickRecyclerAdapter;
 import com.moris.tavda.adapter.RemindListAdapter;
@@ -129,9 +132,14 @@ public class HistoryFragment extends AbstractTabFragment implements
     public void onItemClick(View view, int position) {
         String str;
 //        str = adapter.getItemData(position).getTitle().toString();
-        str = adapter.getItemData(position).getUrl_DTO().toString();
-        Toast.makeText(view.getContext(), str , Toast.LENGTH_SHORT).show();
-//        getActivity().invalidateOptionsMenu();
+        str = "http://www.adm-tavda.ru" + adapter.getItemData(position).getUrl_DTO().toString();
+
+        if(BuildConfig.DEBUG)   Toast.makeText(view.getContext(), str+"-> "+BuildConfig.FLAVOR , Toast.LENGTH_SHORT).show();
+
+        Intent startIntent = new Intent(getActivity(), ActivityWebview.class);
+        startIntent.putExtra("INTENT_EXTRA_URL", str);
+        startActivity(startIntent);
+        //        getActivity().invalidateOptionsMenu();
 //   ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("ssssssssss");
 //        Toolbar toolbar = (Toolbar)((AppCompatActivity)getActivity()).getSupportActionBar().;
 //        toolbar.setOverflowIcon(R.drawable.ic_account_check);;
@@ -147,9 +155,11 @@ public class HistoryFragment extends AbstractTabFragment implements
             try {
                 document = Jsoup.connect("http://www.adm-tavda.ru/node?page=" + arg[0].toString()).get();
                 Elements elements = document.select(".node.story.promote");
+//                String dd;
                 data.clear();
                 for (Element element : elements) {
-                    data.add(new RemindDTO(element.select("h2").text(), element.select("p").text(), element.select("img").attr("src"), element.select("span.art-postdateicon").text(), element.select("h2.art-postheader.a").attr("href")));
+//                    dd=element.select("h2.art-postheader>a").attr("href");
+                    data.add(new RemindDTO(element.select("h2").text(), element.select("p").text(), element.select("img").attr("src"), element.select("span.art-postdateicon").text(), element.select("h2.art-postheader>a").attr("href")));
                 }
 
             } catch (IOException e) {

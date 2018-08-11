@@ -16,12 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Authentication"
             android:label="@string/label_emailpassword"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
+        <activity
+            android:name=".ActivityWebview"
+            android:label="ActivityWebview"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

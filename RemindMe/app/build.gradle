@@ -30,7 +30,18 @@ android {
             minifyEnabled false
         }
     }
+    flavorDimensions "tier"
     productFlavors {
+        free {
+            applicationIdSuffix ".free"
+            versionName "1.0"
+            dimension "tier"
+        }
+        pro {
+            applicationIdSuffix ".pro"
+            versionName "1.0-pro"
+            dimension "tier"
+        }
     }
     packagingOptions {
         exclude 'META-INF/notice.txt'
@@ -55,6 +66,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.2'
     //    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 }
 
 repositories {
