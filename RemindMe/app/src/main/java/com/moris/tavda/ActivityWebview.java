@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -72,8 +71,9 @@ public class ActivityWebview extends AppCompatActivity {
         wbNews = findViewById(R.id.webview);
         WebSettings wbset = wbNews.getSettings();
         wbset.setJavaScriptEnabled(true);
-        wbset.setBuiltInZoomControls(true);
-        wbset.setDisplayZoomControls(false);
+        // FIXME: 8/12/2018 вырести в настройки
+//        wbset.setBuiltInZoomControls(true);
+//        wbset.setDisplayZoomControls(false);
         wbset.setDefaultTextEncodingName("utf-8");
         wbNews.setWebViewClient(new WebViewClient() {
 

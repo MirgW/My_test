@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.moris.tavda.ActivityWebview;
 import com.moris.tavda.BuildConfig;
@@ -99,25 +98,29 @@ public class HistoryFragment extends AbstractTabFragment implements
 //            }
 //        });
 
-        Button nexButton = view.findViewById(R.id.nex);
+        FloatingActionButton nexButton = view.findViewById(R.id.nex_fl);
         nexButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Num = Num + 1;
-                Snackbar.make(view, "Страница "+ Num, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (BuildConfig.DEBUG) {
+                    Snackbar.make(view, "Страница "+ Num, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
                 parse = new Parse();
                 parse.execute(Num);
             }
         });
 
-        Button topButton = view.findViewById(R.id.pre);
+        FloatingActionButton topButton = view.findViewById(R.id.pre_fl);
         topButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Num != 0) Num = Num - 1;
-                Snackbar.make(view, "Страница "+ Num, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (BuildConfig.DEBUG) {
+                    Snackbar.make(view, "Страница "+ Num, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
                 parse = new Parse();
                 parse.execute(Num);
             }
