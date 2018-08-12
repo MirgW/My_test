@@ -29,8 +29,8 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             minifyEnabled true
-            signingConfig signingConfigs.config
             zipAlignEnabled true
+            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
@@ -40,14 +40,12 @@ android {
     productFlavors {
         free {
             applicationIdSuffix ".free"
-            versionName "1.0"
-//            versionNameSuffix "-beta-build-${buildTime()}"
+            versionName "1.0-free-build-${buildTime()}"
             dimension "tier"
         }
         pro {
             applicationIdSuffix ".pro"
-            versionName "1.0"
-//            versionNameSuffix "-beta-build-${buildTime()}"
+            versionName "1.0-pro-build-${buildTime()}"
             dimension "tier"
         }
     }

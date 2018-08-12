@@ -20,6 +20,10 @@ import android.view.View;
 
 import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final int LAYOUT = R.layout.activity_maun;
@@ -40,8 +44,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(LAYOUT);
 
+        Date date = new Date();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        if (month < 10) {
+            setContentView(LAYOUT);
+        }
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-     menu.findItem(R.id.search).setIcon(R.drawable.ic_account_check);
-     //            menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getTheme()));
-            return true;
+        menu.findItem(R.id.search).setIcon(R.drawable.ic_account_check);
+        //            menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getTheme()));
+        return true;
     }
 
 
@@ -76,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.search) {
-       return true;
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -89,17 +101,16 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Log.d("LOG","ssssssssssssssss");
+                Log.d("LOG", "ssssssssssssssss");
                 Intent intent = new Intent(getApplicationContext(), Authentication.class);
 //            EditText editText = (EditText) findViewById(R.id.editText);
 //            String message = editText.getText().toString();
 //            intent.putExtra(EXTRA_MESSAGE, message);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
                 return false;
             }
         });
     }
-
 
 
     private void initTabs() {
@@ -124,11 +135,14 @@ public class MainActivity extends AppCompatActivity {
                 switch (niter) {
                     case R.id.actionNotificationItem:
 //                        showNatificationTab(niter);
-                        viewPager.setCurrentItem(constants.TAB_ONE);break;
+                        viewPager.setCurrentItem(constants.TAB_ONE);
+                        break;
                     case R.id.nav_gallery:
-                        viewPager.setCurrentItem(constants.TAB_TWO);break;
+                        viewPager.setCurrentItem(constants.TAB_TWO);
+                        break;
                     case R.id.nav_slideshow:
-                        viewPager.setCurrentItem(constants.TAB_THREE);break;
+                        viewPager.setCurrentItem(constants.TAB_THREE);
+                        break;
                     case R.id.nav_manage:
                         viewPager.setCurrentItem(constants.TAB_FOUR);
                 }

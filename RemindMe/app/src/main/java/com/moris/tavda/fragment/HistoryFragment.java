@@ -134,7 +134,7 @@ public class HistoryFragment extends AbstractTabFragment implements
 //        str = adapter.getItemData(position).getTitle().toString();
         str = "http://www.adm-tavda.ru" + adapter.getItemData(position).getUrl_DTO().toString();
 
-        if(BuildConfig.DEBUG)   Toast.makeText(view.getContext(), str+"-> "+BuildConfig.FLAVOR , Toast.LENGTH_SHORT).show();
+//        if(BuildConfig.DEBUG)   Toast.makeText(view.getContext(), str+"-> "+BuildConfig.FLAVOR , Toast.LENGTH_SHORT).show();
 
         Intent startIntent = new Intent(getActivity(), ActivityWebview.class);
         startIntent.putExtra("INTENT_EXTRA_URL", str);
