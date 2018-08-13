@@ -48,7 +48,7 @@
             android:layout_marginBottom="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
             android:src="@drawable/ic_report_problem_white_24dp"
-            app:backgroundTint="@color/colorPrimary" />
+            app:backgroundTint="#f44336" />
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

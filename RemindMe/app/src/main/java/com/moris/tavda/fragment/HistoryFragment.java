@@ -33,7 +33,7 @@ import java.util.List;
 import dto.RemindDTO;
 
 public class HistoryFragment extends AbstractTabFragment implements
-        ClickRecyclerAdapter.OnItemClickListener{
+        ClickRecyclerAdapter.OnItemClickListener {
     private static final int LAYOUT = R.layout.fragment_history;
 
     //    public Element element;
@@ -76,6 +76,21 @@ public class HistoryFragment extends AbstractTabFragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         rv = view.findViewById(R.id.recyclerView);
+
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    fab.hide();
+                } else if (dy < 0) {
+                    fab.show();
+                }
+            }
+        });
+
         //Toolbar toolbar =  view.findViewById(R.id.toolbar);
 //        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 //       ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -85,7 +100,7 @@ public class HistoryFragment extends AbstractTabFragment implements
         parse = new Parse();
         parse.execute(0);
 //        adapter = new RemindListAdapter(getLayoutInflater(),data);
-        adapter = new ClickRecyclerAdapter(getLayoutInflater(),data,this);
+        adapter = new ClickRecyclerAdapter(getLayoutInflater(), data, this);
         rv.setLayoutManager(new LinearLayoutManager(context));
         rv.setHasFixedSize(true); // неизменый экран
 //        LinearLayout linearLayout =  (LinearLayout) rv.findViewById(R.id.recyclerView);
@@ -104,7 +119,7 @@ public class HistoryFragment extends AbstractTabFragment implements
             public void onClick(View view) {
                 Num = Num + 1;
                 if (BuildConfig.DEBUG) {
-                    Snackbar.make(view, "Страница "+ Num, Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Страница " + Num, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
                 parse = new Parse();
@@ -118,7 +133,7 @@ public class HistoryFragment extends AbstractTabFragment implements
             public void onClick(View view) {
                 if (Num != 0) Num = Num - 1;
                 if (BuildConfig.DEBUG) {
-                    Snackbar.make(view, "Страница "+ Num, Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Страница " + Num, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
                 parse = new Parse();
@@ -167,7 +182,7 @@ public class HistoryFragment extends AbstractTabFragment implements
 
             } catch (IOException e) {
                 e.printStackTrace();
-                data=creatMockData();
+                data = creatMockData();
             }
             return data;
         }
