@@ -54,13 +54,13 @@ android {
         variant.outputs.all { output ->
             def project = "Tavda"
             def SEP = "_"
-            def flavor = variant.productFlavors[0].name
+            def flavor = variant.variantData.variantConfiguration.flavorName
             def buildType = variant.variantData.variantConfiguration.buildType.name
             def version = variant.versionName
-            def date = new Date();
-            def formattedDate = date.format('ddMMyyHHmm')
+            def date = new Date()
+            def formattedDate = date.format('ddMMyyyyHHmm')
 
-            def newApkName = project + SEP + flavor + SEP + buildType + SEP + version + SEP + formattedDate + ".apk"
+            def newApkName = project + SEP + flavor + SEP + buildType + SEP + "1.0" + SEP + formattedDate + ".apk"
 
             outputFileName = new File(newApkName)
         }

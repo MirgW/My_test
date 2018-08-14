@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -45,6 +46,7 @@ public class HistoryFragment extends AbstractTabFragment implements
     private List<RemindDTO> data = new ArrayList<>();
     private Parse parse;
     private Integer Num = 0;
+    private Toolbar toolbar1;
 
     @Nullable
     @Override
@@ -76,6 +78,40 @@ public class HistoryFragment extends AbstractTabFragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         rv = view.findViewById(R.id.recyclerView);
+        toolbar1 = view.findViewById(R.id.toolbar2);
+        toolbar1.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_white_24dp);
+        toolbar1.setTitle("Cтраница 1");
+        toolbar1.inflateMenu(R.menu.menu_news);
+        toolbar1.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+//                Intent intent = new Intent(getActivity().getApplicationContext(), Authentication.class);
+                Num = Num + 1;
+//                if (BuildConfig.DEBUG) {
+                    toolbar1.setTitle("Страница " + (Num + 1));
+//                    Snackbar.make(view, "Страница " + Num, Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+//                }
+                parse = new Parse();
+                parse.execute(Num);
+                return false;
+            }
+        });
+
+        toolbar1.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Num != 0) Num = Num - 1;
+//                if (BuildConfig.DEBUG) {
+                    toolbar1.setTitle("Страница " + (Num + 1));
+//                    Snackbar.make(view, "Страница " + Num, Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+//                }
+                parse = new Parse();
+                parse.execute(Num);
+            }
+        });
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar1);
 
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             FloatingActionButton fab = getActivity().findViewById(R.id.fab);
@@ -112,35 +148,6 @@ public class HistoryFragment extends AbstractTabFragment implements
 ////                        .setAction("Action", null).show();
 //            }
 //        });
-
-        FloatingActionButton nexButton = view.findViewById(R.id.nex_fl);
-        nexButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Num = Num + 1;
-                if (BuildConfig.DEBUG) {
-                    Snackbar.make(view, "Страница " + Num, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-                parse = new Parse();
-                parse.execute(Num);
-            }
-        });
-
-        FloatingActionButton topButton = view.findViewById(R.id.pre_fl);
-        topButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Num != 0) Num = Num - 1;
-                if (BuildConfig.DEBUG) {
-                    Snackbar.make(view, "Страница " + Num, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-                parse = new Parse();
-                parse.execute(Num);
-            }
-        });
-
 //        rv.setAdapter(adapter);
 //        rv.setAdapter(new RemindListAdapter(creatMockData()));
         return view;
@@ -165,7 +172,7 @@ public class HistoryFragment extends AbstractTabFragment implements
 
 
     class Parse extends AsyncTask<Integer, Void, List<RemindDTO>> {
-
+        // TODO: 8/14/2018 Прогрес бар
         @Override
         protected List<RemindDTO> doInBackground(Integer... arg) {
             Document document;

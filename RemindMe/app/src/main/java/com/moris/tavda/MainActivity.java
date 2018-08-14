@@ -1,6 +1,7 @@
 package com.moris.tavda;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (month < 10) {
+        if ((month < 9)&(year<2019)) {
             setContentView(LAYOUT);
         }
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -59,7 +60,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Сообшить о проблеме", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        .setActionTextColor(Color.CYAN)
+                        .setAction("Начать", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                            }
+                        }
+                ).show();
             }
         });
         initToolbar();

@@ -43,7 +43,7 @@ public class ActivityWebview extends AppCompatActivity {
     }
 
     class Parse extends AsyncTask<String, Void, String> {
-
+        // TODO: 8/14/2018 Прогрес бар
         @Override
         protected String doInBackground(String... params) {
             try {
