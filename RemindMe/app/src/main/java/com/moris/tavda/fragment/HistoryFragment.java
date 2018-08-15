@@ -1,5 +1,6 @@
 package com.moris.tavda.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -47,6 +48,23 @@ public class HistoryFragment extends AbstractTabFragment implements
     private Parse parse;
     private Integer Num = 0;
     private Toolbar toolbar1;
+    private ProgressDialog mProgressDialog;
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setMessage("Loading...");
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
 
     @Nullable
     @Override
@@ -88,10 +106,11 @@ public class HistoryFragment extends AbstractTabFragment implements
 //                Intent intent = new Intent(getActivity().getApplicationContext(), Authentication.class);
                 Num = Num + 1;
 //                if (BuildConfig.DEBUG) {
-                    toolbar1.setTitle("Страница " + (Num + 1));
+                toolbar1.setTitle("Страница " + (Num + 1));
 //                    Snackbar.make(view, "Страница " + Num, Snackbar.LENGTH_LONG)
 //                            .setAction("Action", null).show();
 //                }
+                showProgressDialog();
                 parse = new Parse();
                 parse.execute(Num);
                 return false;
@@ -103,10 +122,11 @@ public class HistoryFragment extends AbstractTabFragment implements
             public void onClick(View v) {
                 if (Num != 0) Num = Num - 1;
 //                if (BuildConfig.DEBUG) {
-                    toolbar1.setTitle("Страница " + (Num + 1));
+                toolbar1.setTitle("Страница " + (Num + 1));
 //                    Snackbar.make(view, "Страница " + Num, Snackbar.LENGTH_LONG)
 //                            .setAction("Action", null).show();
 //                }
+                showProgressDialog();
                 parse = new Parse();
                 parse.execute(Num);
             }
@@ -134,6 +154,7 @@ public class HistoryFragment extends AbstractTabFragment implements
 
         List<RemindDTO> remindDTOList = new ArrayList<>();
         parse = new Parse();
+        showProgressDialog();
         parse.execute(0);
 //        adapter = new RemindListAdapter(getLayoutInflater(),data);
         adapter = new ClickRecyclerAdapter(getLayoutInflater(), data, this);
@@ -198,6 +219,7 @@ public class HistoryFragment extends AbstractTabFragment implements
         protected void onPostExecute(List<RemindDTO> remindDTOS) {
             super.onPostExecute(remindDTOS);
             rv.setAdapter(adapter);
+            hideProgressDialog();
 //            rv.setAdapter(new RemindListAdapter(creatMockData()));
 //            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ddddd");
 //            (MainActivity) rv.getActivity().setToolbarTitle("ssss")''

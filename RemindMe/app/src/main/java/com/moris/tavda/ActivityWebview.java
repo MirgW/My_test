@@ -1,5 +1,6 @@
 package com.moris.tavda;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -25,6 +26,23 @@ public class ActivityWebview extends AppCompatActivity {
     private Elements elements;
     private FloatingActionButton floatingActionButton_share;
     String param_str;
+    private ProgressDialog mProgressDialog;
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setMessage("Loading...");
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +60,7 @@ public class ActivityWebview extends AppCompatActivity {
         Parse parse = new Parse();
         Bundle extr = getIntent().getExtras();
         if (extr != null) param_str = extr.getString("INTENT_EXTRA_URL");
+        showProgressDialog();
         parse.execute(param_str);
         setWebView();
 
@@ -88,7 +107,7 @@ public class ActivityWebview extends AppCompatActivity {
             } else {
                 wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", "<H3>Источник недоступен, проверьте связь</H3>", "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
             }
-
+            hideProgressDialog();
         }
     }
 
