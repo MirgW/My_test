@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat
 apply plugin: 'com.android.application'
+//apply plugin: 'io.fabric'
 
 def buildTime() {
     def df = new SimpleDateFormat("yyyyMMddHHmm") // you can change it
@@ -94,6 +95,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.2'
     //    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+//    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
 }
 
 repositories {

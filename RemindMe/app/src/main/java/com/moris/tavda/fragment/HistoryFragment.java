@@ -206,12 +206,12 @@ public class HistoryFragment extends AbstractTabFragment implements
 
     private List<RemindDTO> creatMockData() {
 //        List<RemindDTO> data = new ArrayList<>();
-        data.add(new RemindDTO("Item 1", "zzzz", "", "lorem", "http://www.mail.ru"));
-        data.add(new RemindDTO("Item 3", "zzzz", "", "lorem", "http://www.mail.ru"));
-        data.add(new RemindDTO("Item 4", "zzzz", "", "lorem", "http://www.mail.ru"));
-        data.add(new RemindDTO("Item 5", "zzzz", "", "lorem", "http://www.mail.ru"));
-        data.add(new RemindDTO("Item 6", "zzzz", "", "lorem", "http://www.ya.ru"));
-        data.add(new RemindDTO("Item 2", "zzzz", "", "lorem", "http://www.google.ru"));
+        data.add(new RemindDTO("Item 1", "zzzz", "", "lorem", "http://www.1.ru"));
+        data.add(new RemindDTO("Item 3", "zzzz", "", "lorem", "http://www.1.ru"));
+        data.add(new RemindDTO("Item 4", "zzzz", "", "lorem", "http://www.1.ru"));
+        data.add(new RemindDTO("Item 5", "zzzz", "", "lorem", "http://www.1.ru"));
+        data.add(new RemindDTO("Item 6", "zzzz", "", "lorem", "http://www.1.ru"));
+        data.add(new RemindDTO("Item 2", "zzzz", "", "lorem", "http://www.1.ru"));
 //        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ddddd");
 //        (MainActivity) getActivity().setToolbarTitle("ssss");
 //        getActivity().invalidateOptionsMenu();
