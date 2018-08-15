@@ -13,5 +13,5 @@ public class constants {
 // TODO  реклама в оповешении
 // TODO  zip выравнивание
 // TODO HOCKEYAPP сервис сборшик ошибок
-// TODO: 8/11/2018 отдeльный e-mail 
+// TODO: 8/11/2018 отдeльный e-mail
 // TODO: 8/12/2018 кеширование

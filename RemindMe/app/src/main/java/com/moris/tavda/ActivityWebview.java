@@ -1,5 +1,6 @@
 package com.moris.tavda;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,8 +22,9 @@ public class ActivityWebview extends AppCompatActivity {
 
     private WebView wbNews;
 
-    private Document document;
     private Elements elements;
+    private FloatingActionButton floatingActionButton_share;
+    String param_str;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,19 +37,23 @@ public class ActivityWebview extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        floatingActionButton_share = findViewById(R.id.fab_share);
 
         Parse parse = new Parse();
-        parse.execute(getIntent().getExtras().getString("INTENT_EXTRA_URL"));
+        Bundle extr = getIntent().getExtras();
+        if (extr != null) param_str = extr.getString("INTENT_EXTRA_URL");
+        parse.execute(param_str);
         setWebView();
 
     }
 
-    class Parse extends AsyncTask<String, Void, String> {
+     class Parse extends AsyncTask<String, Void, String> {
         // TODO: 8/14/2018 Прогрес бар
         @Override
         protected String doInBackground(String... params) {
+            Document document;
             try {
-                document = Jsoup.connect(params[0].toString()).get();
+                document = Jsoup.connect(params[0]).get();
                 elements = document.select(".node.story");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -59,10 +65,26 @@ public class ActivityWebview extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String unencodedHtml = elements.toString()+"<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table>";
+            String unencodedHtml = elements.toString() + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table>";
 //            String encodedHtml = Base64.encodeToString(unencodedHtml.getBytes(),
 //                    Base64.NO_PADDING);
-            wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", unencodedHtml, "text/html; charset=utf-8", "base64","http://www.adm-tavda.ru");
+            wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+            floatingActionButton_share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Отправлено из мобильного приложения Тавда: " + param_str);
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Отправлено из мобильного приложения Тавда");
+//                    sendIntent.putExtra(Intent.EXTRA_EMAIL  , new String[] { "ssss@where.com" });
+//                    sendIntent.putExtra(Intent.EXTRA_CONTENT_ANNOTATIONS, "EXTRA_CONTENT_ANNOTATIONS");
+//                    sendIntent.putExtra(Intent.EXTRA_SPLIT_NAME,"dddddd");
+                    sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Тавда.</h1></html></body>");
+                    sendIntent.setType("text/plan");
+                    startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
+                }
+            });
+
         }
     }
 

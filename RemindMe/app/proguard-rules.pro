@@ -1,3 +1,4 @@
+-keep class android.support.v7.widget.ShareActionProvider { *; }
 # okhttp
 
 -keepattributes Signature
