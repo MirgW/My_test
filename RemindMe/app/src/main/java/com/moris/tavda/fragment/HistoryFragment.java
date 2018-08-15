@@ -61,7 +61,7 @@ public class HistoryFragment extends AbstractTabFragment implements
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-//        menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getActivity().getTheme()));
+        menu.findItem(R.id.search).setIcon(R.drawable.ic_account_check);
     }
 
     public static HistoryFragment getInstance(Context context) {
@@ -206,12 +206,12 @@ public class HistoryFragment extends AbstractTabFragment implements
 
     private List<RemindDTO> creatMockData() {
 //        List<RemindDTO> data = new ArrayList<>();
-        data.add(new RemindDTO("Item 1", "zzzz", "", "lorem", "http://www.1.ru"));
-        data.add(new RemindDTO("Item 3", "zzzz", "", "lorem", "http://www.1.ru"));
-        data.add(new RemindDTO("Item 4", "zzzz", "", "lorem", "http://www.1.ru"));
-        data.add(new RemindDTO("Item 5", "zzzz", "", "lorem", "http://www.1.ru"));
-        data.add(new RemindDTO("Item 6", "zzzz", "", "lorem", "http://www.1.ru"));
-        data.add(new RemindDTO("Item 2", "zzzz", "", "lorem", "http://www.1.ru"));
+        data.add(new RemindDTO("Нет соединения с источником", "Источник не доступен", "", "Нет соеденения", "http://www.1.ru"));
+//        data.add(new RemindDTO("Item 3", "zzzz", "", "lorem", "http://www.1.ru"));
+//        data.add(new RemindDTO("Item 4", "zzzz", "", "lorem", "http://www.1.ru"));
+//        data.add(new RemindDTO("Item 5", "zzzz", "", "lorem", "http://www.1.ru"));
+//        data.add(new RemindDTO("Item 6", "zzzz", "", "lorem", "http://www.1.ru"));
+//        data.add(new RemindDTO("Item 2", "zzzz", "", "lorem", "http://www.1.ru"));
 //        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("ddddd");
 //        (MainActivity) getActivity().setToolbarTitle("ssss");
 //        getActivity().invalidateOptionsMenu();

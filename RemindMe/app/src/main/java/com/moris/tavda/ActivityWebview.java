@@ -57,7 +57,7 @@ public class ActivityWebview extends AppCompatActivity {
                 elements = document.select(".node.story");
             } catch (IOException e) {
                 e.printStackTrace();
-                return null;
+                return "";
             }
             return document.html();
         }
@@ -65,25 +65,29 @@ public class ActivityWebview extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String unencodedHtml = elements.toString() + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table>";
+            if (elements != null) {
+                String unencodedHtml = elements.toString() + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table>";
 //            String encodedHtml = Base64.encodeToString(unencodedHtml.getBytes(),
 //                    Base64.NO_PADDING);
-            wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
-            floatingActionButton_share.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Отправлено из мобильного приложения Живая Тавда: " + param_str);
-                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Отправлено из мобильного приложения Живая Тавда");
+                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+                floatingActionButton_share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Отправлено из мобильного приложения Живая Тавда: " + param_str);
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Отправлено из мобильного приложения Живая Тавда");
 //                    sendIntent.putExtra(Intent.EXTRA_EMAIL  , new String[] { "ssss@where.com" });
 //                    sendIntent.putExtra(Intent.EXTRA_CONTENT_ANNOTATIONS, "EXTRA_CONTENT_ANNOTATIONS");
 //                    sendIntent.putExtra(Intent.EXTRA_SPLIT_NAME,"dddddd");
-                    sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Живая Тавда.</h1></html></body>");
-                    sendIntent.setType("text/plan");
-                    startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
-                }
-            });
+                        sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Живая Тавда.</h1></html></body>");
+                        sendIntent.setType("text/plan");
+                        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
+                    }
+                });
+            } else {
+                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", "<H3>Источник недоступен, проверьте связь</H3>", "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+            }
 
         }
     }

@@ -1,10 +1,13 @@
 package com.moris.tavda;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +32,7 @@ public class Authentication extends AppCompatActivity implements
     private EditText mPasswordField;
 
     private FirebaseAuth mAuth;
-
+    SharedPreferences preferences;
     private ProgressDialog mProgressDialog;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -59,6 +62,10 @@ public class Authentication extends AppCompatActivity implements
         mDetailTextView = findViewById(R.id.detail);
         mEmailField = findViewById(R.id.field_email);
         mPasswordField = findViewById(R.id.field_password);
+        preferences = getSharedPreferences("TAVDA_PREFERENCES", Context.MODE_PRIVATE);
+//        invalidateOptionsMenu();
+//        Toolbar toolbar = (Toolbar)( .getSupportActionBar().;
+//        toolbar.setOverflowIcon(R.drawable.ic_account_check);
 
         // Buttons
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
@@ -75,6 +82,7 @@ public class Authentication extends AppCompatActivity implements
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    invalidateOptionsMenu();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -169,7 +177,7 @@ public class Authentication extends AppCompatActivity implements
         hideProgressDialog();
         if (currentUser != null) {
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt, currentUser.getEmail()));
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, currentUser.getUid()));
+//            mDetailTextView.setText(getString(R.string.firebase_status_fmt, currentUser.getUid()));
 
             findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
             findViewById(R.id.email_password_fields).setVisibility(View.GONE);
@@ -242,8 +250,20 @@ public class Authentication extends AppCompatActivity implements
 
     @Override
     public void finish() {
+        String st;
         Intent intent = new Intent();
-        intent.putExtra("name", "ok");
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        SharedPreferences.Editor editor = preferences.edit();
+        if (currentUser == null) {
+            //        intent.putExtra("name", null);
+            editor.putString("User", "");
+
+        } else {
+            intent.putExtra("name", currentUser.getEmail());
+            String email = currentUser.getEmail();
+            editor.putString("User", email);
+        }
+        editor.apply();
         setResult(RESULT_OK, intent);
         super.finish();
     }

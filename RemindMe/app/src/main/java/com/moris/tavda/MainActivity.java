@@ -1,6 +1,8 @@
 package com.moris.tavda;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
 
@@ -32,27 +35,35 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String UserID;
+    SharedPreferences preferences;
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (data == null) {return;}
-//        String name = data.getStringExtra("name");
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        UserID = data.getStringExtra("name");
+        invalidateOptionsMenu();
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
 
+        preferences = getSharedPreferences("TAVDA_PREFERENCES", Context.MODE_PRIVATE);
+        UserID = preferences.getString("User", "");
+        if (UserID.equals("")) UserID = null;
         Date date = new Date();
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if ((month < 9)&(year<2019)) {
+        if ((month < 9) & (year < 2019)) {
             setContentView(LAYOUT);
         }
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -62,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Сообшить о проблеме", Snackbar.LENGTH_LONG)
                         .setActionTextColor(Color.CYAN)
                         .setAction("Начать", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                            }
-                        }
-                ).show();
+                                    @Override
+                                    public void onClick(View view) {
+                                    }
+                                }
+                        ).show();
             }
         });
         initToolbar();
@@ -85,8 +96,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.search).setIcon(R.drawable.ic_account_check);
-        //            menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getTheme()));
+        if (UserID != null) {
+            menu.findItem(R.id.search).setIcon(R.drawable.ic_account_check);
+            ((TextView)findViewById(R.id.textView)).setText(UserID);
+        } else {
+            menu.findItem(R.id.search).setIcon(R.drawable.ic_account);
+            ((TextView)findViewById(R.id.textView)).setText("");
+        }
+
+//            menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getTheme()));
         return true;
     }
 
@@ -108,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Log.d("LOG", "ssssssssssssssss");
+//                Log.d("LOG", "ssssssssssssssss");
                 Intent intent = new Intent(getApplicationContext(), Authentication.class);
 //            EditText editText = (EditText) findViewById(R.id.editText);
 //            String message = editText.getText().toString();
