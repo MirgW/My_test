@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private String UserID;
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
 
 
     @Override
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+//        int day = calendar.get(Calendar.DAY_OF_MONTH);
         if ((month < 9) & (year < 2019)) {
             setContentView(LAYOUT);
         }
@@ -75,6 +77,19 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Начать", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+
+                                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                        startActivityForResult(cameraIntent, 2);
+
+//                                        Intent intent = new Intent();
+//                                        intent.setAction(Intent.ACTION_CAMERA_BUTTON);
+//                                        intent.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_DOWN,
+//                                                KeyEvent.KEYCODE_CAMERA));
+//                                        startActivityForResult(intent,2);
+                                        //sendOrderedBroadcast(intent, null);
+
+                                       // Intent intent = new Intent(getApplicationContext(), CamActivity.class);
+                                       // startActivityForResult(intent, 3);
                                     }
                                 }
                         ).show();
@@ -112,10 +127,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.search) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.search || super.onOptionsItemSelected(item);
     }
 
     private void initToolbar() {
