@@ -17,9 +17,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-
         preferences = getSharedPreferences("TAVDA_PREFERENCES", Context.MODE_PRIVATE);
         UserID = preferences.getString("User", "");
         if (UserID.equals("")) UserID = null;
@@ -185,6 +181,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_slideshow:
                         viewPager.setCurrentItem(constants.TAB_THREE);
+                        break;
+                    case R.id.nav_nastr:
+                        Intent intent = new Intent(getBaseContext(), SettingsActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.nav_manage:
                         viewPager.setCurrentItem(constants.TAB_FOUR);

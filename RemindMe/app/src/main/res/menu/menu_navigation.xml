@@ -20,18 +20,18 @@
             android:title="Обьявления" />
     </group>
 
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@mipmap/ic_message_text_outline"
-                android:title="Поделится" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@mipmap/ic_message_text_outline"
-                android:title="О программе" />
-        </menu>
-    </item>
-
-
+    <group>
+        <item
+            android:id="@+id/nav_nastr"
+            android:icon="@mipmap/ic_message_text_outline"
+            android:title="Настройки" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@mipmap/ic_message_text_outline"
+            android:title="Поделится" />
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@mipmap/ic_message_text_outline"
+            android:title="О программе" />
+    </group>
 </menu>
