@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -47,8 +48,13 @@ public class MainActivity extends AppCompatActivity {
         if (data == null) {
             return;
         }
-        UserID = data.getStringExtra("name");
-        invalidateOptionsMenu();
+        switch (requestCode) {
+            case 1:
+                UserID = data.getStringExtra("name");
+                invalidateOptionsMenu();
+                break;
+            case 2: break;
+        }
     }
 
     @Override
@@ -88,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
 //                                        startActivityForResult(intent,2);
                                         //sendOrderedBroadcast(intent, null);
 
-                                       // Intent intent = new Intent(getApplicationContext(), CamActivity.class);
-                                       // startActivityForResult(intent, 3);
+                                        // Intent intent = new Intent(getApplicationContext(), CamActivity.class);
+                                        // startActivityForResult(intent, 3);
                                     }
                                 }
                         ).show();
@@ -106,17 +112,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+        return (super.onCreateOptionsMenu(menu));
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (UserID != null) {
             menu.findItem(R.id.search).setIcon(R.drawable.ic_account_check);
-            ((TextView)findViewById(R.id.textView)).setText(UserID);
+            ((TextView) findViewById(R.id.textView)).setText(UserID);
         } else {
             menu.findItem(R.id.search).setIcon(R.drawable.ic_account);
-            ((TextView)findViewById(R.id.textView)).setText("");
+            ((TextView) findViewById(R.id.textView)).setText("");
         }
 
 //            menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getTheme()));
