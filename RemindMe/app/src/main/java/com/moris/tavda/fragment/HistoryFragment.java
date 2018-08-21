@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.moris.tavda.ActivityWebview;
-import com.moris.tavda.BuildConfig;
 import com.moris.tavda.R;
 import com.moris.tavda.adapter.ClickRecyclerAdapter;
 import com.moris.tavda.adapter.RemindListAdapter;
