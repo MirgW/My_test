@@ -188,6 +188,21 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_manage:
                         viewPager.setCurrentItem(constants.TAB_FOUR);
+                        break;
+                    case R.id.nav_exit:
+                        finish();
+                        break;
+                    case R.id.nav_share:
+    Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Отправлено из мобильного приложения Живая Тавда: " + "Установи приложение ...");
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Отправлено из мобильного приложения Живая Тавда");
+//                    sendIntent.putExtra(Intent.EXTRA_EMAIL  , new String[] { "ssss@where.com" });
+//                    sendIntent.putExtra(Intent.EXTRA_CONTENT_ANNOTATIONS, "EXTRA_CONTENT_ANNOTATIONS");
+//                    sendIntent.putExtra(Intent.EXTRA_SPLIT_NAME,"dddddd");
+                        sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Живая Тавда.</h1></html></body>");
+                        sendIntent.setType("text/plan");
+                        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
                 }
                 return false;
             }

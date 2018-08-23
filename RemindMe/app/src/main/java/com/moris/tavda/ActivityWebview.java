@@ -90,7 +90,12 @@ public class ActivityWebview extends AppCompatActivity {
                         "    max-width: 100%;\n" +
                         "    width:auto;\n" +
                         "    height: auto;\n" +
-                        "}\n" +
+                        "}\n" +" iframe {\n" +
+                        "    position: absolute;\n" +
+                        "    top: 0;\n" +
+                        "    left: 0;\n" +
+                        "    width: 100%;\n" +
+                        "}"+
                         "</style>\n<div>"+elements.toString()+"</div>" + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table></body><html>";
 //            String encodedHtml = Base64.encodeToString(unencodedHtml.getBytes(),
 //                    Base64.NO_PADDING);
