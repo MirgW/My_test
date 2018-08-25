@@ -1,5 +1,6 @@
 package com.moris.tavda;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -101,6 +104,17 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
         initTabs();
 
+        if (BuildConfig.DEBUG) {
+            ActivityManager am = (ActivityManager) this
+                    .getSystemService(ACTIVITY_SERVICE);
+            List<ActivityManager.RunningServiceInfo> rs = am.getRunningServices(50);
+
+            for (int i = 0; i < rs.size(); i++) {
+                ActivityManager.RunningServiceInfo rsi = rs.get(i);
+                Log.i("MYService", "Process " + rsi.process + " with component "
+                        + rsi.service.getClassName());
+            }
+        }
 
     }
 

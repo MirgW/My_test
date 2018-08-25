@@ -15,6 +15,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -252,6 +254,26 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_notification);
             setHasOptionsMenu(true);
+
+            final SwitchPreference onOffNot;
+            onOffNot = (SwitchPreference) findPreference(this.getResources().getString(R.string.notifications_new_message));
+            onOffNot.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
+                    if (onOffNot.isChecked()) {
+                        Toast.makeText(getActivity(), "Unchecked", Toast.LENGTH_SHORT).show();
+
+                        // Checked the switch programmatically
+                        onOffNot.setChecked(false);
+                    } else {
+                        Toast.makeText(getActivity(), "Checked", Toast.LENGTH_SHORT).show();
+
+                        // Unchecked the switch programmatically
+                        onOffNot.setChecked(true);
+                    }
+                    return false;
+                }
+            });
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
