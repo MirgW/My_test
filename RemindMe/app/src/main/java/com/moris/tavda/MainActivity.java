@@ -1,11 +1,14 @@
 package com.moris.tavda;
 
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +28,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
+import com.moris.tavda.servic.TavdaService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private String UserID;
     private SharedPreferences preferences;
 
+    final String LOG_TAG = "myLog";
+
+    boolean bound = false;
+    ServiceConnection sConn;
+    Intent intent;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -103,21 +112,47 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigationView();
         initTabs();
+        intent = new Intent(this, TavdaService.class);
+        sConn = new ServiceConnection() {
+            public void onServiceConnected(ComponentName name, IBinder binder) {
+                Log.d(LOG_TAG, "MainActivity onServiceConnected");
+                bound = true;
+            }
 
+            public void onServiceDisconnected(ComponentName name) {
+                Log.d(LOG_TAG, "MainActivity onServiceDisconnected");
+                bound = false;
+            }
+        };
+//        startService(new Intent(this, TavdaService.class));
+        bindService(intent, sConn, Context.BIND_AUTO_CREATE);
         if (BuildConfig.DEBUG) {
             ActivityManager am = (ActivityManager) this
                     .getSystemService(ACTIVITY_SERVICE);
-            List<ActivityManager.RunningServiceInfo> rs = am.getRunningServices(50);
+            List<ActivityManager.RunningServiceInfo> rs = am.getRunningServices(3);
 
             for (int i = 0; i < rs.size(); i++) {
                 ActivityManager.RunningServiceInfo rsi = rs.get(i);
-                Log.i("MYService", "Process " + rsi.process + " with component "
+                Log.d(LOG_TAG, "Process " + rsi.process + " with component "
                         + rsi.service.getClassName());
             }
         }
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bound) {
+            unbindService(sConn);
+        }
+        bound = false;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
@@ -207,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                         break;
                     case R.id.nav_share:
-    Intent sendIntent = new Intent();
+                        Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_TEXT, "Отправлено из мобильного приложения Живая Тавда: " + "Установи приложение ...");
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Отправлено из мобильного приложения Живая Тавда");
