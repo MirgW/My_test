@@ -1,6 +1,7 @@
 package com.moris.tavda.servic;
 
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -17,7 +18,8 @@ public class TavdaService extends Service {
     final String LOG_TAG = "myLog";
     Timer timer;
     TimerTask tTask;
-    long interval = 1000*60 ;
+    long interval = 1000 * 60;
+    NotificationUtils notificationUtils;
 
     @Override
     public void onDestroy() {
@@ -72,6 +74,7 @@ public class TavdaService extends Service {
         super.onCreate();
         Log.d(LOG_TAG, "onCreate: ");
         timer = new Timer();
+        notificationUtils = NotificationUtils.getInstance(getApplication());
         schedule();
     }
 
@@ -81,7 +84,7 @@ public class TavdaService extends Service {
             tTask = new TimerTask() {
                 public void run() {
                     Log.d(LOG_TAG, "run");
-
+                    notificationUtils.createInfoNotification("ssssssssss");
 
                 }
             };
