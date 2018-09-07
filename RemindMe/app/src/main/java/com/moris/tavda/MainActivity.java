@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 UserID = data.getStringExtra("name");
                 invalidateOptionsMenu();
                 break;
-            case 2: break;
+            case 2:
+                break;
         }
     }
 
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        preferences = getSharedPreferences("TAVDA_PREFERENCES", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         UserID = preferences.getString("User", "");
         if (UserID.equals("")) UserID = null;
         Date date = new Date();
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
 //        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if ((month < 9) & (year < 2019)) {
+        if ((month < 11) & (year < 2019)) {
             setContentView(LAYOUT);
         }
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -124,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 bound = false;
             }
         };
-//        startService(new Intent(this, TavdaService.class));
-        bindService(intent, sConn, Context.BIND_AUTO_CREATE);
+        if (preferences.getBoolean("notifications_new_message", true))
+            startService(new Intent(this, TavdaService.class));
         if (BuildConfig.DEBUG) {
             ActivityManager am = (ActivityManager) this
                     .getSystemService(ACTIVITY_SERVICE);
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         }
         bound = false;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
@@ -207,6 +209,13 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (preferences.getBoolean("notifications_new_message", true))
+            bindService(intent, sConn, Context.BIND_AUTO_CREATE);
     }
 
     private void initNavigationView() {

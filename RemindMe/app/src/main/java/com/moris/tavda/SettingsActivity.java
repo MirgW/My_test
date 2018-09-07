@@ -226,6 +226,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));
         }
+
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             int horizontalMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
@@ -238,6 +239,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             return v;
         }
+
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
@@ -267,7 +269,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_notification);
             setHasOptionsMenu(true);
 
-            intent = new Intent(getActivity(),TavdaService.class);
+            intent = new Intent(getActivity(), TavdaService.class);
             sConn = new ServiceConnection() {
                 public void onServiceConnected(ComponentName name, IBinder binder) {
                     Log.d(LOG_TAG, "MainActivity onServiceConnected");
@@ -281,21 +283,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     bound = false;
                 }
             };
-            getActivity().bindService(intent, sConn, BIND_AUTO_CREATE);
+            //getActivity().bindService(intent, sConn, BIND_AUTO_CREATE);
             onOffNot = (SwitchPreference) findPreference(this.getResources().getString(R.string.notifications_new_message));
             onOffNot.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object o) {
                     if (onOffNot.isChecked()) {
-                        Toast.makeText(getActivity(), "Unchecked", Toast.LENGTH_SHORT).show();
-//                        getActivity().stopService(new Intent(getActivity(),TavdaService.class));
+                        if (BuildConfig.DEBUG)
+                            Toast.makeText(getActivity(), "Unchecked", Toast.LENGTH_SHORT).show();
                         // Checked the switch programmatically
-                         getActivity().unbindService(sConn);
+                        if (bound) getActivity().unbindService(sConn);
+                        getActivity().stopService(new Intent(getActivity(),TavdaService.class));
                         onOffNot.setChecked(false);
                     } else {
-                        Toast.makeText(getActivity(), "Checked", Toast.LENGTH_SHORT).show();
-//                        getActivity().startService(new Intent(getActivity(), TavdaService.class));
-                         getActivity().bindService(intent, sConn, getActivity().getBaseContext().BIND_AUTO_CREATE);
+                        if (BuildConfig.DEBUG)
+                            Toast.makeText(getActivity(), "Checked", Toast.LENGTH_SHORT).show();
+                        getActivity().startService(new Intent(getActivity().getBaseContext(), TavdaService.class));
+                        getActivity().bindService(intent, sConn, getActivity().getBaseContext().BIND_AUTO_CREATE);
                         // Unchecked the switch programmatically
                         onOffNot.setChecked(true);
                     }
@@ -352,6 +356,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("sync_frequency"));
         }
+
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             int horizontalMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
@@ -364,6 +369,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             return v;
         }
+
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();

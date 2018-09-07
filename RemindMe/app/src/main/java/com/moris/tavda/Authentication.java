@@ -61,7 +61,7 @@ public class Authentication extends AppCompatActivity implements
         mDetailTextView = findViewById(R.id.detail);
         mEmailField = findViewById(R.id.field_email);
         mPasswordField = findViewById(R.id.field_password);
-        preferences = getSharedPreferences("TAVDA_PREFERENCES", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 //        invalidateOptionsMenu();
 //        Toolbar toolbar = (Toolbar)( .getSupportActionBar().;
 //        toolbar.setOverflowIcon(R.drawable.ic_account_check);
