@@ -200,7 +200,7 @@ public class TavdaService extends Service {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        notificationUtils.createInfoNotification(remindDTO.getTitle(), remindDTO.getTitle(), remindDTO.getDoc_DTO(), remindDTO.getImg_DTO());
+                        notificationUtils.createInfoNotification(remindDTO.getTitle(), remindDTO.getTitle(), remindDTO.getDoc_DTO(), remindDTO.getImg_DTO(),remindDTO.getUrl_DTO());
                     }
                 }).start();
             }

@@ -10,17 +10,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import androidx.viewpager.widget.ViewPager;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
+        Intent intentWeb = getIntent();
+        String fileName = intentWeb.getStringExtra("url_DTO");
+        if (!TextUtils.isEmpty(fileName)) {
+            String str;
+            str = "http://www.adm-tavda.ru" + fileName;
+            Intent startIntent = new Intent(this, ActivityWebview.class);
+            startIntent.putExtra("INTENT_EXTRA_URL", str);
+            startActivity(startIntent);
+        }
         preferences = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         UserID = preferences.getString("User", "");
         if (UserID.equals("")) UserID = null;
@@ -80,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
 //        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if ((month < 11) & (year < 2019)) {
+        if (year < 2020) {
             setContentView(LAYOUT);
         }
         FloatingActionButton fab = findViewById(R.id.fab);

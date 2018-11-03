@@ -1,14 +1,13 @@
 package com.moris.tavda.servic;
 
 
-
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.moris.tavda.MainActivity;
 import com.moris.tavda.R;
@@ -16,21 +15,20 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class NotificationUtils {
     public static final String LOG_TAG = NotificationUtils.class.getName();
     public static NotificationUtils instance;
-    private static Context context;
+    private Context context;
     private NotificationManagerCompat manager;
     private int lastId = 0;
-    private HashMap<Integer, Notification> notifications;
+//    private HashMap<Integer, Notification> notifications;
 
     private NotificationUtils(Context context) {
         this.context = context;
 //        manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         manager = NotificationManagerCompat.from(context);
-        notifications = new HashMap<Integer, Notification>();
+//        notifications = new HashMap<Integer, Notification>();
     }
 
     public static NotificationUtils getInstance(Context context) {
@@ -65,8 +63,11 @@ public class NotificationUtils {
 
     };
 
-    public int createInfoNotification(String title, String statbar, String message, String url_not) {
-        Intent notificationIntent = new Intent(context, MainActivity.class); // по клику на уведомлении откроется ...
+    public int createInfoNotification(String title, String statbar, String message, String url_not, String url_DTO) {
+        //Intent notificationIntent = new Intent(context, MainActivity.class); // по клику на уведомлении откроется ...
+        Intent intent = new Intent(this.context, MainActivity.class);
+        intent.putExtra("url_DTO", url_DTO);
+        PendingIntent notificationIntent = PendingIntent.getActivity(context, lastId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 //        NotificationCompat.Builder nb = new NotificationCompat.Builder(context)
         String imageUri = "http://www.adm-tavda.ru/" + url_not.replaceAll("http://www.adm-tavda.ru/", "").replaceAll("http://adm-tavda.ru/", "");
 
@@ -75,7 +76,7 @@ public class NotificationUtils {
                 .setAutoCancel(true) //уведомление закроется по клику на него
                 //.setTicker(statbar) //текст, который отобразится вверху статус-бара при создании уведомления
                 .setContentText(message) // Основной текст уведомления
-                .setContentIntent(PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT))
+                .setContentIntent(notificationIntent)
                 .setWhen(System.currentTimeMillis()) //отображаемое время уведомления
                 .setContentTitle(title) //заголовок уведомления
                // .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
@@ -100,7 +101,7 @@ public class NotificationUtils {
 //             nb.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
              Notification notification = nb.build(); //генерируем уведомление
             manager.notify(lastId, notification); // отображаем его пользователю.
-            notifications.put(lastId, notification); //теперь мы можем обращаться к нему по id
+//            notifications.put(lastId, notification); //теперь мы можем обращаться к нему по id
         } catch (IOException e) {
             e.printStackTrace();
         }
