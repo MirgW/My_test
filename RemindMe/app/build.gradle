@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat
 apply plugin: 'com.android.application'
 //apply plugin: 'io.fabric'
 
-def buildTime() {
+def static buildTime() {
     def df = new SimpleDateFormat("yyyyMMddHHmm") // you can change it
     df.setTimeZone(TimeZone.getTimeZone("UTC"))
     return df.format(new Date())
@@ -19,11 +19,10 @@ android {
         }
     }
     compileSdkVersion 28
-    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId 'com.moris.tavda'
-        minSdkVersion 16
-        targetSdkVersion 27
+        minSdkVersion 19
+        targetSdkVersion 28
         versionCode 1
 //        versionName "2.0"
 
@@ -63,7 +62,7 @@ android {
             def SEP = "_"
             def flavor = variant.variantData.variantConfiguration.flavorName
             def buildType = variant.variantData.variantConfiguration.buildType.name
-            def version = variant.versionName
+//            def version = variant.versionName
             def date = new Date()
             def formattedDate = date.format('ddMMyyyyHHmm')
 
@@ -82,15 +81,17 @@ android {
 }
 
 dependencies {
+    def work_version = "1.0.0"
+    implementation "android.arch.work:work-runtime:$work_version"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.vectordrawable:vectordrawable:1.0.0'
+    implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
     // Optional, if you use support library fragments:
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
@@ -99,10 +100,10 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.11.3'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
     //    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
 //    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
 }
 

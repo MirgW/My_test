@@ -1,10 +1,10 @@
 package com.moris.tavda;
 
-public class constants {
-    public static final int TAB_ONE = 0;
-    public static final int TAB_TWO = 1;
-    public static final int TAB_THREE = 2;
-    public static final int TAB_FOUR = 3;
+class constants {
+    static final int TAB_ONE = 0;
+    static final int TAB_TWO = 1;
+    static final int TAB_THREE = 2;
+    static final int TAB_FOUR = 3;
 }
 
 // TODO "реакция на нажатия списка https://www.youtube.com/watch?v=x-TQ8Zcup4U"
@@ -17,3 +17,5 @@ public class constants {
 // TODO: 8/12/2018 кеширование
 // TODO: 8/26/2018 звук, картинка, вибро уведомления, МИГАНИЯ
 // TODO: 8/31/2018 поворот видео сначала идет.
+// TODO: 03/02/2019 адресс приложения в поделится.
+// TODO: 03/02/2019 поделится ватсап.
