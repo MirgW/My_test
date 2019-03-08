@@ -43,19 +43,19 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
 
-        <receiver android:name=".servic.TavdaBroadReceiv">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name=".servic.TavdaBroadReceiv">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+                <!--<action android:name="android.intent.action.QUICKBOOT_POWERON" />-->
+                <!--<action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
 
-        <service
-            android:name=".servic.TavdaService"
-            android:enabled="true"
-            android:exported="true" />
+        <!--<service-->
+            <!--android:name=".servic.TavdaService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true" />-->
     </application>
 
 </manifest>

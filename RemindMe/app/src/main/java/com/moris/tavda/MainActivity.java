@@ -1,40 +1,34 @@
 package com.moris.tavda;
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.provider.MediaStore;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
-import com.moris.tavda.servic.TavdaService;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -49,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     final String LOG_TAG = "myLog";
 
     boolean bound = false;
-    ServiceConnection sConn;
+//    ServiceConnection sConn;
     Intent intent;
 
     @Override
@@ -123,31 +117,31 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigationView();
         initTabs();
-        intent = new Intent(this, TavdaService.class);
-        sConn = new ServiceConnection() {
-            public void onServiceConnected(ComponentName name, IBinder binder) {
-                Log.d(LOG_TAG, "MainActivity onServiceConnected");
-                bound = true;
-            }
-
-            public void onServiceDisconnected(ComponentName name) {
-                Log.d(LOG_TAG, "MainActivity onServiceDisconnected");
-                bound = false;
-            }
-        };
-        if (preferences.getBoolean("notifications_new_message", true))
-            startService(new Intent(this, TavdaService.class));
-        if (BuildConfig.DEBUG) {
-            ActivityManager am = (ActivityManager) this
-                    .getSystemService(ACTIVITY_SERVICE);
-            List<ActivityManager.RunningServiceInfo> rs = am.getRunningServices(3);
-
-            for (int i = 0; i < rs.size(); i++) {
-                ActivityManager.RunningServiceInfo rsi = rs.get(i);
-                Log.d(LOG_TAG, "Process " + rsi.process + " with component "
-                        + rsi.service.getClassName());
-            }
-        }
+//        intent = new Intent(this, TavdaService.class);
+//        sConn = new ServiceConnection() {
+//            public void onServiceConnected(ComponentName name, IBinder binder) {
+//                Log.d(LOG_TAG, "MainActivity onServiceConnected");
+//                bound = true;
+//            }
+//
+//            public void onServiceDisconnected(ComponentName name) {
+//                Log.d(LOG_TAG, "MainActivity onServiceDisconnected");
+//                bound = false;
+//            }
+//        };
+//        if (preferences.getBoolean("notifications_new_message", true))
+//            startService(new Intent(this, TavdaService.class));
+//        if (BuildConfig.DEBUG) {
+//            ActivityManager am = (ActivityManager) this
+//                    .getSystemService(ACTIVITY_SERVICE);
+//            List<ActivityManager.RunningServiceInfo> rs = am.getRunningServices(3);
+//
+//            for (int i = 0; i < rs.size(); i++) {
+//                ActivityManager.RunningServiceInfo rsi = rs.get(i);
+//                Log.d(LOG_TAG, "Process " + rsi.process + " with component "
+//                        + rsi.service.getClassName());
+//            }
+//        }
 
     }
 
@@ -159,9 +153,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (bound) {
-            unbindService(sConn);
-        }
+//        if (bound) {
+//            unbindService(sConn);
+//        }
         bound = false;
     }
 
@@ -224,8 +218,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (preferences.getBoolean("notifications_new_message", true))
+/*        if (preferences.getBoolean("notifications_new_message", true))
             bindService(intent, sConn, Context.BIND_AUTO_CREATE);
+*/
     }
 
     private void initNavigationView() {

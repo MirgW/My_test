@@ -1,17 +1,14 @@
 package com.moris.tavda;
 
 import android.annotation.TargetApi;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -19,11 +16,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,9 +25,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.moris.tavda.servic.TavdaService;
-
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -258,7 +253,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class NotificationPreferenceFragment extends PreferenceFragment {
         boolean bound = false;
-        ServiceConnection sConn;
+//        ServiceConnection sConn;
         Intent intent;
         SwitchPreference onOffNot;
         final String LOG_TAG = "myLog";
@@ -269,20 +264,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_notification);
             setHasOptionsMenu(true);
 
-            intent = new Intent(getActivity(), TavdaService.class);
-            sConn = new ServiceConnection() {
-                public void onServiceConnected(ComponentName name, IBinder binder) {
-                    Log.d(LOG_TAG, "MainActivity onServiceConnected");
-                    Toast.makeText(getActivity(), "onServiceConnected", Toast.LENGTH_SHORT).show();
-                    bound = true;
-                }
-
-                public void onServiceDisconnected(ComponentName name) {
-                    Log.d(LOG_TAG, "MainActivity onServiceDisconnected");
-                    Toast.makeText(getActivity(), "onServiceDisconnected", Toast.LENGTH_SHORT).show();
-                    bound = false;
-                }
-            };
+//            intent = new Intent(getActivity(), TavdaService.class);
+//            sConn = new ServiceConnection() {
+//                public void onServiceConnected(ComponentName name, IBinder binder) {
+//                    Log.d(LOG_TAG, "MainActivity onServiceConnected");
+//                    Toast.makeText(getActivity(), "onServiceConnected", Toast.LENGTH_SHORT).show();
+//                    bound = true;
+//                }
+//
+//                public void onServiceDisconnected(ComponentName name) {
+//                    Log.d(LOG_TAG, "MainActivity onServiceDisconnected");
+//                    Toast.makeText(getActivity(), "onServiceDisconnected", Toast.LENGTH_SHORT).show();
+//                    bound = false;
+//                }
+//            };
             //getActivity().bindService(intent, sConn, BIND_AUTO_CREATE);
             onOffNot = (SwitchPreference) findPreference(this.getResources().getString(R.string.notifications_new_message));
             onOffNot.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -292,16 +287,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         if (BuildConfig.DEBUG)
                             Toast.makeText(getActivity(), "Unchecked", Toast.LENGTH_SHORT).show();
                         // Checked the switch programmatically
-                        if (bound) getActivity().unbindService(sConn);
+/*                        if (bound) getActivity().unbindService(sConn);
                         getActivity().stopService(new Intent(getActivity(),TavdaService.class));
-                        onOffNot.setChecked(false);
+*/                        onOffNot.setChecked(false);
                     } else {
                         if (BuildConfig.DEBUG)
                             Toast.makeText(getActivity(), "Checked", Toast.LENGTH_SHORT).show();
-                        getActivity().startService(new Intent(getActivity().getBaseContext(), TavdaService.class));
+/*                        getActivity().startService(new Intent(getActivity().getBaseContext(), TavdaService.class));
                         getActivity().bindService(intent, sConn, getActivity().getBaseContext().BIND_AUTO_CREATE);
                         // Unchecked the switch programmatically
-                        onOffNot.setChecked(true);
+*/                        onOffNot.setChecked(true);
                     }
                     return false;
                 }
