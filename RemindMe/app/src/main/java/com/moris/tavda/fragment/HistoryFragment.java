@@ -5,18 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.moris.tavda.ActivityWebview;
 import com.moris.tavda.R;
 import com.moris.tavda.adapter.ClickRecyclerAdapter;
@@ -50,13 +51,13 @@ public class HistoryFragment extends AbstractTabFragment implements
     private ProgressDialog mProgressDialog;
 
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.setMessage("Loading...");
-        }
-
-        mProgressDialog.show();
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(getActivity());
+//            mProgressDialog.setCancelable(false);
+//            mProgressDialog.setMessage("Loading...");
+//        }
+//
+//        mProgressDialog.show();
     }
 
     public void hideProgressDialog() {
