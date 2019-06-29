@@ -51,13 +51,13 @@ public class HistoryFragment extends AbstractTabFragment implements
     private ProgressDialog mProgressDialog;
 
     public void showProgressDialog() {
-//        if (mProgressDialog == null) {
-//            mProgressDialog = new ProgressDialog(getActivity());
-//            mProgressDialog.setCancelable(false);
-//            mProgressDialog.setMessage("Loading...");
-//        }
-//
-//        mProgressDialog.show();
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setMessage("Loading...");
+        }
+
+        mProgressDialog.show();
     }
 
     public void hideProgressDialog() {
