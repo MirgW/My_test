@@ -12,15 +12,18 @@
         <item
             android:id="@+id/nav_gallery"
             android:enabled="false"
-            android:title="Справочник" />
+            android:title="Справочник"
+            android:visible="false" />
         <item
             android:id="@+id/nav_slideshow"
             android:enabled="false"
-            android:title="Афиша" />
+            android:title="Афиша"
+            android:visible="false" />
         <item
             android:id="@+id/nav_manage"
             android:enabled="false"
-            android:title="Обьявления" />
+            android:title="Обьявления"
+            android:visible="false" />
     </group>
 
     <group
@@ -28,8 +31,10 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_nastr"
+            android:enabled="false"
             android:icon="@drawable/ic_perm_data_setting_blue_grey_900_24dp"
-            android:title="Настройки" />
+            android:title="Настройки"
+            android:visible="false" />
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_share_blue_grey_900_24dp"
@@ -37,7 +42,8 @@
         <item
             android:id="@+id/nav_send"
             android:enabled="false"
-            android:title="О программе" />
+            android:title="О программе"
+            android:visible="false" />
     </group>
 
     <group

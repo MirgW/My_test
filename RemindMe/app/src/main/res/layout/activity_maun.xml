@@ -22,8 +22,9 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="0dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:tabContentStart="52dp"
                 app:tabIndicatorColor="@android:color/white"
                 app:tabIndicatorHeight="2dp"
@@ -31,8 +32,7 @@
                 app:tabMinWidth="90dp"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@android:color/white"
-                app:tabTextColor="@android:color/white"
-                app:layout_scrollFlags="scroll|enterAlways"/>
+                app:tabTextColor="@android:color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
