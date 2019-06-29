@@ -18,9 +18,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LifecycleRegistry;
 import androidx.viewpager.widget.ViewPager;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     private ViewPager viewPager;
     private String UserID;
     private SharedPreferences preferences;
-    private LifecycleRegistry lifecycleRegistry;
+//    private LifecycleRegistry lifecycleRegistry;
 
     final String LOG_TAG = "myLog";
 
@@ -75,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        lifecycleRegistry = new LifecycleRegistry(this);
-        lifecycleRegistry.markState(Lifecycle.State.CREATED);
+//        lifecycleRegistry = new LifecycleRegistry(this);
+//        lifecycleRegistry.markState(Lifecycle.State.CREATED);
 
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
@@ -279,17 +277,17 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     @Override
     protected void onStart() {
         super.onStart();
-        lifecycleRegistry.markState(Lifecycle.State.STARTED);
+//        lifecycleRegistry.markState(Lifecycle.State.STARTED);
 /*        if (preferences.getBoolean("notifications_new_message", true))
             bindService(intent, sConn, Context.BIND_AUTO_CREATE);
 */
     }
 
-    @NonNull
-    @Override
-    public Lifecycle getLifecycle() {
-        return lifecycleRegistry;
-    }
+//    @NonNull
+//    @Override
+//    public Lifecycle getLifecycle() {
+//        return lifecycleRegistry;
+//    }
 
     private void initNavigationView() {
         drawerLayout = findViewById(R.id.drawerdayout);
