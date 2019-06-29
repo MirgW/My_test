@@ -12,6 +12,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleRegistry;
+import androidx.viewpager.widget.ViewPager;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -21,17 +37,10 @@ import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.viewpager.widget.ViewPager;
+import java.util.concurrent.TimeUnit;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     private static final int LAYOUT = R.layout.activity_maun;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -39,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private String UserID;
     private SharedPreferences preferences;
+    private LifecycleRegistry lifecycleRegistry;
 
     final String LOG_TAG = "myLog";
 
@@ -64,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        lifecycleRegistry = new LifecycleRegistry(this);
+        lifecycleRegistry.markState(Lifecycle.State.CREATED);
+
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         Intent intentWeb = getIntent();
@@ -84,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
 //        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (year < 2020) {
+        if (year < 2021) {
             setContentView(LAYOUT);
         }
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -117,6 +131,52 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigationView();
         initTabs();
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+//        OneTimeWorkRequest myWorkRequest = new OneTimeWorkRequest.Builder(MyWorker.class)
+//                .setConstraints(constraints)
+//                .addTag("TavadSet")
+//                .build();
+//        WorkManager.getInstance().enqueueUniqueWork("TavadSet", ExistingWorkPolicy.REPLACE,   myWorkRequest);
+
+        if (BuildConfig.DEBUG) {
+            PeriodicWorkRequest myWorkRequest = new PeriodicWorkRequest
+                    .Builder(MyWorker.class, 1, TimeUnit.MINUTES)
+                    .setConstraints(constraints)
+                    .addTag("TavadSet")
+                    .build();
+            WorkManager.getInstance().enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
+                    myWorkRequest);
+        } else
+            {
+                PeriodicWorkRequest myWorkRequest = new PeriodicWorkRequest
+                        .Builder(MyWorker.class, 2, TimeUnit.HOURS)
+                        .setConstraints(constraints)
+                        .addTag("TavadSet")
+                        .build();
+                WorkManager.getInstance().enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
+                        myWorkRequest);
+        }
+
+
+//        WorkManager.getInstance().getWorkInfoByIdLiveData(myWorkRequest.getId())
+//                .observe(this, info -> {
+//                    if (info != null && info.getState().isFinished()) {
+//                        Log.d("myLog", "doWork: OK!");
+//                    }
+//                });
+
+//        WorkManager.getInstance().getWorkInfoByIdLiveData(myWorkRequest.getId())
+//                .observe( this, new Observer<WorkInfo>() {
+//                    @Override
+//                    public void onChanged(@Nullable WorkInfo workStatus) {
+//                        Log.d(LOG_TAG, "onChanged: " + workStatus.getState()+" - "+workStatus.getTags().toString());
+//                        Log.d(LOG_TAG, "onChanged: " + workStatus.getOutputData().getString("keyA"));
+//                        Log.d(LOG_TAG, "onChanged: " + workStatus.getOutputData().getKeyValueMap());
+//                    }
+//        });
+////////////////////////////////////////////////////////////////////////////////////////
 //        intent = new Intent(this, TavdaService.class);
 //        sConn = new ServiceConnection() {
 //            public void onServiceConnected(ComponentName name, IBinder binder) {
@@ -142,12 +202,13 @@ public class MainActivity extends AppCompatActivity {
 //                        + rsi.service.getClassName());
 //            }
 //        }
-
+/////////////////////////////////////////////////////////////////////////////////
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+ //       WorkManager.getInstance().cancelAllWorkByTag("TavadSet");
     }
 
     @Override
@@ -218,9 +279,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        lifecycleRegistry.markState(Lifecycle.State.STARTED);
 /*        if (preferences.getBoolean("notifications_new_message", true))
             bindService(intent, sConn, Context.BIND_AUTO_CREATE);
 */
+    }
+
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        return lifecycleRegistry;
     }
 
     private void initNavigationView() {

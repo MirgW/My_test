@@ -21,7 +21,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId 'com.moris.tavda'
-        minSdkVersion 19
+        minSdkVersion 25
         targetSdkVersion 28
         versionCode 1
 //        versionName "2.0"
@@ -48,11 +48,13 @@ android {
             applicationIdSuffix ".free"
             versionName "1.0-free-build-${buildTime()}"
             dimension "tier"
+            signingConfig signingConfigs.config
         }
         pro {
             applicationIdSuffix ".pro"
             versionName "1.0-pro-build-${buildTime()}"
             dimension "tier"
+            signingConfig signingConfigs.config
         }
     }
 
@@ -78,11 +80,17 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    buildToolsVersion = '28.0.3'
 }
 
 dependencies {
-    def work_version = "1.0.0"
-    implementation "android.arch.work:work-runtime:$work_version"
+    def work_version = "2.1.0-rc01"
+    // (Java only)
+    implementation "androidx.work:work-runtime:$work_version"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
@@ -100,10 +108,10 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.11.3'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.firebase:firebase-core:16.0.7'
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:18.0.0'
     //    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
 //    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
 }
 

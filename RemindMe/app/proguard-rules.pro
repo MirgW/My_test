@@ -58,7 +58,9 @@
 -keep public class android.support.constraint.R$* { *; }
 
 -keep public class com.moris.tavda.MainActivity
-
+-keepclassmembers class * extends androidx.work.Worker {
+    public <init>(android.content.Context,androidx.work.WorkerParameters);
+}
 -keepclassmembers class ** {
    public static *** pure(...);
 }
