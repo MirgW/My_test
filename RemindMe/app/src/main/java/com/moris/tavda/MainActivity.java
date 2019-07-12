@@ -3,7 +3,9 @@ package com.moris.tavda;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -129,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         initToolbar();
         initNavigationView();
         initTabs();
+   //     ((TextView) findViewById(R.id.textView)).setText("sssss");
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
@@ -144,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                     .setConstraints(constraints)
                     .addTag("TavadSet")
                     .build();
+            // TODO: 7/3/2019  getInstance(this) getInstance() - проверить уведомления
             WorkManager.getInstance().enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
                     myWorkRequest);
         } else
@@ -232,7 +236,18 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             ((TextView) findViewById(R.id.textView)).setText(UserID);
         } else {
             menu.findItem(R.id.search).setIcon(R.drawable.ic_account);
-            ((TextView) findViewById(R.id.textView)).setText("");
+            Context context = getApplicationContext(); // or activity.getApplicationContext()
+            PackageManager packageManager = context.getPackageManager();
+            String packageName = context.getPackageName();
+
+            String myVersionName = "not available"; // initialize String
+
+            try {
+                myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
+                ((TextView) findViewById(R.id.textView)).setText(myVersionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
 //            menu.findItem(R.id.search).setIcon(getResources().getDrawable(R.drawable.ic_account_check, getTheme()));
@@ -272,6 +287,33 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         viewPager.setAdapter(adapter);
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_list_bulleted_black_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_stars_black_24dp);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_notifications_black_24dp);
+        tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500,null), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60,null), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.grey_60,null), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(3).getIcon().setColorFilter(getResources().getColor(R.color.grey_60,null), PorterDuff.Mode.SRC_IN);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tab.getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500,null), PorterDuff.Mode.SRC_IN);
+//                ViewAnimation.fadeOutIn(nested_scroll_view);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.getIcon().setColorFilter(getResources().getColor(R.color.grey_60,null), PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override

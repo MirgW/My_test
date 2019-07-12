@@ -1,8 +1,9 @@
 package com.moris.tavda.fragment;
 
 import android.content.Context;
-import androidx.fragment.app.Fragment;
 import android.view.View;
+
+import androidx.fragment.app.Fragment;
 
 public class AbstractTabFragment extends Fragment {
     private String title;
@@ -10,7 +11,7 @@ public class AbstractTabFragment extends Fragment {
     protected View view;
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = ""; // без надписей
     }
 
     public String getTitle() {

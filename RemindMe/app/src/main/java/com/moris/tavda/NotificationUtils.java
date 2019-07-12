@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -18,9 +19,9 @@ import java.io.IOException;
 public class NotificationUtils {
     public static final String LOG_TAG = NotificationUtils.class.getName();
     public static NotificationUtils instance;
-    private Context context;
-    private NotificationManagerCompat manager;
-    private int lastId = 0;
+    private static Context context;
+    private static NotificationManagerCompat manager;
+    private static int lastId = 0;
 //    private HashMap<Integer, Notification> notifications;
 
     private NotificationUtils(Context context) {
@@ -32,9 +33,15 @@ public class NotificationUtils {
 
     public static NotificationUtils getInstance(Context context) {
         if (instance == null) {
+            Log.d("myLog", "doWork: N-1");
             instance = new NotificationUtils(context);
+            Log.d("myLog", "doWork: N-1.1");
+            // TODO: 7/4/2019   падение при зппушеном приложении, при приходе уведомления.
+            //instance.context = context;
         } else {
-            instance.context = context;
+            //instance.context = context;
+            Log.d("myLog", "doWork: N-2");
+            instance = new NotificationUtils(context);
         }
         return instance;
     }
