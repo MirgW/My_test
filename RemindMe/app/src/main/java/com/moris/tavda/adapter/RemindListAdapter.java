@@ -1,45 +1,58 @@
 package com.moris.tavda.adapter;
 
 import android.graphics.Bitmap;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.AsyncDifferConfig;
+import androidx.recyclerview.widget.DiffUtil;
 
 import com.moris.tavda.BuildConfig;
 import com.moris.tavda.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import dto.RemindDTO;
 
-public class RemindListAdapter extends RecyclerView.Adapter<RemindViewHolder> {
+public class RemindListAdapter extends PagedListAdapter<RemindDTO, RemindViewHolder> {
     private List<RemindDTO> data;
 
+    public RemindListAdapter(DiffUtil.ItemCallback<RemindDTO> diffUtilCallback) {
+        super(diffUtilCallback);
+    }
+
+
+    private RemindListAdapter(@NonNull AsyncDifferConfig<RemindDTO> config) {
+        super(config);
+    }
+
     public RemindDTO getItemData(int position) {
-        return data.get(position);
+//        return data.get(position);
+        return getItem(position);    /*после paging a*/
     }
 //    public RemindListAdapter(List<RemindDTO> data) {
 //        this.data = data;
 //    }
 
-    private final WeakReference<LayoutInflater> mInflater;
-
-    public RemindListAdapter(LayoutInflater inflater, List<RemindDTO> data) {
-        mInflater = new WeakReference<LayoutInflater>(inflater);
-        this.data = data;
-    }
+//    private final WeakReference<LayoutInflater> mInflater;
+//
+//    public RemindListAdapter(LayoutInflater inflater, List<RemindDTO> data) {
+//        mInflater = new WeakReference<LayoutInflater>(inflater);
+//        this.data = data;
+//    }
 
 
     @NonNull
     @Override
     public RemindViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.remaind_item, parent, false);
+
         return new RemindViewHolder(view);
     }
 
@@ -68,7 +81,11 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RemindViewHolder holder, int position) {
-        RemindDTO item = data.get(position);
+//        RemindDTO item = data.get(position);
+        RemindDTO item = getItem(position); /*после paging a*/
+        if (item == null) {
+            return;
+        }
         holder.title.setText(item.getTitle());
         holder.doc.setText(item.getDoc_DTO());
         holder.day.setText(item.getData_DTO());
@@ -88,7 +105,8 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindViewHolder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+//        return data.size();
+        return super.getItemCount(); /*после paging a*/
     }
 
 }

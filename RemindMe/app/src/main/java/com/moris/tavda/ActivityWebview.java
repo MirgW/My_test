@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,7 +31,8 @@ public class ActivityWebview extends AppCompatActivity {
     private FloatingActionButton floatingActionButton_share;
     private FloatingActionButton floatingActionButton;
     String param_str;
-
+    SwipeRefreshLayout swipeContainer;
+    Parse parse;
 //    private ProgressDialog mProgressDialog;
 //
 //    public void showProgressDialog() {
@@ -54,6 +56,23 @@ public class ActivityWebview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         floatingActionButton = findViewById(R.id.fab2);
+        swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                parse = new Parse();
+                Bundle extr = getIntent().getExtras();
+                if (extr != null) param_str = extr.getString("INTENT_EXTRA_URL");
+//        showProgressDialog();
+//                final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
+//                lyt_progress.setVisibility(View.VISIBLE);
+//                lyt_progress.setAlpha(1.0f);
+                parse.execute(param_str);
+                setWebView();
+
+            }
+        });
+
 //        wv = (ObservableWebView) findViewById(R.id.scorllableWebview);
 //        wv.setOnScrollChangedCallback(new OnScrollChangedCallback(){
 //            public void onScroll(int l, int t, int oldl, int oldt){
@@ -76,7 +95,7 @@ public class ActivityWebview extends AppCompatActivity {
         });
         floatingActionButton_share = findViewById(R.id.fab_share);
 
-        Parse parse = new Parse();
+        parse = new Parse();
         Bundle extr = getIntent().getExtras();
         if (extr != null) param_str = extr.getString("INTENT_EXTRA_URL");
 //        showProgressDialog();
@@ -144,7 +163,7 @@ public class ActivityWebview extends AppCompatActivity {
             final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
             lyt_progress.setVisibility(View.INVISIBLE);
             lyt_progress.setAlpha(1.0f);
-
+            swipeContainer.setRefreshing(false);
         }
     }
 

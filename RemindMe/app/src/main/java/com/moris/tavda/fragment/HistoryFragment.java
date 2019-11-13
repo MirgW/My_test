@@ -14,14 +14,20 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.moris.tavda.ActivityWebview;
+import com.moris.tavda.Data.MySourceFactory;
 import com.moris.tavda.R;
 import com.moris.tavda.adapter.ClickRecyclerAdapter;
-import com.moris.tavda.adapter.RemindListAdapter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,11 +37,11 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import dto.RemindDTO;
 
-public class HistoryFragment extends AbstractTabFragment implements
-        ClickRecyclerAdapter.OnItemClickListener {
+public class HistoryFragment extends AbstractTabFragment implements  ClickRecyclerAdapter.OnItemClickListener {
     private static final int LAYOUT = R.layout.fragment_history;
 
     //    public Element element;
@@ -43,11 +49,12 @@ public class HistoryFragment extends AbstractTabFragment implements
 //    private ArrayAdapter adapter;
 //    private
     private RecyclerView rv;
-    private RemindListAdapter adapter;
+    private ClickRecyclerAdapter adapter;
     private List<RemindDTO> data = new ArrayList<>();
     private Parse parse;
     private Integer Num = 0;
     private Toolbar toolbar1;
+    MySourceFactory sourceFactory;
 //    private ProgressDialog mProgressDialog;
 //
 //    public void showProgressDialog() {
@@ -135,8 +142,8 @@ public class HistoryFragment extends AbstractTabFragment implements
                 final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progress);
                 lyt_progress.setVisibility(View.VISIBLE);
                 lyt_progress.setAlpha(1.0f);
-                parse = new Parse();
-                parse.execute(Num);
+//                parse = new Parse();
+//                parse.execute(Num);
             }
         });
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar1);
@@ -160,17 +167,16 @@ public class HistoryFragment extends AbstractTabFragment implements
 //       ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 //        setHasOptionsMenu(true);
 
-        List<RemindDTO> remindDTOList = new ArrayList<>();
-        parse = new Parse();
+//        List<RemindDTO> remindDTOList = new ArrayList<>();
+//        parse = new Parse();
         final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progress);
         lyt_progress.setVisibility(View.VISIBLE);
         lyt_progress.setAlpha(1.0f);
 ////        showProgressDialog();
-        parse.execute(0);
+//        parse.execute(0);
 //        adapter = new RemindListAdapter(getLayoutInflater(),data);
-        adapter = new ClickRecyclerAdapter(getLayoutInflater(), data, this);
-        rv.setLayoutManager(new LinearLayoutManager(context));
-        rv.setHasFixedSize(true); // неизменый экран
+  //      adapter = new ClickRecyclerAdapter(getLayoutInflater(), data, this);
+
 //        LinearLayout linearLayout =  (LinearLayout) rv.findViewById(R.id.recyclerView);
 //
 //        linearLayout.setOnClickListener(new View.OnClickListener(){
@@ -182,6 +188,82 @@ public class HistoryFragment extends AbstractTabFragment implements
 //        });
 //        rv.setAdapter(adapter);
 //        rv.setAdapter(new RemindListAdapter(creatMockData()));
+        // DataSource
+        final DiffUtil.ItemCallback<RemindDTO> DIFF_CALLBACK =
+                new DiffUtil.ItemCallback<RemindDTO>() {
+                    @Override
+                    public boolean areItemsTheSame(RemindDTO oldItem, RemindDTO newItem) {
+                        return ((oldItem.getNode().doubleValue()) == (newItem.getNode().floatValue()));
+                    }
+
+                    @Override
+                    public boolean areContentsTheSame(RemindDTO oldItem, RemindDTO newItem) {
+                        return ((oldItem.getNode().doubleValue()) == (newItem.getNode()).doubleValue());
+                    }
+                };
+        // Adapter
+        if (adapter == null) {
+            adapter = new ClickRecyclerAdapter(DIFF_CALLBACK);
+        }
+        rv.setLayoutManager(new LinearLayoutManager(context));
+        rv.setHasFixedSize(true); // неизменый экран
+        adapter.setOnItemClickListener(new ClickRecyclerAdapter.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(View view, int position) {
+                String str;
+                str = adapter.getItemData(position).getUrl_DTO().toString();
+                str = "http://www.adm-tavda.ru" + str;
+
+//        if(BuildConfig.DEBUG)   Toast.makeText(view.getContext(), str+"-> "+BuildConfig.FLAVOR , Toast.LENGTH_SHORT).show();
+
+                Intent startIntent = new Intent(getActivity(), ActivityWebview.class);
+                startIntent.putExtra("INTENT_EXTRA_URL", str);
+                startActivity(startIntent);
+            }
+        });
+//        DTODataSource dataSource = new DTODataSource();
+        sourceFactory = new MySourceFactory();
+        // PagedList
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setPageSize(15)
+                .build();
+
+        LiveData<PagedList<RemindDTO>> pagedList = new LivePagedListBuilder<>(sourceFactory, config)
+                .setFetchExecutor (Executors.newSingleThreadExecutor())
+//                .setFetchExecutor(Executors.newFixedThreadPool(1))
+              .build();
+//
+//        PagedList<RemindDTO> pagedList = new PagedList.Builder<>(dataSource, config)
+//                .setMainThreadExecutor(new MainThreadExecutor())
+//                .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor())
+//                .build();
+//        // Adapter
+//        adapter = new RemindListAdapter(DIFF_CALLBACK);
+//        adapter.submitList();
+
+        SwipeRefreshLayout swipeContainer = view.findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                sourceFactory.datasourceLiveData.getValue().invalidate();
+            }
+        });
+
+         pagedList.observe(this, new Observer<PagedList<RemindDTO>>() {
+            @Override
+            public void onChanged(@Nullable PagedList<RemindDTO> pagedListDTO) {
+                //Log.d(TAG, "submit PagedList");
+                adapter.submitList(pagedListDTO);
+//                adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+
+        // RecyclerView
+        rv.setAdapter(adapter);
         return view;
     }
 

@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
         if (BuildConfig.DEBUG) {
             PeriodicWorkRequest myWorkRequest = new PeriodicWorkRequest
-                    .Builder(MyWorker.class, 1, TimeUnit.MINUTES)
+                    .Builder(MyWorker.class, 15, TimeUnit.MINUTES)
                     .setConstraints(constraints)
                     .addTag("TavadSet")
                     .build();
