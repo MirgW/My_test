@@ -1,6 +1,12 @@
+.idea
 .gradle
 /.idea
 /local.properties
 .DS_Store
 /build
 RemindMe.iml
+/RemindMe/app/app.iml
+/app/pro/release/1.bat
+/app/src/androidTest/java/com/moris/tavda/ApplicationTest.java
+/.gitignore
+/1.txt
