@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -110,9 +109,10 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                         .setAction("Начать", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-
-                                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        startActivityForResult(cameraIntent, 2);
+                                        Intent startIntent = new Intent(getApplicationContext(), CamActivity.class);
+                                        startActivity(startIntent);
+//                                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                        startActivityForResult(cameraIntent,2);
 
 //                                        Intent intent = new Intent();
 //                                        intent.setAction(Intent.ACTION_CAMERA_BUTTON);

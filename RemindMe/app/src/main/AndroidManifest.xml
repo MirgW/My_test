@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
-
+    <uses-feature android:name="android.hardware.camera" android:required="true" /> <!--наличие камеры-->
 
     <application
         android:name=".ExampleApplication"
