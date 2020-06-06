@@ -97,9 +97,9 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
 //        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (year < 2021) {
+//        if (year < 2021) {
             setContentView(LAYOUT);
-        }
+//        }
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -280,6 +280,19 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        int pos;
+        pos = tabLayout.getSelectedTabPosition();
+        if (pos==0) {super.onBackPressed();}
+        //else tabLayout.selectTab(tabLayout.getTabAt(0),true);
+/*//
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+       //     this.finish();
+        } else {
+            getFragmentManager().popBackStack();
+        }*/
+    }
 
     private void initTabs() {
         viewPager = findViewById(R.id.viewPager);

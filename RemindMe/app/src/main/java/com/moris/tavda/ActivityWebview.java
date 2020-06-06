@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -167,6 +168,13 @@ public class ActivityWebview extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (wbNews.canGoBack()) {
+            wbNews.goBack();
+        } else super.onBackPressed();
+        ;
+    }
 
     private void setWebView() {
         wbNews = findViewById(R.id.webview);
@@ -187,6 +195,7 @@ public class ActivityWebview extends AppCompatActivity {
 //        wbset.setBuiltInZoomControls(true);
 //        wbset.setDisplayZoomControls(false);
         wbset.setDefaultTextEncodingName("utf-8");
+//        wbNews.setWebViewClient(new SimpleWebViewClientImpl() {
         wbNews.setWebViewClient(new WebViewClient() {
 
 
@@ -202,6 +211,7 @@ public class ActivityWebview extends AppCompatActivity {
                 wbNews.setVisibility(view.VISIBLE);
             }
         });
+        wbNews.setWebChromeClient(new WebChromeClient());
 //        newsLink = getIntent().getExtras().getString("INTENT_EXTRA_URL");
 //        wbNews.loadUrl(newsLink);
 //        String unencodedHtml ="<html><body>"+"</body></html>";
