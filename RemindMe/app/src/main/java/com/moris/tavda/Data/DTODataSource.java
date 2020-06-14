@@ -15,13 +15,14 @@ import java.util.List;
 import dto.RemindDTO;
 
 public class DTODataSource extends PageKeyedDataSource<Long, RemindDTO> {
-    private List<RemindDTO> data ;
+    private List<RemindDTO> data;
     Long Page;
+
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long, RemindDTO> callback) {
         data = new ArrayList<>();
         final Document document;
-    Page = 0L;
+        Page = 0L;
         try {
             document = Jsoup.connect("http://www.adm-tavda.ru/node?page=0").get();
             Elements elements = document.select(".node.story.promote");
@@ -29,7 +30,7 @@ public class DTODataSource extends PageKeyedDataSource<Long, RemindDTO> {
             data.clear();
             for (Element element : elements) {
 //                    dd=element.select("h2.art-postheader>a").attr("href");
-                 data.add(new RemindDTO(element.select("h2").text(), element.select("p").text(), element.select("img").attr("src"), element.select("span.art-postdateicon").text(), element.select("h2.art-postheader>a").attr("href")));
+                data.add(new RemindDTO(element.select("h2").text(), element.select("p").text(), element.select("img").attr("src"), element.select("span.art-postdateicon").text(), element.select("h2.art-postheader>a").attr("href")));
             }
 
         } catch (IOException e) {

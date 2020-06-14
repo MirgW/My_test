@@ -1,11 +1,14 @@
 package com.moris.tavda;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -22,12 +25,23 @@ public class NotificationUtils {
     private static Context context;
     private static NotificationManagerCompat manager;
     private static int lastId = 0;
+    String CHANNEL_ID = "Tavda";
 //    private HashMap<Integer, Notification> notifications;
 
     private NotificationUtils(Context context) {
         this.context = context;
 //        manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         manager = NotificationManagerCompat.from(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (manager.getNotificationChannel(CHANNEL_ID) == null) {
+                CharSequence name = "Тавда";
+                String description = "О Тавде";
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription(description);
+                NotificationManager notificationManager = (android.app.NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
 //        notifications = new HashMap<Integer, Notification>();
     }
 
@@ -79,7 +93,7 @@ public class NotificationUtils {
 //        NotificationCompat.Builder nb = new NotificationCompat.Builder(context)
         String imageUri = "http://www.adm-tavda.ru/" + url_not.replaceAll("http://www.adm-tavda.ru/", "").replaceAll("http://adm-tavda.ru/", "");
 
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(context) //для версии Android > 3.0
+        NotificationCompat.Builder nb = new NotificationCompat.Builder(context, CHANNEL_ID) //для версии Android > 3.0
                 .setSmallIcon(R.drawable.ic_account) //иконка уведомления
                 .setAutoCancel(true) //уведомление закроется по клику на него
                 //.setTicker(statbar) //текст, который отобразится вверху статус-бара при создании уведомления

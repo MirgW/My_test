@@ -1,5 +1,6 @@
 package com.moris.tavda;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.viewpager.widget.ViewPager;
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     private ViewPager viewPager;
     private String UserID;
     private SharedPreferences preferences;
+    private static final int REQUEST_CODE_PERMISSION_INTERNET = 123;
 //    private LifecycleRegistry lifecycleRegistry;
 
     final String LOG_TAG = "myLog";
@@ -76,7 +80,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
 //        lifecycleRegistry = new LifecycleRegistry(this);
 //        lifecycleRegistry.markState(Lifecycle.State.CREATED);
-
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+        if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
+            //readContacts();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_CODE_PERMISSION_INTERNET);
+        }
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         Intent intentWeb = getIntent();
