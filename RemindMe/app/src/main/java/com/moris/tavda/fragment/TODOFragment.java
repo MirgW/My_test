@@ -48,7 +48,7 @@ public class TODOFragment extends AbstractTabFragment {
         wv.getSettings().setLoadsImagesAutomatically(true);
         wv.getSettings().setJavaScriptEnabled(true);
         wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        wv.setWebViewClient(new SimpleWebViewClientImpl());
+        wv.setWebViewClient(new SimpleWebViewClientImpl(getActivity()));
         wv.setWebChromeClient(new WebChromeClient() {
         });
 //        wv.loadUrl("http://itavda.ru/avito");

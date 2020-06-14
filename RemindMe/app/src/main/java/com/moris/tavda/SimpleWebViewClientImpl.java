@@ -1,6 +1,8 @@
 package com.moris.tavda;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebResourceError;
@@ -26,12 +28,19 @@ public class SimpleWebViewClientImpl extends WebViewClient {
         // все ссылки, в которых содержится 'javadevblog.com'
         // будут открываться внутри приложения
         //          if (url.contains("javadevblog.com")) {
-        return false;
+        if (url.startsWith("http:") || url.startsWith("https:")) {
+            return false;
+        }
         //          }
         // все остальные ссылки будут спрашивать какой браузер открывать
-        //          Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        //          activity.startActivity(intent);
-        //          return true;
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            activity.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
