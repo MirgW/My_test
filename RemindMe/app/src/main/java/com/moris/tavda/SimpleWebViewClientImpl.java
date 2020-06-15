@@ -45,13 +45,15 @@ public class SimpleWebViewClientImpl extends WebViewClient {
 
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-        // super.onReceivedError(view, request, error);
+        super.onReceivedError(view, request, error);
+        String errorHtml = "<html><body><h2>Нет соединения</h2></body></html>";
+        view.loadDataWithBaseURL(null, errorHtml, "text/html", "UTF-8", null);
     }
 
     @Override
     public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
-        Log.d("KEYCODE_my", "KOD-"+Integer.toString(event.getKeyCode()));
-        Log.d("KEYCODE_my", "AKT-"+Integer.toString(event.getAction()));
+        Log.d("KEYCODE_my", "KOD-"+ event.getKeyCode());
+        Log.d("KEYCODE_my", "AKT-"+ event.getAction());
         if ((view.canGoBack()) && (event.getKeyCode() == KeyEvent.KEYCODE_BACK) && (event.getAction() == KeyEvent.ACTION_DOWN)) {
             view.goBack();
             return true;

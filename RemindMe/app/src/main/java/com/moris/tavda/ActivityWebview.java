@@ -30,7 +30,7 @@ public class ActivityWebview extends AppCompatActivity {
 
     private Elements elements;
     private FloatingActionButton floatingActionButton_share;
-    private FloatingActionButton floatingActionButton;
+//    private FloatingActionButton floatingActionButton;
     String param_str;
     SwipeRefreshLayout swipeContainer;
     Parse parse;
@@ -56,7 +56,7 @@ public class ActivityWebview extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        floatingActionButton = findViewById(R.id.fab2);
+//        floatingActionButton = findViewById(R.id.fab2);
         swipeContainer = findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -88,12 +88,12 @@ public class ActivityWebview extends AppCompatActivity {
 //                Log.d(TAG,"We Scrolled etc...");
 //            }
 //        });
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onBackPressed();
+//            }
+//        });
         floatingActionButton_share = findViewById(R.id.fab_share);
 
         parse = new Parse();
@@ -158,7 +158,7 @@ public class ActivityWebview extends AppCompatActivity {
                     }
                 });
             } else {
-                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", "<H3>Источник недоступен, проверьте связь</H3>", "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", "<H3>Источник не доступен, проверьте связь</H3>", "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
             }
 //            hideProgressDialog();
             final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
@@ -182,10 +182,10 @@ public class ActivityWebview extends AppCompatActivity {
         wbNews.setOnScrollChangedCallback((dx, dy) -> {
             if (dy > 0) {
                 floatingActionButton_share.hide();
-                floatingActionButton.hide();
+//                floatingActionButton.hide();
             } else {
                 floatingActionButton_share.show();
-                floatingActionButton.show();
+//                floatingActionButton.show();
             }
         });
 
