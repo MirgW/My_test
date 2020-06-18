@@ -9,6 +9,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -27,11 +28,14 @@ import java.io.IOException;
 public class ActivityWebview extends AppCompatActivity {
 
     private ObservableWebView wbNews;
+    //    private FloatingActionButton floatingActionButton;
+    String param_str;
+    private FrameLayout mFullScreenContaine;
+    private View mFullScreenView;
 
     private Elements elements;
     private FloatingActionButton floatingActionButton_share;
-//    private FloatingActionButton floatingActionButton;
-    String param_str;
+    private WebChromeClient.CustomViewCallback mFullscreenViewCallback;
     SwipeRefreshLayout swipeContainer;
     Parse parse;
 //    private ProgressDialog mProgressDialog;
@@ -211,7 +215,40 @@ public class ActivityWebview extends AppCompatActivity {
                 wbNews.setVisibility(view.VISIBLE);
             }
         });
-        wbNews.setWebChromeClient(new WebChromeClient());
+        mFullScreenContaine = (FrameLayout) findViewById(R.id.fullscreen_container);
+        wbNews.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+//                super.onShowCustomView(view, callback);
+                mFullscreenViewCallback = callback;
+                mFullScreenContaine.addView(view);
+                mFullScreenView = view;
+                floatingActionButton_share.hide();
+                swipeContainer.setVisibility(View.GONE);
+                mFullScreenContaine.setVisibility(View.VISIBLE);
+                mFullScreenContaine.bringToFront();
+                mFullScreenContaine.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+            }
+
+            @Override
+            public void onHideCustomView() {
+//                super.onHideCustomView();
+                if (mFullScreenView == null) return;
+                floatingActionButton_share.show();
+                mFullScreenView.setVisibility(View.GONE);
+                mFullScreenContaine.removeView(mFullScreenView);
+                mFullScreenView = null;
+                mFullscreenViewCallback.onCustomViewHidden();
+                swipeContainer.setVisibility(View.VISIBLE);
+            }
+        });
 //        newsLink = getIntent().getExtras().getString("INTENT_EXTRA_URL");
 //        wbNews.loadUrl(newsLink);
 //        String unencodedHtml ="<html><body>"+"</body></html>";

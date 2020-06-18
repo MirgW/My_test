@@ -33,6 +33,7 @@
         <activity
             android:name=".ActivityWebview"
             android:label="ActivityWebview"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <meta-data
@@ -42,6 +43,7 @@
         <activity
             android:name=".CamActivity"
             android:label="CamActivity"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".SettingsActivity"
