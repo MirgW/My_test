@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                     .addTag("TavadSet")
                     .build();
             // TODO: 7/3/2019  getInstance(this) getInstance() - проверить уведомления
-            WorkManager.getInstance().enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
+            WorkManager.getInstance(this).enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
                     myWorkRequest);
         } else
             {
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                         .setConstraints(constraints)
                         .addTag("TavadSet")
                         .build();
-                WorkManager.getInstance().enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
+                WorkManager.getInstance(this).enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
                         myWorkRequest);
         }
 
