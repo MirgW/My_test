@@ -322,8 +322,31 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tab.getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500,null), PorterDuff.Mode.SRC_IN);
+                tab.getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
 //                ViewAnimation.fadeOutIn(nested_scroll_view);
+                int pos;
+                pos = tabLayout.getSelectedTabPosition();
+                FloatingActionButton fab = findViewById(R.id.fab);
+                toolbar = findViewById(R.id.toolbar);
+//                setSupportActionBar(toolbar);
+                switch (pos) {
+                    case 0:
+                        fab.show();
+                        toolbar.setTitle("Тавда");
+                        break;
+                    case 1:
+                        fab.hide();
+                        toolbar.setTitle("Важное");
+                        break;
+                    case 2:
+                        fab.hide();
+                        toolbar.setTitle("Карта");
+                        break;
+                    case 3:
+                        fab.hide();
+                        toolbar.setTitle("COVID-19");
+                        break;
+                }
             }
 
             @Override
