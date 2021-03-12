@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                         break;
                     case 1:
                         fab.hide();
-                        toolbar.setTitle("Важное");
+                        toolbar.setTitle("Календарь");
                         break;
                     case 2:
                         fab.hide();
