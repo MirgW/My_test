@@ -18,11 +18,11 @@ android {
             storePassword '12581258'
         }
     }
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId 'com.moris.tavda'
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 10
 //        versionName "2.0"
 
