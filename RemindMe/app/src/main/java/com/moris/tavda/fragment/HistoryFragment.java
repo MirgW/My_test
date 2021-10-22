@@ -11,18 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.moris.tavda.ActivityWebview;
 import com.moris.tavda.Data.MySourceFactory;
@@ -39,6 +27,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import dto.RemindDTO;
 
 public class HistoryFragment extends AbstractTabFragment implements  ClickRecyclerAdapter.OnItemClickListener {
@@ -206,7 +205,7 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
             adapter = new ClickRecyclerAdapter(DIFF_CALLBACK);
         }
         rv.setLayoutManager(new LinearLayoutManager(context));
-        rv.setHasFixedSize(true); // неизменый экран
+        rv.setHasFixedSize(false); // неизменый экран
         adapter.setOnItemClickListener(new ClickRecyclerAdapter.OnItemClickListener(){
 
             @Override
@@ -251,7 +250,7 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
             }
         });
 
-         pagedList.observe(this, new Observer<PagedList<RemindDTO>>() {
+         pagedList.observe(getViewLifecycleOwner(), new Observer<PagedList<RemindDTO>>() {
             @Override
             public void onChanged(@Nullable PagedList<RemindDTO> pagedListDTO) {
                 //Log.d(TAG, "submit PagedList");
