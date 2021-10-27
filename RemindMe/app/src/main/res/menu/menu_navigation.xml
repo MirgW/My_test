@@ -40,6 +40,11 @@
             android:icon="@drawable/ic_share_blue_grey_900_24dp"
             android:title="Поделится" />
         <item
+            android:id="@+id/nav_policy"
+            android:titleCondensed="Политика конфиденциальности"
+            android:icon="@drawable/content_ic_paste_icon"
+            android:title="Политика конфиденциальности" />
+        <item
             android:id="@+id/nav_send"
             android:enabled="false"
             android:title="О программе"

@@ -1,18 +1,31 @@
 package com.moris.tavda;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,17 +42,6 @@ import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity implements LifecycleOwner {
@@ -404,6 +406,14 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                         break;
                     case R.id.nav_manage:
                         viewPager.setCurrentItem(constants.TAB_FOUR);
+                        break;
+                    case R.id.nav_policy:
+                        Uri address = Uri.parse("https://sites.google.com/view/tavdanews");
+                        Intent openlink = new Intent(Intent.ACTION_VIEW, address);
+                        try {
+                            startActivity(Intent.createChooser(openlink, ""));
+                        } catch(ActivityNotFoundException e) {
+                    }
                         break;
                     case R.id.nav_exit:
                         finish();
