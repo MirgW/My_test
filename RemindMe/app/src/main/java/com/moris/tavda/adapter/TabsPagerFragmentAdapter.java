@@ -2,19 +2,18 @@ package com.moris.tavda.adapter;
 
 import android.content.Context;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-
 import com.moris.tavda.fragment.AbstractTabFragment;
-import com.moris.tavda.fragment.BirthdaysFragment;
 import com.moris.tavda.fragment.HistoryFragment;
 import com.moris.tavda.fragment.IdeasFragment;
 import com.moris.tavda.fragment.TODOFragment;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     private Map<Integer,AbstractTabFragment> tabs;
@@ -55,6 +54,6 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         tabs.put(0, HistoryFragment.getInstance(context));
         tabs.put(1, IdeasFragment.getInstance(context));
         tabs.put(2, TODOFragment.getInstance(context));
-        tabs.put(3, BirthdaysFragment.getInstance(context));
+//        tabs.put(3, BirthdaysFragment.getInstance(context));
     }
 }
