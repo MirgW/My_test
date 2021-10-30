@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/drawable/baseline_contact_mail_black_24dp.xml" value="0.19166666666666668" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/drawable/baseline_contact_mail_white_24dp.xml" value="0.1125" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/drawable/baseline_speaker_notes_white_24dp.xml" value="0.1125" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/drawable/bg_gradient_soft.xml" value="0.19166666666666668" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/drawable/ic_format_list_bulleted_black_24dp.xml" value="0.19166666666666668" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.19166666666666668" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/drawable/ic_stars_black_24dp.xml" value="0.19166666666666668" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/drawable/ic_sync_black_24dp.xml" value="0.19166666666666668" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout-v21/toolbar.xml" value="0.14855072463768115" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout-v21/toolbar_setup.xml" value="0.14855072463768115" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/activity_maun.xml" value="0.125" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/toolbar.xml" value="0.1539855072463768" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/toolbar_setup.xml" value="0.1539855072463768" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/menu/menu.xml" value="0.1765625" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/menu/menu_navigation.xml" value="0.1" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/menu/menu_news.xml" value="0.1765625" />
+      </map>
+    </option>
+  </component>
   <component name="JavadocGenerationManager">
     <option name="OTHER_OPTIONS" value="" />
   </component>
@@ -57,7 +79,7 @@
   </component>
   <component name="TaskProjectConfiguration">
     <server type="YouTrack" url="https://tavda.myjetbrains.com/youtrack" />
-    <server type="YouTrack" url="http://127.0.0.1" />
     <server type="Trello" url="https://api.trello.com" />
+    <server type="YouTrack" url="http://127.0.0.1" />
   </component>
 </project>

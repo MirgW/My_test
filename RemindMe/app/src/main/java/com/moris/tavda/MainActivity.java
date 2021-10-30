@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     final String LOG_TAG = "myLog";
 
     boolean bound = false;
-//    ServiceConnection sConn;
+    //    ServiceConnection sConn;
     Intent intent;
 
     @Override
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         int month = calendar.get(Calendar.MONTH) + 1;
 //        int day = calendar.get(Calendar.DAY_OF_MONTH);
 //        if (year < 2021) {
-            setContentView(LAYOUT);
+        setContentView(LAYOUT);
 //        }
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         initToolbar();
         initNavigationView();
         initTabs();
-   //     ((TextView) findViewById(R.id.textView)).setText("sssss");
+        //     ((TextView) findViewById(R.id.textView)).setText("sssss");
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
@@ -161,15 +161,14 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             // TODO: 7/3/2019  getInstance(this) getInstance() - проверить уведомления
             WorkManager.getInstance(this).enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
                     myWorkRequest);
-        } else
-            {
-                PeriodicWorkRequest myWorkRequest = new PeriodicWorkRequest
-                        .Builder(MyWorker.class, 2, TimeUnit.HOURS)
-                        .setConstraints(constraints)
-                        .addTag("TavadSet")
-                        .build();
-                WorkManager.getInstance(this).enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
-                        myWorkRequest);
+        } else {
+            PeriodicWorkRequest myWorkRequest = new PeriodicWorkRequest
+                    .Builder(MyWorker.class, 2, TimeUnit.HOURS)
+                    .setConstraints(constraints)
+                    .addTag("TavadSet")
+                    .build();
+            WorkManager.getInstance(this).enqueueUniquePeriodicWork("TavadSet", ExistingPeriodicWorkPolicy.KEEP,
+                    myWorkRequest);
         }
 
 
@@ -221,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     @Override
     protected void onDestroy() {
         super.onDestroy();
- //       WorkManager.getInstance().cancelAllWorkByTag("TavadSet");
+        //       WorkManager.getInstance().cancelAllWorkByTag("TavadSet");
     }
 
     @Override
@@ -295,7 +294,9 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     public void onBackPressed() {
         int pos;
         pos = tabLayout.getSelectedTabPosition();
-        if (pos==0) {super.onBackPressed();}
+        if (pos == 0) {
+            super.onBackPressed();
+        }
         //else tabLayout.selectTab(tabLayout.getTabAt(0),true);
 /*//
         if (getFragmentManager().getBackStackEntryCount() == 0) {
@@ -315,12 +316,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_list_bulleted_black_24dp);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_stars_black_24dp);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_notifications_black_24dp);
-        tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500,null), PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60,null), PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.grey_60,null), PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(3).getIcon().setColorFilter(getResources().getColor(R.color.grey_60,null), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(3).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -353,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                tab.getIcon().setColorFilter(getResources().getColor(R.color.grey_60,null), PorterDuff.Mode.SRC_IN);
+                tab.getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
             }
 
             @Override
@@ -408,12 +409,28 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                         viewPager.setCurrentItem(constants.TAB_FOUR);
                         break;
                     case R.id.nav_policy:
-                        Uri address = Uri.parse("https://sites.google.com/view/tavdanews");
+                        Uri address = Uri.parse("https://sites.google.com/view/tavdanews/Privacy");
                         Intent openlink = new Intent(Intent.ACTION_VIEW, address);
                         try {
                             startActivity(Intent.createChooser(openlink, ""));
-                        } catch(ActivityNotFoundException e) {
-                    }
+                        } catch (ActivityNotFoundException e) {
+                        }
+                        break;
+                    case R.id.nav_news:
+                        address = Uri.parse("https://sites.google.com/view/tavdanews/news");
+                        openlink = new Intent(Intent.ACTION_VIEW, address);
+                        try {
+                            startActivity(Intent.createChooser(openlink, ""));
+                        } catch (ActivityNotFoundException e) {
+                        }
+                        break;
+                    case R.id.nav_contact:
+                        address = Uri.parse("https://sites.google.com/view/tavdanews/contacts");
+                        openlink = new Intent(Intent.ACTION_VIEW, address);
+                        try {
+                            startActivity(Intent.createChooser(openlink, ""));
+                        } catch (ActivityNotFoundException e) {
+                        }
                         break;
                     case R.id.nav_exit:
                         finish();
