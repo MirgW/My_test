@@ -6,5 +6,6 @@
         android:icon="@drawable/ic_account"
         android:orderInCategory="1"
         android:title=""
+        android:visible="false"
         app:showAsAction="ifRoom" />
 </menu>
