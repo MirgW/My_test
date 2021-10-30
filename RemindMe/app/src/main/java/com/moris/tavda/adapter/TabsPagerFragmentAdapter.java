@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.moris.tavda.fragment.AbstractTabFragment;
 import com.moris.tavda.fragment.HistoryFragment;
-import com.moris.tavda.fragment.IdeasFragment;
 import com.moris.tavda.fragment.TODOFragment;
 
 import java.util.HashMap;
@@ -52,8 +51,8 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     private void InitTabsMap(Context context) {
         tabs = new HashMap<>();
         tabs.put(0, HistoryFragment.getInstance(context));
-        tabs.put(1, IdeasFragment.getInstance(context));
-        tabs.put(2, TODOFragment.getInstance(context));
+//        tabs.put(1, IdeasFragment.getInstance(context));
+        tabs.put(1, TODOFragment.getInstance(context));
 //        tabs.put(3, BirthdaysFragment.getInstance(context));
     }
 }
