@@ -27,10 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Authentication"
-            android:label="@string/label_emailpassword"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+<!--        <activity-->
+<!--            android:name=".Authentication"-->
+<!--            android:label="@string/label_emailpassword"-->
+<!--            android:windowSoftInputMode="stateAlwaysHidden" />-->
         <activity
             android:name=".ActivityWebview"
             android:label="ActivityWebview"
@@ -46,9 +46,9 @@
             android:label="CamActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
+<!--        <activity-->
+<!--            android:name=".SettingsActivity"-->
+<!--            android:label="@string/title_activity_settings" />-->
 
         <!--<receiver android:name=".servic.TavdaBroadReceiv">-->
             <!--<intent-filter>-->

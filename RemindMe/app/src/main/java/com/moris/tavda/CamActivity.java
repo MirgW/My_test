@@ -9,13 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.moris.tavda.Data.NetworkClient;
 
 import java.io.ByteArrayOutputStream;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -30,6 +29,7 @@ public class CamActivity extends AppCompatActivity {
     private ImageView imageView;
     private Button buttSend;
     private EditText editText;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -76,7 +76,11 @@ public class CamActivity extends AppCompatActivity {
 //        File file = new File());
         // Create a request body with file and image media type
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        thumbnailBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        try {
+            thumbnailBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         byte[] bitmapdata = baos.toByteArray();
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), bitmapdata);
         // Create MultipartBody.Part using file request-body,file name and part name
