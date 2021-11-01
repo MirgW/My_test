@@ -35,6 +35,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.viewpager.widget.ViewPager;
 import androidx.work.Constraints;
@@ -292,11 +294,31 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
     @Override
     public void onBackPressed() {
+        FragmentManager fragmentManager;
         int pos;
+        boolean flag;
         pos = tabLayout.getSelectedTabPosition();
-        if (pos == 0) {
-            super.onBackPressed();
+        Fragment fragment = getSupportFragmentManager().getFragments().get(pos);
+        if (!(fragment instanceof IOnBackPressed)) {
+            //     super.onBackPressed();
+            if (pos == 0) {
+                super.onBackPressed();
+            } else {
+                tabLayout.selectTab(tabLayout.getTabAt(0), true);
+//                getSupportFragmentManager().popBackStack();
+            }
+        } else {
+            flag=((IOnBackPressed) fragment).onBackPressed();
+            if (flag) {
+                tabLayout.selectTab(tabLayout.getTabAt(0), true);
+            } else {
+ //               super.onBackPressed();
+            }
         }
+//        int count = getSupportFragmentManager().getBackStackEntryCount();
+//        String tmpStr10 = String.valueOf(count);
+//        Toast toast = Toast.makeText(this, tmpStr10,Toast.LENGTH_LONG);
+//        toast.show();
         //else tabLayout.selectTab(tabLayout.getTabAt(0),true);
 /*//
         if (getFragmentManager().getBackStackEntryCount() == 0) {
@@ -334,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 //                setSupportActionBar(toolbar);
                 switch (pos) {
                     case 0:
-                        fab.show();
+//                        fab.show();
                         toolbar.setTitle("Тавда");
                         break;
                     case 1:

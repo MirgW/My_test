@@ -156,7 +156,7 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
                 if (dy > 0) {
                     fab.hide();
                 } else if (dy < 0) {
-                    fab.show();
+//                    fab.show();
                 }
             }
         });
