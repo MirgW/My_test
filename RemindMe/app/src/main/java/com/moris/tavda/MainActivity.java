@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 //                Log.d("LOG", "ssssssssssssssss");
-                Intent intent = new Intent(getApplicationContext(), Authentication.class);
+         //       Intent intent = new Intent(getApplicationContext(), Authentication.class);
 //            EditText editText = (EditText) findViewById(R.id.editText);
 //            String message = editText.getText().toString();
 //            intent.putExtra(EXTRA_MESSAGE, message);

@@ -110,8 +110,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.firebase:firebase-core:19.0.2'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
+//    implementation 'com.google.firebase:firebase-core:19.0.2'
+//    implementation 'com.google.firebase:firebase-auth:21.0.1'
     //    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
 //    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
@@ -133,4 +133,4 @@ allprojects {
         options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
     }
 }
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
