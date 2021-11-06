@@ -39,7 +39,6 @@
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_share_blue_grey_900_24dp"
             android:title="Поделится" />
-        https://sites.google.com/view/tavdanewsinfo
         <item
             android:id="@+id/nav_news"
             android:icon="@drawable/baseline_speaker_notes_white_24dp"

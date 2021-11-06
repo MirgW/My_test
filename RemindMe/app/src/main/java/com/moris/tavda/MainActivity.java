@@ -460,12 +460,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                     case R.id.nav_share:
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Отправлено из мобильного приложения Живая Тавда: " + "Установи приложение #живаятавда");
-                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Отправлено из мобильного приложения Живая Тавда #живаятавда");
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free");
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Тавда");
 //                    sendIntent.putExtra(Intent.EXTRA_EMAIL  , new String[] { "ssss@where.com" });
 //                    sendIntent.putExtra(Intent.EXTRA_CONTENT_ANNOTATIONS, "EXTRA_CONTENT_ANNOTATIONS");
 //                    sendIntent.putExtra(Intent.EXTRA_SPLIT_NAME,"dddddd");
-                        sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Живая Тавда. #живаятавда</h1></html></body>");
+//                        sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Живая Тавда. #живаятавда</h1></html></body>");
                         sendIntent.setType("text/plan");
                         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
                 }

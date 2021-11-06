@@ -12,10 +12,6 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jsoup.Jsoup;
@@ -23,6 +19,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 public class ActivityWebview extends AppCompatActivity {
@@ -151,12 +151,12 @@ public class ActivityWebview extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, "-> #живаятавда \n Отправлено из мобильного приложения Живая Тавда: " + param_str);
-                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Отправлено из мобильного приложения Живая Тавда #живаятавда");
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, elements.select("h2").text()+"\n\n"+param_str+ "\n\n Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free\n");
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Тавда");
 //                    sendIntent.putExtra(Intent.EXTRA_EMAIL  , new String[] { "ssss@where.com" });
 //                    sendIntent.putExtra(Intent.EXTRA_CONTENT_ANNOTATIONS, "EXTRA_CONTENT_ANNOTATIONS");
 //                    sendIntent.putExtra(Intent.EXTRA_SPLIT_NAME,"dddddd");
-                        sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Живая Тавда. #живаятавда</h1></html></body>");
+//                        sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Живая Тавда. #живаятавда</h1></html></body>");
                         sendIntent.setType("text/plan");
                         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
                     }
