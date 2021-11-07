@@ -11,13 +11,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationUtils {
     public static final String LOG_TAG = NotificationUtils.class.getName();
@@ -94,7 +94,7 @@ public class NotificationUtils {
         String imageUri = "http://www.adm-tavda.ru/" + url_not.replaceAll("http://www.adm-tavda.ru/", "").replaceAll("http://adm-tavda.ru/", "");
 
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context, CHANNEL_ID) //для версии Android > 3.0
-                .setSmallIcon(R.drawable.ic_account) //иконка уведомления
+                .setSmallIcon(R.drawable.baseline_title_blue_a700_24dp) //иконка уведомления
                 .setAutoCancel(true) //уведомление закроется по клику на него
                 //.setTicker(statbar) //текст, который отобразится вверху статус-бара при создании уведомления
                 .setContentText(message) // Основной текст уведомления
@@ -104,7 +104,8 @@ public class NotificationUtils {
                 // .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
 //                .setSubText(title)
                 //setColor(R.color.grey_300)
-                .setDefaults(NotificationCompat.DEFAULT_ALL); // звук, вибро и диодный индикатор выставляются по умолчанию
+                .setDefaults(NotificationCompat.DEFAULT_ALL) // звук, вибро и диодный индикатор выставляются по умолчанию
+                .setSilent(true);
         try {
             Bitmap bitmap = new Picasso.Builder(context)
                     .build()
