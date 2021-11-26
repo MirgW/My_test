@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -308,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 //                getSupportFragmentManager().popBackStack();
             }
         } else {
-            flag=((IOnBackPressed) fragment).onBackPressed();
+            flag = ((IOnBackPressed) fragment).onBackPressed();
             if (flag) {
                 tabLayout.selectTab(tabLayout.getTabAt(0), true);
             } else {
@@ -400,6 +402,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 //    public Lifecycle getLifecycle() {
 //        return lifecycleRegistry;
 //    }
+    private Uri imageUri;
 
     private void initNavigationView() {
         drawerLayout = findViewById(R.id.drawerdayout);
@@ -458,15 +461,53 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                         finish();
                         break;
                     case R.id.nav_share:
+                        int sharableImage = R.drawable.tavda1024;
+                        Bitmap bitmap= BitmapFactory.decodeResource(getResources(), sharableImage);
+                        String path = getExternalCacheDir()+"/tavda.jpg";
+                        java.io.OutputStream out;
+                        java.io.File file = new java.io.File(path);
+                        if(!file.exists()) {
+                            try {
+                                out = new java.io.FileOutputStream(file);
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                                out.flush();
+                                out.close();
+                            }
+                            catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        path = file.getPath();
+                        imageUri =  Uri.parse("file://" + path);;
                         Intent sendIntent = new Intent();
-                        sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free");
-                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Тавда");
+                        sendIntent.setType("text/plain");
+//                        imageUri = Uri.parse("android.resource://" + getPackageName() + "/drawable/" + "tavda1024.png");
+                        sendIntent.setAction(android.content.Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.moris.tavda.free");
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Новости г. Тавда в мобильном приложении");
+                        sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+//                        sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+/*                        PackageManager pm = getApplicationContext().getPackageManager();
+                        @SuppressLint("QueryPermissionsNeeded") List<ResolveInfo> activityList = pm.queryIntentActivities(sendIntent, 0);
+                        for (final ResolveInfo app : activityList) {
+                            if ((app.activityInfo.name).contains("ru.ok.android")) {
+                                final ActivityInfo activity = app.activityInfo;
+                                final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
+                                sendIntent.setPackage("ru.ok.android");
+                                sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                                sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                                sendIntent.setComponent(name);
+//                                startActivity(sendIntent);
+                                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
+                                break;
+                            }
+                        }*/
 //                    sendIntent.putExtra(Intent.EXTRA_EMAIL  , new String[] { "ssss@where.com" });
 //                    sendIntent.putExtra(Intent.EXTRA_CONTENT_ANNOTATIONS, "EXTRA_CONTENT_ANNOTATIONS");
 //                    sendIntent.putExtra(Intent.EXTRA_SPLIT_NAME,"dddddd");
 //                        sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Живая Тавда. #живаятавда</h1></html></body>");
-                        sendIntent.setType("text/plan");
+//                        sendIntent.setType("text/plan");
                         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
                 }
                 return false;

@@ -89,7 +89,7 @@
   </component>
   <component name="TaskProjectConfiguration">
     <server type="YouTrack" url="https://tavda.myjetbrains.com/youtrack" />
-    <server type="Trello" url="https://api.trello.com" />
     <server type="YouTrack" url="http://127.0.0.1" />
+    <server type="Trello" url="https://api.trello.com" />
   </component>
 </project>

@@ -2,8 +2,12 @@ package com.moris.tavda;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -13,11 +17,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import androidx.annotation.Nullable;
@@ -127,6 +135,8 @@ public class ActivityWebview extends AppCompatActivity {
             return document.html();
         }
 
+        private Uri imageUri;
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -149,16 +159,67 @@ public class ActivityWebview extends AppCompatActivity {
                 floatingActionButton_share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent sendIntent = new Intent();
-                        sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, elements.select("h2").text()+"\n\n"+param_str+ "\n\n Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free\n");
-                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Тавда");
+                        int sharableImage = R.drawable.tavda1024;
+                        String s = elements.select("img").attr("src");
+                        if (s != "") {
+                            Picasso.get().load("http://www.adm-tavda.ru/" + elements.select("img").attr("src").replaceAll("http://www.adm-tavda.ru/", "").replaceAll("http://adm-tavda.ru/", "")).into(new Target() {
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                                }
+
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                        imageUri =  Uri.parse("http://www.adm-tavda.ru"+elements.select("img").attr("src"));
+                                    Intent sendIntent = new Intent();
+//                                sendIntent.setType("image/*");
+                                    sendIntent.setType("text/plain");
+                                    sendIntent.setAction(Intent.ACTION_SEND);
+                                    sendIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap));
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT,  param_str);
+//                                    sendIntent.putExtra(Intent.EXTRA_TEXT, param_str + "\n\n Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
+                                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, elements.select("h2").text());
+                                    sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 //                    sendIntent.putExtra(Intent.EXTRA_EMAIL  , new String[] { "ssss@where.com" });
 //                    sendIntent.putExtra(Intent.EXTRA_CONTENT_ANNOTATIONS, "EXTRA_CONTENT_ANNOTATIONS");
 //                    sendIntent.putExtra(Intent.EXTRA_SPLIT_NAME,"dddddd");
-                        sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Тавда.</h1><a href='https://play.google.com/store/apps/details?id=com.moris.tavda.free&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a></html></body>");
-                        sendIntent.setType("text/plan");
-                        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
+                                    sendIntent.putExtra(Intent.EXTRA_HTML_TEXT, "<html><body><h1>Отправлено из мобильного приложения Тавда.</h1><a href='https://play.google.com/store/apps/details?id=com.moris.tavda.free&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a></html></body>");
+                                    startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
+                                }
+                            });
+                        } else {
+                            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), sharableImage);
+                            String path = getExternalCacheDir() + "/tavda.jpg";
+                            java.io.OutputStream out;
+                            java.io.File file = new java.io.File(path);
+                            if (!file.exists()) {
+                                try {
+                                    out = new java.io.FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                                    out.flush();
+                                    out.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            path = file.getPath();
+                            imageUri = Uri.parse("file://" + path);
+                            ;
+                            Intent sendIntent = new Intent();
+                            sendIntent.setType("text/plain");
+                            sendIntent.setAction(android.content.Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, elements.select("h2").text() + "\n\n" + param_str + "\n\n Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
+//                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
+                            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Тавда");
+                            sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                            sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
+                        }
                     }
                 });
             } else {
@@ -170,6 +231,20 @@ public class ActivityWebview extends AppCompatActivity {
             lyt_progress.setAlpha(1.0f);
             swipeContainer.setRefreshing(false);
         }
+    }
+
+    public Uri getLocalBitmapUri(Bitmap bmp) {
+        Uri bmpUri = null;
+        try {
+            File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "tavda_" + System.currentTimeMillis() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.close();
+            bmpUri = Uri.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmpUri;
     }
 
     @Override
