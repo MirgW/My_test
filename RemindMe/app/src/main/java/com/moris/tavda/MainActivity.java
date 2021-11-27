@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -64,6 +66,16 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     boolean bound = false;
     //    ServiceConnection sConn;
     Intent intent;
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -145,7 +157,13 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         });
         initToolbar();
         initNavigationView();
-        initTabs();
+        if (isOnline(this)) {
+            initTabs();
+        } else {
+            intent = new Intent(this, internet.class);
+            startActivity(intent);
+        }
+
         //     ((TextView) findViewById(R.id.textView)).setText("sssss");
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -284,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 //                Log.d("LOG", "ssssssssssssssss");
-         //       Intent intent = new Intent(getApplicationContext(), Authentication.class);
+                //       Intent intent = new Intent(getApplicationContext(), Authentication.class);
 //            EditText editText = (EditText) findViewById(R.id.editText);
 //            String message = editText.getText().toString();
 //            intent.putExtra(EXTRA_MESSAGE, message);
@@ -296,38 +314,40 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager;
-        int pos;
-        boolean flag;
-        pos = tabLayout.getSelectedTabPosition();
-        Fragment fragment = getSupportFragmentManager().getFragments().get(pos);
-        if (!(fragment instanceof IOnBackPressed)) {
-            //     super.onBackPressed();
-            if (pos == 0) {
-                super.onBackPressed();
-            } else {
-                tabLayout.selectTab(tabLayout.getTabAt(0), true);
+        if (isOnline(this)) {
+            FragmentManager fragmentManager;
+            int pos;
+            boolean flag;
+            pos = tabLayout.getSelectedTabPosition();
+            Fragment fragment = getSupportFragmentManager().getFragments().get(pos);
+            if (!(fragment instanceof IOnBackPressed)) {
+                //     super.onBackPressed();
+                if (pos == 0) {
+                    super.onBackPressed();
+                } else {
+                    tabLayout.selectTab(tabLayout.getTabAt(0), true);
 //                getSupportFragmentManager().popBackStack();
-            }
-        } else {
-            flag = ((IOnBackPressed) fragment).onBackPressed();
-            if (flag) {
-                tabLayout.selectTab(tabLayout.getTabAt(0), true);
+                }
             } else {
- //               super.onBackPressed();
+                flag = ((IOnBackPressed) fragment).onBackPressed();
+                if (flag) {
+                    tabLayout.selectTab(tabLayout.getTabAt(0), true);
+                } else {
+                    //               super.onBackPressed();
+                }
             }
-        }
 //        int count = getSupportFragmentManager().getBackStackEntryCount();
 //        String tmpStr10 = String.valueOf(count);
 //        Toast toast = Toast.makeText(this, tmpStr10,Toast.LENGTH_LONG);
 //        toast.show();
-        //else tabLayout.selectTab(tabLayout.getTabAt(0),true);
+            //else tabLayout.selectTab(tabLayout.getTabAt(0),true);
 /*//
         if (getFragmentManager().getBackStackEntryCount() == 0) {
        //     this.finish();
         } else {
             getFragmentManager().popBackStack();
         }*/
+        } else super.onBackPressed();
     }
 
     private void initTabs() {
@@ -397,7 +417,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 */
     }
 
-//    @NonNull
+    //    @NonNull
 //    @Override
 //    public Lifecycle getLifecycle() {
 //        return lifecycleRegistry;
@@ -462,23 +482,23 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                         break;
                     case R.id.nav_share:
                         int sharableImage = R.drawable.tavda1024;
-                        Bitmap bitmap= BitmapFactory.decodeResource(getResources(), sharableImage);
-                        String path = getExternalCacheDir()+"/tavda.jpg";
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), sharableImage);
+                        String path = getExternalCacheDir() + "/tavda.jpg";
                         java.io.OutputStream out;
                         java.io.File file = new java.io.File(path);
-                        if(!file.exists()) {
+                        if (!file.exists()) {
                             try {
                                 out = new java.io.FileOutputStream(file);
                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                                 out.flush();
                                 out.close();
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                         path = file.getPath();
-                        imageUri =  Uri.parse("file://" + path);;
+                        imageUri = Uri.parse("file://" + path);
+                        ;
                         Intent sendIntent = new Intent();
                         sendIntent.setType("text/plain");
 //                        imageUri = Uri.parse("android.resource://" + getPackageName() + "/drawable/" + "tavda1024.png");

@@ -223,13 +223,17 @@ public class ActivityWebview extends AppCompatActivity {
                     }
                 });
             } else {
-                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", "<H3>Источник не доступен, проверьте связь</H3>", "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", "        <div>\n" +
+                        "          <p></p>\n" +
+                        "          <ul>\n" +
+                        "            <li>Источник не доступен, Проверьте подключение к Wi-Fi или сотовой сети</li>\n" +
+                        "          </ul>\n" +
+                        "        </div>", "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
             }
 //            hideProgressDialog();
-            final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
-            lyt_progress.setVisibility(View.INVISIBLE);
-            lyt_progress.setAlpha(1.0f);
+//            final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
             swipeContainer.setRefreshing(false);
+
         }
     }
 
@@ -288,6 +292,10 @@ public class ActivityWebview extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 wbNews.setVisibility(view.VISIBLE);
+                final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
+//                swipeContainer.setRefreshing(false);
+                lyt_progress.setVisibility(View.INVISIBLE);
+                lyt_progress.setAlpha(1.0f);
             }
         });
         mFullScreenContaine = (FrameLayout) findViewById(R.id.fullscreen_container);

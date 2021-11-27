@@ -111,8 +111,8 @@ public class NotificationUtils {
                     .build()
                     .load(imageUri)
                     .transform(transformation)
-                    .error(R.drawable.ic_action_name)
-                    .placeholder(R.drawable.ic_action_name)
+                    .error(R.drawable.baseline_title_blue_a700_24dp)
+                    .placeholder(R.drawable.baseline_title_blue_a700_24dp)
                     .get();
             if (bitmap != null) {
                 nb.setLargeIcon(bitmap)

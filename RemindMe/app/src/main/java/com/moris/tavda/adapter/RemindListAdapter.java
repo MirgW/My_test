@@ -6,11 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.paging.PagedListAdapter;
-import androidx.recyclerview.widget.AsyncDifferConfig;
-import androidx.recyclerview.widget.DiffUtil;
-
 import com.moris.tavda.BuildConfig;
 import com.moris.tavda.R;
 import com.squareup.picasso.Picasso;
@@ -18,6 +13,10 @@ import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.AsyncDifferConfig;
+import androidx.recyclerview.widget.DiffUtil;
 import dto.RemindDTO;
 
 public class RemindListAdapter extends PagedListAdapter<RemindDTO, RemindViewHolder> {
@@ -91,8 +90,8 @@ public class RemindListAdapter extends PagedListAdapter<RemindDTO, RemindViewHol
         holder.day.setText(item.getData_DTO());
         try {
             Picasso.get().load("http://www.adm-tavda.ru/" + item.getImg_DTO().replaceAll("http://www.adm-tavda.ru/", "").replaceAll("http://adm-tavda.ru/", ""))
-                    .placeholder(R.drawable.ic_action_name)
-                    .error(R.drawable.ic_action_name)
+                    .placeholder(R.drawable.baseline_title_blue_a700_24dp)
+                    .error(R.drawable.baseline_title_blue_a700_24dp)
                     .transform(transformation)
                     .into(holder.img);
         } catch (Exception e) {
