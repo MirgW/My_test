@@ -1,8 +1,5 @@
 package com.moris.tavda.Data;
 
-import androidx.annotation.NonNull;
-import androidx.paging.PageKeyedDataSource;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.paging.PageKeyedDataSource;
 import dto.RemindDTO;
 
 public class DTODataSource extends PageKeyedDataSource<Long, RemindDTO> {
@@ -35,7 +34,7 @@ public class DTODataSource extends PageKeyedDataSource<Long, RemindDTO> {
 
         } catch (IOException e) {
             e.printStackTrace();
-            data.add(new RemindDTO("Нет соединения с источником", "Источник не доступен", "", "Нет соеденения", "http://www.1.ru"));
+            data.add(new RemindDTO("Нет соединения с источником", "", "", "Проверьте подключение к Wi-Fi или сотовой сети", ""));
         }
 //        List<RemindDTO> result = data;
 callback.onResult(data,null,1L);
@@ -58,7 +57,8 @@ callback.onResult(data,null,1L);
 
         } catch (IOException e) {
             e.printStackTrace();
-            data.add(new RemindDTO("Нет соединения с источником", "Источник не доступен", "", "Нет соеденения", "http://www.1.ru"));
+//            data.add(new RemindDTO("Нет соединения с источником", "Источник не доступен", "", "Нет соеденения", "http://www.1.ru"));
+            data.add(new RemindDTO("Нет соединения с источником", "", "", "Проверьте подключение к Wi-Fi или сотовой сети", ""));
         }
 //        List<RemindDTO> result = data;
         Page=Page-1;
@@ -82,7 +82,8 @@ callback.onResult(data,null,1L);
 
         } catch (IOException e) {
             e.printStackTrace();
-            data.add(new RemindDTO("Нет соединения с источником", "Источник не доступен", "", "Нет соеденения", "http://www.1.ru"));
+//            data.add(new RemindDTO("Нет соединения с источником", "Источник не доступен", "", "Нет соеденения", "http://www.1.ru"));
+            data.add(new RemindDTO("Нет соединения с источником", "", "", "Проверьте подключение к Wi-Fi или сотовой сети", ""));
         }
 //        List<RemindDTO> result = data;
         Page=Page+1;

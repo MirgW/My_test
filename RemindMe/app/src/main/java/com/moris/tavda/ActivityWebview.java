@@ -182,7 +182,7 @@ public class ActivityWebview extends AppCompatActivity {
                                     sendIntent.setAction(Intent.ACTION_SEND);
                                     sendIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap));
                                     sendIntent.putExtra(Intent.EXTRA_TEXT,  param_str);
-//                                    sendIntent.putExtra(Intent.EXTRA_TEXT, param_str + "\n\n Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
+//                                    sendIntent.putExtra(Intent.EXTRA_TEXT, param_str + "\n\n Новости города Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
                                     sendIntent.putExtra(Intent.EXTRA_SUBJECT, elements.select("h2").text());
                                     sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 //                    sendIntent.putExtra(Intent.EXTRA_EMAIL  , new String[] { "ssss@where.com" });
@@ -213,8 +213,8 @@ public class ActivityWebview extends AppCompatActivity {
                             Intent sendIntent = new Intent();
                             sendIntent.setType("text/plain");
                             sendIntent.setAction(android.content.Intent.ACTION_SEND);
-                            sendIntent.putExtra(Intent.EXTRA_TEXT, elements.select("h2").text() + "\n\n" + param_str + "\n\n Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
-//                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Новости г. Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, elements.select("h2").text() + "\n\n" + param_str + "\n\n Новости города Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
+//                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Новости города Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
                             sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Тавда");
                             sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
                             sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
@@ -223,13 +223,17 @@ public class ActivityWebview extends AppCompatActivity {
                     }
                 });
             } else {
-                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", "<H3>Источник не доступен, проверьте связь</H3>", "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", "        <div>\n" +
+                        "          <p></p>\n" +
+                        "          <ul>\n" +
+                        "            <li>Источник не доступен, Проверьте подключение к Wi-Fi или сотовой сети</li>\n" +
+                        "          </ul>\n" +
+                        "        </div>", "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
             }
 //            hideProgressDialog();
-            final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
-            lyt_progress.setVisibility(View.INVISIBLE);
-            lyt_progress.setAlpha(1.0f);
+//            final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
             swipeContainer.setRefreshing(false);
+
         }
     }
 
@@ -288,6 +292,10 @@ public class ActivityWebview extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 wbNews.setVisibility(view.VISIBLE);
+                final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress);
+//                swipeContainer.setRefreshing(false);
+                lyt_progress.setVisibility(View.INVISIBLE);
+                lyt_progress.setAlpha(1.0f);
             }
         });
         mFullScreenContaine = (FrameLayout) findViewById(R.id.fullscreen_container);

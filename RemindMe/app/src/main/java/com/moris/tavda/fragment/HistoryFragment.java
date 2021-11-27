@@ -2,6 +2,7 @@ package com.moris.tavda.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import dto.RemindDTO;
 
-public class HistoryFragment extends AbstractTabFragment implements  ClickRecyclerAdapter.OnItemClickListener {
+public class HistoryFragment extends AbstractTabFragment implements ClickRecyclerAdapter.OnItemClickListener {
     private static final int LAYOUT = R.layout.fragment_history;
 
     //    public Element element;
@@ -108,6 +109,9 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
 //        toolbar1.setTitle("Cтраница 1"+ " " + String.valueOf(i));
         toolbar1.setTitle("Cтраница 1");
         toolbar1.inflateMenu(R.menu.menu_news);
+        final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progressM);
+        lyt_progress.setVisibility(View.VISIBLE);
+        lyt_progress.setAlpha(1.0f);
         toolbar1.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -119,7 +123,7 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
 //                            .setAction("Action", null).show();
 //                }
 ////                showProgressDialog();
-                final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progress);
+                final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progressM);
                 lyt_progress.setVisibility(View.VISIBLE);
                 lyt_progress.setAlpha(1.0f);
                 parse = new Parse();
@@ -138,7 +142,7 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
 //                            .setAction("Action", null).show();
 //                }
 ////                showProgressDialog();
-                final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progress);
+                final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progressM);
                 lyt_progress.setVisibility(View.VISIBLE);
                 lyt_progress.setAlpha(1.0f);
 //                parse = new Parse();
@@ -168,13 +172,13 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
 
 //        List<RemindDTO> remindDTOList = new ArrayList<>();
 //        parse = new Parse();
-        final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progress);
-        lyt_progress.setVisibility(View.VISIBLE);
-        lyt_progress.setAlpha(1.0f);
+        //      final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progressM);
+        //      lyt_progress.setVisibility(View.VISIBLE);
+        //      lyt_progress.setAlpha(1.0f);
 ////        showProgressDialog();
 //        parse.execute(0);
 //        adapter = new RemindListAdapter(getLayoutInflater(),data);
-  //      adapter = new ClickRecyclerAdapter(getLayoutInflater(), data, this);
+        //      adapter = new ClickRecyclerAdapter(getLayoutInflater(), data, this);
 
 //        LinearLayout linearLayout =  (LinearLayout) rv.findViewById(R.id.recyclerView);
 //
@@ -206,7 +210,7 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
         }
         rv.setLayoutManager(new LinearLayoutManager(context));
         rv.setHasFixedSize(false); // неизменый экран
-        adapter.setOnItemClickListener(new ClickRecyclerAdapter.OnItemClickListener(){
+        adapter.setOnItemClickListener(new ClickRecyclerAdapter.OnItemClickListener() {
 
             @Override
             public void onItemClick(View view, int position) {
@@ -230,9 +234,9 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
                 .build();
 
         LiveData<PagedList<RemindDTO>> pagedList = new LivePagedListBuilder<>(sourceFactory, config)
-                .setFetchExecutor (Executors.newSingleThreadExecutor())
+                .setFetchExecutor(Executors.newSingleThreadExecutor())
 //                .setFetchExecutor(Executors.newFixedThreadPool(1))
-              .build();
+                .build();
 //
 //        PagedList<RemindDTO> pagedList = new PagedList.Builder<>(dataSource, config)
 //                .setMainThreadExecutor(new MainThreadExecutor())
@@ -250,7 +254,7 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
             }
         });
 
-         pagedList.observe(getViewLifecycleOwner(), new Observer<PagedList<RemindDTO>>() {
+        pagedList.observe(getViewLifecycleOwner(), new Observer<PagedList<RemindDTO>>() {
             @Override
             public void onChanged(@Nullable PagedList<RemindDTO> pagedListDTO) {
                 //Log.d(TAG, "submit PagedList");
@@ -260,9 +264,51 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
             }
         });
 
+        class SimpleBlueDivider extends RecyclerView.ItemDecoration {
+//            private Drawable mDivider;
+
+            public SimpleBlueDivider(Context context) {
+//                mDivider = context.getResources().getDrawable(R.drawable.ic_account_check);
+            }
+
+            Boolean showLoadin(RecyclerView recycler) {
+                LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
+                int lastVisibleItemPos = manager.findLastVisibleItemPosition();
+                return lastVisibleItemPos != -1;
+//                        &&  lastVisibleItemPos >= recycler.getAdapter().getItemCount() - 1;
+            }
+
+            @Override
+            public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                if (showLoadin(parent)) {
+                    final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progressM);
+                    lyt_progress.setVisibility(View.GONE);
+                    lyt_progress.setAlpha(1.0f);
+                }
+
+/*                //divider padding give some padding whatever u want or disable
+               int left = parent.getPaddingLeft() + 80;
+                int right = parent.getWidth() - parent.getPaddingRight() - 30;
+
+                int childCount = parent.getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    View child = parent.getChildAt(i);
+
+                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+                    int top = child.getBottom() + params.bottomMargin;
+                    int bottom = top + mDivider.getIntrinsicHeight();
+
+                    mDivider.setBounds(left, top, right, bottom);
+                    mDivider.draw(c);
+                }*/
+            }
+
+        }
 
         // RecyclerView
         rv.setAdapter(adapter);
+        rv.addItemDecoration(new SimpleBlueDivider(context));
         return view;
     }
 
@@ -311,7 +357,7 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
         protected void onPostExecute(List<RemindDTO> remindDTOS) {
             super.onPostExecute(remindDTOS);
             rv.setAdapter(adapter);
-            final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progress);
+            final LinearLayout lyt_progress = (LinearLayout) view.findViewById(R.id.lyt_progressM);
             lyt_progress.setVisibility(View.INVISIBLE);
             lyt_progress.setAlpha(1.0f);
 ////            hideProgressDialog();
@@ -323,7 +369,8 @@ public class HistoryFragment extends AbstractTabFragment implements  ClickRecycl
 
     private List<RemindDTO> creatMockData() {
 //        List<RemindDTO> data = new ArrayList<>();
-        data.add(new RemindDTO("Нет соединения с источником", "Источник не доступен", "", "Нет соеденения", "http://www.1.ru"));
+//        data.add(new RemindDTO("Нет соединения с источником", "Источник не доступен", "", "Нет соеденения", "http://www.1.ru"));
+        data.add(new RemindDTO("Нет соединения с источником", "", "", "Проверьте подключение к Wi-Fi или сотовой сети", ""));
 //        data.add(new RemindDTO("Item 3", "zzzz", "", "lorem", "http://www.1.ru"));
 //        data.add(new RemindDTO("Item 4", "zzzz", "", "lorem", "http://www.1.ru"));
 //        data.add(new RemindDTO("Item 5", "zzzz", "", "lorem", "http://www.1.ru"));
