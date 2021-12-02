@@ -508,7 +508,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 //                        imageUri = Uri.parse("android.resource://" + getPackageName() + "/drawable/" + "tavda1024.png");
                         sendIntent.setAction(android.content.Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_TEXT, "" +
-                                "Новости города Тавда в мобильном приложении\n" +
+                                "Новости города Тавда в мобильном приложении\n\n" +
                                 "С помощью нашего приложения Вы сможете:\n" +
                                 "- Своевременно ознакомится с новостями города Тавды и Тавдинского района\n" +
                                 "- Смотреть новостные программы местного телевидения\n" +
