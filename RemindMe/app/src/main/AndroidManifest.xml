@@ -5,16 +5,18 @@
     <application
         android:name=".ExampleApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_town"
         android:installLocation="internalOnly"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">
+        <!--        android:debuggable="true"-->
+        <!--        tools:ignore="HardcodedDebugMode"-->
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,8 +29,7 @@
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait">
-        </activity> <!-- <activity -->
+            android:screenOrientation="portrait"></activity> <!-- <activity -->
         <!-- android:name=".Authentication" -->
         <!-- android:label="@string/label_emailpassword" -->
         <!-- android:windowSoftInputMode="stateAlwaysHidden" /> -->
@@ -41,7 +42,12 @@
             android:name=".CamActivity"
             android:configChanges="orientation|screenSize"
             android:label="CamActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- <activity -->
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+        <!-- <activity -->
         <!-- android:name=".SettingsActivity" -->
         <!-- android:label="@string/title_activity_settings" /> -->
         <!-- <receiver android:name=".servic.TavdaBroadReceiv"> -->
@@ -55,14 +61,21 @@
         <!-- android:name=".servic.TavdaService" -->
         <!-- android:enabled="true" -->
         <!-- android:exported="true" /> -->
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
     <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

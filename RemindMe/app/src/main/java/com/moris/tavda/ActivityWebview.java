@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -25,11 +24,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
@@ -179,6 +178,7 @@ public class ActivityWebview extends AppCompatActivity {
                                     Intent sendIntent = new Intent();
 //                                sendIntent.setType("image/*");
                                     sendIntent.setType("text/plain");
+                                    sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                     sendIntent.setAction(Intent.ACTION_SEND);
                                     sendIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap));
                                     sendIntent.putExtra(Intent.EXTRA_TEXT,  param_str);
@@ -208,8 +208,8 @@ public class ActivityWebview extends AppCompatActivity {
                                 }
                             }
                             path = file.getPath();
-                            imageUri = Uri.parse("file://" + path);
-                            ;
+//                            imageUri = Uri.parse("file://" + path);
+                            imageUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
                             Intent sendIntent = new Intent();
                             sendIntent.setType("text/plain");
                             sendIntent.setAction(android.content.Intent.ACTION_SEND);
@@ -217,6 +217,7 @@ public class ActivityWebview extends AppCompatActivity {
 //                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Новости города Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free \n");
                             sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Тавда");
                             sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                             startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.app_name)));
                         }
@@ -239,15 +240,33 @@ public class ActivityWebview extends AppCompatActivity {
 
     public Uri getLocalBitmapUri(Bitmap bmp) {
         Uri bmpUri = null;
-        try {
-            File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "tavda_" + System.currentTimeMillis() + ".png");
+
+        String path = getExternalCacheDir() + "/tavda"+ System.currentTimeMillis()+".jpg";
+        java.io.OutputStream out;
+        java.io.File file = new java.io.File(path);
+        if (!file.exists()) {
+            try {
+                out = new java.io.FileOutputStream(file);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        path = file.getPath();
+        bmpUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
+/*        try {
+//            File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "tavda_" + System.currentTimeMillis() + ".png");
+            File file = new File(getExternalCacheDir(), "tavda_" + System.currentTimeMillis() + ".png");
             FileOutputStream out = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
-            bmpUri = Uri.fromFile(file);
+//            bmpUri = Uri.fromFile(file);
+            bmpUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         return bmpUri;
     }
 

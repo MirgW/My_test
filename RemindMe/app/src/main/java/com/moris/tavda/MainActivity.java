@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -38,6 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -497,13 +499,23 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                             }
                         }
                         path = file.getPath();
-                        imageUri = Uri.parse("file://" + path);
+//                        imageUri = Uri.parse("file://" + path);
+                        imageUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
                         ;
                         Intent sendIntent = new Intent();
                         sendIntent.setType("text/plain");
+                        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 //                        imageUri = Uri.parse("android.resource://" + getPackageName() + "/drawable/" + "tavda1024.png");
                         sendIntent.setAction(android.content.Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Новости города Тавда в мобильном приложении https://play.google.com/store/apps/details?id=com.moris.tavda.free");
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "" +
+                                "Новости города Тавда в мобильном приложении\n" +
+                                "С помощью нашего приложения Вы сможете:\n" +
+                                "- Своевременно ознакомится с новостями города Тавды и Тавдинского района\n" +
+                                "- Смотреть новостные программы местного телевидения\n" +
+                                "- Получать уведомления от городских служб\n" +
+                                "- Быть в курсе предстоящих городских мероприятиях\n" +
+                                "- Делится новостями в социальных сетях.\n" +
+                                " https://play.google.com/store/apps/details?id=com.moris.tavda.free");
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Новости города Тавда в мобильном приложении");
                         sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
 //                        sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
