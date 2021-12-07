@@ -61,11 +61,11 @@
                 android:layout_below="@id/title"
                 android:layout_marginLeft="96dp"
                 android:layout_marginStart="96dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/work_sans_bold"
                 android:text="Чт, 26/07/2018 - 15:24"
                 android:textColor="#232F34"
-                android:textSize="8sp" />
+                android:textSize="9sp" />
 
             <TextView
                 android:id="@+id/doc"
