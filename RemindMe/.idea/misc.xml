@@ -17,7 +17,7 @@
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/activity_authentication.xml" value="0.16893115942028986" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/activity_cam.xml" value="0.2" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/activity_internet.xml" value="0.22" />
-        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/activity_maun.xml" value="0.1" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/activity_maun.xml" value="0.25" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/activity_splash.xml" value="0.20923076923076922" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/activity_web.xml" value="0.16893115942028986" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/fragment_covid.xml" value="0.25" />
@@ -25,7 +25,7 @@
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/fragment_history.xml" value="0.25" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/fragment_idea.xml" value="0.1921875" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/navigation_header.xml" value="0.25" />
-        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/remaind_item.xml" value="0.5" />
+        <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/remaind_item.xml" value="0.22" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/toolbar.xml" value="0.1539855072463768" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/layout/toolbar_setup.xml" value="0.1539855072463768" />
         <entry key="..\:/W/_Android_/My_Test/RemindMe/app/src/main/res/menu/menu.xml" value="0.1765625" />
@@ -39,7 +39,7 @@
     </option>
   </component>
   <component name="JavadocGenerationManager">
-    <option name="OTHER_OPTIONS" value="" />
+    <option name="OUTPUT_DIRECTORY" value="W:/W" />
   </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="androidx.annotation.Nullable" />

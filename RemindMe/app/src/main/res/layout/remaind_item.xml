@@ -1,88 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_marginBottom="0dp"
-    android:layout_marginTop="0dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    >
+    android:layout_marginTop="0dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="1dp"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false"
-        app:contentPadding="5dp"
-        app:cardCornerRadius="10dp"
-        >
+        app:contentPadding="5dp">
 
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/item_img"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/baseline_title_blue_a700_24dp"
-                app:civ_border_color="#5c6bc0"
-                app:civ_border_width="1dp" />
-
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="96dp"
                 android:layout_marginStart="96dp"
-                android:fontFamily="@font/work_sans_bold"
+                android:textStyle="bold"
                 android:maxLines="4"
                 android:paddingBottom="8dp"
                 android:text="JJJJJJJJ"
                 android:textColor="#232F34"
-                android:textSize="12sp" />
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/data"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
-                android:layout_marginLeft="96dp"
                 android:layout_marginStart="96dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/work_sans_bold"
                 android:text="Чт, 26/07/2018 - 15:24"
                 android:textColor="#232F34"
-                android:textSize="9sp" />
+                android:textSize="9sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
 
             <TextView
                 android:id="@+id/doc"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="2dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="90dp"
-                android:fontFamily="@font/rubik_regular"
+                android:layout_marginTop="8dp"
                 android:text="TEST"
                 android:textColor="#232F34"
-                android:textSize="12sp"
-                android:theme="@style/CardView.Light" />
-        </RelativeLayout>
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:theme="@style/CardView.Light"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/barrier" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="data,item_img"
+                card_view:layout_editor_absoluteY="80dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/item_img"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/baseline_title_blue_a700_24dp"
+                app:civ_border_color="#5c6bc0"
+                app:civ_border_width="1dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.cardview.widget.CardView>
