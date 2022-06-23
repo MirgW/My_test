@@ -13,6 +13,7 @@ import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -358,20 +359,24 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         viewPager.setAdapter(adapter);
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_blue_grey_900_24dp);
 //        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_list_bulleted_black_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_stars_black_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.baseline_navigation_grey_900_24dp);
 //        tabLayout.getTabAt(3).setIcon(R.drawable.ic_notifications_black_24dp);
-        tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
 //        tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+             tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+        }
 //        tabLayout.getTabAt(3).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tab.getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    tab.getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
+                }
 //                ViewAnimation.fadeOutIn(nested_scroll_view);
                 int pos;
                 pos = tabLayout.getSelectedTabPosition();
@@ -400,7 +405,9 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                tab.getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    tab.getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
