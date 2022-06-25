@@ -46,7 +46,7 @@ public class SimpleWebViewClientImpl extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
         super.onReceivedError(view, request, error);
-        String errorHtml = "<html><body><h2>Нет соединения</h2></body></html>";
+        String errorHtml = "<html><body><h2>Нет соединения с интернетом</h2></body></html>";
         view.loadDataWithBaseURL(null, errorHtml, "text/html", "UTF-8", null);
     }
 

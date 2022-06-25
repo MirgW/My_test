@@ -53,8 +53,8 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         tabs = new HashMap<>();
         tabs.put(0, HistoryFragment.getInstance(context));
 //        tabs.put(1, IdeasFragment.getInstance(context));
-        tabs.put(1, TODOFragment.getInstance(context));
-        tabs.put(2, BirthdaysFragment.getInstance(context));
+        tabs.put(1, BirthdaysFragment.getInstance(context));
+        tabs.put(2, TODOFragment.getInstance(context));
 //        tabs.put(3, BirthdaysFragment.getInstance(context));
     }
 }
