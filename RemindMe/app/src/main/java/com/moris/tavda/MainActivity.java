@@ -1,6 +1,7 @@
 package com.moris.tavda;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -315,42 +317,61 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         });
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onBackPressed() {
-        if (isOnline(this)) {
-            FragmentManager fragmentManager;
-            int pos;
-            boolean flag;
-            pos = tabLayout.getSelectedTabPosition();
-            Fragment fragment = getSupportFragmentManager().getFragments().get(pos);
-            if (!(fragment instanceof IOnBackPressed)) {
-                //     super.onBackPressed();
-                if (pos == 0) {
-                    super.onBackPressed();
-                } else {
-                    tabLayout.selectTab(tabLayout.getTabAt(0), true);
+        DrawerLayout mDrawerLayout;
+//        NavigationView navigationView = findViewById(R.id.navigation);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerdayout);
+        if (mDrawerLayout.isOpen()) {
+            mDrawerLayout.closeDrawers();
+        } else {
+            if (isOnline(this)) {
+                FragmentManager fragmentManager;
+                int pos;
+                boolean flag;
+                pos = tabLayout.getSelectedTabPosition();
+                List<Fragment> list = getSupportFragmentManager().getFragments();
+//            FragmentManager.BackStackEntry fragment = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1);
+                Fragment fragment=null;
+//                list.get(1).isMenuVisible()
+//                list.get(0).getClass().getSimpleName()
+                for(Fragment f : list){
+                    if(f != null && f.isMenuVisible())
+                        fragment=f;
+                }
+
+                if (!(fragment instanceof IOnBackPressed)) {
+                    //     super.onBackPressed();
+                    if (pos == 0) {
+                        super.onBackPressed();
+                    } else {
+                        tabLayout.selectTab(tabLayout.getTabAt(0), true);
 //                getSupportFragmentManager().popBackStack();
-                }
-            } else {
-                flag = ((IOnBackPressed) fragment).onBackPressed();
-                if (flag) {
-                    tabLayout.selectTab(tabLayout.getTabAt(0), true);
+                    }
                 } else {
-                    //               super.onBackPressed();
+                    flag = ((IOnBackPressed) fragment).onBackPressed();
+                    if (flag) {
+                        tabLayout.selectTab(tabLayout.getTabAt(0), true);
+                    } else {
+                        //               super.onBackPressed();
+                    }
                 }
-            }
 //        int count = getSupportFragmentManager().getBackStackEntryCount();
 //        String tmpStr10 = String.valueOf(count);
 //        Toast toast = Toast.makeText(this, tmpStr10,Toast.LENGTH_LONG);
 //        toast.show();
-            //else tabLayout.selectTab(tabLayout.getTabAt(0),true);
+                //else tabLayout.selectTab(tabLayout.getTabAt(0),true);
 /*//
         if (getFragmentManager().getBackStackEntryCount() == 0) {
        //     this.finish();
         } else {
             getFragmentManager().popBackStack();
         }*/
-        } else super.onBackPressed();
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 
     private void initTabs() {
@@ -362,11 +383,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_blue_grey_900_24dp);
 //        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_list_bulleted_black_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.baseline_navigation_grey_900_24dp);
-//        tabLayout.getTabAt(3).setIcon(R.drawable.ic_notifications_black_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.baseline_error_outline_grey_900_24dp);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
 //        tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
-             tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+            tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+            tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
         }
 //        tabLayout.getTabAt(3).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
 

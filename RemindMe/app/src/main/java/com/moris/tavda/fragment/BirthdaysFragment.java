@@ -8,16 +8,27 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
+import com.moris.tavda.IOnBackPressed;
 import com.moris.tavda.R;
 import com.moris.tavda.SimpleWebViewClientImpl;
 
-public class BirthdaysFragment extends AbstractTabFragment {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+public class BirthdaysFragment extends AbstractTabFragment implements IOnBackPressed {
     private static final int LAYOUT =R.layout.fragment_covid;
     private WebView wv;
-
+    @Override
+    public boolean onBackPressed() {
+        if (wv.canGoBack()) {
+            wv.goBack();
+            return false;
+        } else return true;
+//        int count = getFragmentManager().getBackStackEntryCount();
+//        String tmpStr10 = String.valueOf(count);
+//        Toast toast = Toast.makeText(context, tmpStr10, Toast.LENGTH_LONG);
+//        toast.show();
+    }
 
     @Nullable
     @Override

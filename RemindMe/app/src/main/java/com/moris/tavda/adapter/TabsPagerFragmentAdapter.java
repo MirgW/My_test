@@ -3,6 +3,7 @@ package com.moris.tavda.adapter;
 import android.content.Context;
 
 import com.moris.tavda.fragment.AbstractTabFragment;
+import com.moris.tavda.fragment.BirthdaysFragment;
 import com.moris.tavda.fragment.HistoryFragment;
 import com.moris.tavda.fragment.TODOFragment;
 
@@ -53,6 +54,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         tabs.put(0, HistoryFragment.getInstance(context));
 //        tabs.put(1, IdeasFragment.getInstance(context));
         tabs.put(1, TODOFragment.getInstance(context));
+        tabs.put(2, BirthdaysFragment.getInstance(context));
 //        tabs.put(3, BirthdaysFragment.getInstance(context));
     }
 }
