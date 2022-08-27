@@ -1,8 +1,15 @@
 package com.moris.tavda;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +19,14 @@ import android.widget.ImageView;
 import com.moris.tavda.Data.NetworkClient;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -29,6 +41,23 @@ public class CamActivity extends AppCompatActivity {
     private ImageView imageView;
     private Button buttSend;
     private EditText editText;
+    String currentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
 
     @Override
     protected void onStart() {
@@ -57,16 +86,62 @@ public class CamActivity extends AppCompatActivity {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             // Фотка сделана, извлекаем картинку
             //selectedImage = data.getExtras().get("data");
-            thumbnailBitmap = (Bitmap) data.getExtras().get("data");
+            int targetW = imageView.getWidth();
+            int targetH = imageView.getHeight();
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+           // int scaleFactor = Math.max(1, Math.min(photoW/targetW, photoH/targetH));
+            int scaleFactor = 1;
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+            thumbnailBitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
             imageView.setImageBitmap(thumbnailBitmap);
+
+//            Bundle extras = data.getExtras();
+//            thumbnailBitmap = (Bitmap) extras.get("data");
+//            Bitmap scaledImage = scaleBitmap(thumbnailBitmap, 460, 230);
+//            imageView.setImageBitmap(thumbnailBitmap);
+
+            //thumbnailBitmap = (Bitmap) data.getExtras().get("data");
+            //imageView.setImageBitmap(thumbnailBitmap);
 
         }
     }
 
     //    http://tavda.ru:8070/index.php?action=insert&text=dcgfdgdgf
+    @SuppressLint("QueryPermissionsNeeded")
     public void onClick(View v) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String[] permissionRequest = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            requestPermissions(permissionRequest, 2323);
+        }
+        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+            //if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this.getApplication(),
+                        "com.moris.tavda.fileprovider",
+                        photoFile);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(cameraIntent, 0);
+            }
+        }
     }
 
     private void uploadToServer() {

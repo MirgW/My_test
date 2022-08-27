@@ -48,7 +48,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
             android:src="@drawable/ic_report_problem_white_24dp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:backgroundTint="#f44336"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

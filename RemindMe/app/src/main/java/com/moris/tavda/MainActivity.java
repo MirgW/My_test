@@ -407,7 +407,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 //                setSupportActionBar(toolbar);
                 switch (pos) {
                     case 0:
-//                        fab.show();
+                        fab.show();
                         toolbar.setTitle("Тавда");
                         break;
                     case 1:
