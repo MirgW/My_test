@@ -78,4 +78,23 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="62dp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="522dp">
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="304dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="19dp"
+        android:hint="hint"
+        android:textColorHint="#757575"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
