@@ -256,7 +256,7 @@ public class ActivityWebview extends AppCompatActivity {
             }
         }
         path = file.getPath();
-        bmpUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
+        bmpUri = FileProvider.getUriForFile(ExampleApplication.getContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
 /*        try {
 //            File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "tavda_" + System.currentTimeMillis() + ".png");
             File file = new File(getExternalCacheDir(), "tavda_" + System.currentTimeMillis() + ".png");

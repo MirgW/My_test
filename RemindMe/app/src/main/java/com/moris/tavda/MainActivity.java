@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
+ExampleApplication.setContext(this);
 //        lifecycleRegistry = new LifecycleRegistry(this);
 //        lifecycleRegistry.markState(Lifecycle.State.CREATED);
         int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
@@ -529,7 +529,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                         }
                         path = file.getPath();
 //                        imageUri = Uri.parse("file://" + path);
-                        imageUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
+                        imageUri = FileProvider.getUriForFile(ExampleApplication.getContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
                         ;
                         Intent sendIntent = new Intent();
                         sendIntent.setType("text/plain");

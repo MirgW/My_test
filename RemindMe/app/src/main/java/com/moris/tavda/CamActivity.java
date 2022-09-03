@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.moris.tavda.Data.NetworkClient;
 
@@ -78,6 +79,10 @@ public class CamActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView3);
         buttSend = findViewById(R.id.button2);
         editText = findViewById(R.id.editText2);
+        final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress1);
+//        final LinearLayout lyt_progress1 = (LinearLayout) findViewById(R.id.);
+        lyt_progress.setVisibility(View.INVISIBLE);
+        lyt_progress.setAlpha(1.0f);
     }
 
     @Override
@@ -96,7 +101,7 @@ public class CamActivity extends AppCompatActivity {
             int photoH = bmOptions.outHeight;
 
             // Determine how much to scale down the image
-           // int scaleFactor = Math.max(1, Math.min(photoW/targetW, photoH/targetH));
+            // int scaleFactor = Math.max(1, Math.min(photoW/targetW, photoH/targetH));
             int scaleFactor = 1;
             // Decode the image file into a Bitmap sized to fill the View
             bmOptions.inJustDecodeBounds = false;
@@ -136,7 +141,7 @@ public class CamActivity extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this.getApplication(),
-                        "com.moris.tavda.fileprovider",
+                        BuildConfig.APPLICATION_ID + ".provider",
                         photoFile);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(cameraIntent, 0);
@@ -175,7 +180,11 @@ public class CamActivity extends AppCompatActivity {
                 buttSend.setText(Integer.toString(kod));
                 if (response.isSuccessful()) {
                     buttSend.setText("ОК");
-                    buttSend.setEnabled(false);
+//                    buttSend.setEnabled(false);
+                    final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress1);
+//                swipeContainer.setRefreshing(false);
+                    lyt_progress.setVisibility(View.INVISIBLE);
+                    lyt_progress.setAlpha(1.0f);
                 }
 
             }
@@ -188,6 +197,9 @@ public class CamActivity extends AppCompatActivity {
     }
 
     public void onClickPost(View v) {
+        final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress1);
+        lyt_progress.setVisibility(View.VISIBLE);
+        lyt_progress.setAlpha(1.0f);
         uploadToServer();
     }
 }
