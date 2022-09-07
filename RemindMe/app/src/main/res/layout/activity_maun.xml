@@ -5,7 +5,6 @@
     android:id="@+id/drawerdayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainBackground"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +48,7 @@
             android:layout_marginBottom="32dp"
             android:src="@drawable/ic_report_problem_white_24dp"
             android:visibility="visible"
-            app:backgroundTint="#f44336"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -66,16 +65,16 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:background="@android:color/white"
+            android:layout_height="48dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_scrollFlags="enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+
             app:tabGravity="fill"
-            app:tabIndicatorColor="#FF4081"
-            app:tabIndicatorHeight="0dp"
+
+
             app:tabMode="fixed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

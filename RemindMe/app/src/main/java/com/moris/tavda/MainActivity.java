@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -109,7 +108,7 @@ ExampleApplication.setContext(this);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_CODE_PERMISSION_INTERNET);
         }
-        setTheme(R.style.AppDefault);
+       setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         Intent intentWeb = getIntent();
         String fileName = intentWeb.getStringExtra("url_DTO");
@@ -137,7 +136,8 @@ ExampleApplication.setContext(this);
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Сообшить о проблеме", Snackbar.LENGTH_LONG)
-                        .setActionTextColor(Color.CYAN)
+//                        .setActionTextColor(Color.CYAN)
+                        .setAnchorView(fab)
                         .setAction("Начать", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

@@ -2,9 +2,9 @@
 <resources>
 
     <style name="AppDefault" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorDark</item>
-        <item name="android:colorControlNormal">@color/colorWhite</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorDark</item>-->
+<!--        <item name="android:colorControlNormal">@color/colorWhite</item>-->
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
     </style>
 </resources>
