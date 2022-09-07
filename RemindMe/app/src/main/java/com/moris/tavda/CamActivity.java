@@ -13,10 +13,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.moris.tavda.Data.NetworkClient;
 
 import java.io.ByteArrayOutputStream;
@@ -41,7 +41,7 @@ public class CamActivity extends AppCompatActivity {
     Bitmap thumbnailBitmap;
     private ImageView imageView;
     private Button buttSend;
-    private EditText editText;
+    private TextInputEditText editText;
     String currentPhotoPath;
 
     private File createImageFile() throws IOException {
@@ -78,7 +78,7 @@ public class CamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cam);
         imageView = findViewById(R.id.imageView3);
         buttSend = findViewById(R.id.button2);
-        editText = findViewById(R.id.editText2);
+        editText = findViewById(R.id.username);
         final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress1);
 //        final LinearLayout lyt_progress1 = (LinearLayout) findViewById(R.id.);
         lyt_progress.setVisibility(View.INVISIBLE);

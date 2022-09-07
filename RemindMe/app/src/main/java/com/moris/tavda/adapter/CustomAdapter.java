@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.moris.tavda.R;
 
@@ -51,7 +50,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 @Override
                 public void onClick(View view) {
                     // display a toast with person name on item click
-                    Toast.makeText(context, Topics.get(position), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, Topics.get(position), Toast.LENGTH_SHORT).show();
                 }
             });
     }

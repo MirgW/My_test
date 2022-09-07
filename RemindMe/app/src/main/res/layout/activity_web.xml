@@ -55,7 +55,6 @@
         android:actionProviderClass="android.support.v7.widget.ShareActionProvider"
 
         android:src="@android:drawable/ic_menu_share"
-        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
