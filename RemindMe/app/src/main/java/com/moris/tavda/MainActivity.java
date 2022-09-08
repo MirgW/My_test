@@ -21,8 +21,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.moris.tavda.adapter.TabsPagerFragmentAdapter;
@@ -108,7 +111,7 @@ ExampleApplication.setContext(this);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_CODE_PERMISSION_INTERNET);
         }
-       setTheme(R.style.AppDefault);
+       setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         Intent intentWeb = getIntent();
         String fileName = intentWeb.getStringExtra("url_DTO");
@@ -131,6 +134,63 @@ ExampleApplication.setContext(this);
 //        if (year < 2021) {
         setContentView(LAYOUT);
 //        }
+
+        BottomAppBar bar = findViewById(R.id.bottomAppBar);
+        FloatingActionButton fab2 = findViewById(R.id.bottomApp);
+//
+//        class BottomAppBarCutCornersTopEdge extends BottomAppBarTopEdgeTreatment {
+//
+//            private final float fabMargin;
+//            private final float cradleVerticalOffset;
+//
+//            BottomAppBarCutCornersTopEdge(
+//                    float fabMargin, float roundedCornerRadius, float cradleVerticalOffset) {
+//                super(fabMargin, roundedCornerRadius, cradleVerticalOffset);
+//                this.fabMargin = fabMargin;
+//                this.cradleVerticalOffset = cradleVerticalOffset;
+//            }
+//
+//            @Override
+//            @SuppressWarnings("RestrictTo")
+//            public void getEdgePath(float length, float center, float interpolation, ShapePath shapePath) {
+//                float fabDiameter = 100f;
+////                float fabDiameter = getFabDiameter();
+//                if (fabDiameter == 0) {
+//                    shapePath.lineTo(length, 0);
+//                    return;
+//                }
+//
+//                float diamondSize = fabDiameter / 1f;
+//                float middle = center + 10f;
+////                float middle = center + getHorizontalOffset();
+//
+//                float verticalOffsetRatio = cradleVerticalOffset / diamondSize;
+//                if (verticalOffsetRatio >= 1.0f) {
+//                    shapePath.lineTo(length, 0);
+//                    return;
+//                }
+//
+//                shapePath.lineTo(middle - (fabMargin + diamondSize), 0);
+//                shapePath.lineTo(middle - fabDiameter/3, (diamondSize - cradleVerticalOffset + fabMargin) * interpolation);
+//                shapePath.lineTo(middle + fabDiameter/3, (diamondSize - cradleVerticalOffset + fabMargin) * interpolation);
+//                shapePath.lineTo(middle + (fabMargin + diamondSize), 0);
+//                shapePath.lineTo(length, 0);
+//            }
+//
+//        }
+
+
+        BottomAppBarTopEdgeTreatment topEdge = new BottomAppBarCutCornersTopEdge(
+                bar.getFabCradleMargin(),
+                bar.getFabCradleRoundedCornerRadius(),
+                bar.getCradleVerticalOffset());
+        MaterialShapeDrawable babBackground = (MaterialShapeDrawable) bar.getBackground();
+        //It requires 1.1.0-alpha10
+        babBackground.setShapeAppearanceModel(
+                babBackground.getShapeAppearanceModel()
+                        .toBuilder()
+                        .setTopEdge(topEdge)
+                        .build());
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

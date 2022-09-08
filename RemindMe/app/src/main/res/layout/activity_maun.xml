@@ -6,53 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-
+    
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/viewPager"
         app:layout_constraintTop_toTopOf="@+id/viewPager">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:gravity="top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
-            android:src="@drawable/ic_report_problem_white_24dp"
-            android:visibility="visible"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+        
         <View
             android:id="@+id/view"
             android:layout_width="0dp"
@@ -61,30 +22,107 @@
             app:layout_constraintBottom_toTopOf="@+id/tabLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
+        
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:gravity="top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top" />
+        </com.google.android.material.appbar.AppBarLayout>
+        
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_report_problem_white_24dp"
+            android:visibility="invisible"
+            app:removeEmbeddedFabElevation="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="0dp"
             android:layout_height="48dp"
-
+            
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_scrollFlags="enterAlways"
-
+            
             app:tabGravity="fill"
-
-
+            
+            
             app:tabMode="fixed" />
-
+    
     </androidx.constraintlayout.widget.ConstraintLayout>
+    
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <!-- Note: A RecyclerView can also be used -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="100dp">
+            
+            <!-- Scrollable content -->
+        
+        </androidx.core.widget.NestedScrollView>
+        
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:fabAlignmentMode="end"
+            app:fabAnchorMode="cradle"
+            app:hideOnScroll="true"
+            app:cornerFamily="cut"
 
+            app:navigationIcon="@drawable/baseline_contact_mail_white_24dp" />
+        
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bottomApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@id/bottomAppBar"
+            app:shapeAppearanceOverlay="@style/Fab1"
+            app:srcCompat="@drawable/ic_perm_data_setting_blue_grey_900_24dp"
+            android:contentDescription="TODO" />
+    
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/menu_navigation"
         app:headerLayout="@layout/navigation_header"
-        />
+        app:menu="@menu/menu_navigation" />
 </androidx.drawerlayout.widget.DrawerLayout>
