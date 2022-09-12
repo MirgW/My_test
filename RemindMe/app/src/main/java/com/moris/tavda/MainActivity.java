@@ -108,7 +108,7 @@ ExampleApplication.setContext(this);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_CODE_PERMISSION_INTERNET);
         }
-       setTheme(R.style.AppDefault);
+       setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         Intent intentWeb = getIntent();
         String fileName = intentWeb.getStringExtra("url_DTO");
