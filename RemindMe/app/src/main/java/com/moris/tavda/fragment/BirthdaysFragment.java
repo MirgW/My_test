@@ -100,12 +100,12 @@ public class BirthdaysFragment extends AbstractTabFragment {
 //                            ListAdapter adapter = new ListViewAdapter(getApplicationContext(),R.layout.row,R.id.textViewName,listItems);
 //                            listView.setAdapter(adapter);
                             for (int i = 0; i < userArray.length(); i++) {
-                                JSONArray jsonRow = userArray.getJSONArray(i);
-                                String value = jsonRow.get(0).toString();
-                                Topics.add(jsonRow.get(0).toString());
-                                Nodes.add(jsonRow.get(1).toString());
-                                time1s.add(jsonRow.get(2).toString());
-                                time2s.add(jsonRow.get(3).toString());
+                                JSONObject jsonRow = userArray.getJSONObject(i);
+                                String value = jsonRow.get("id").toString();
+                                Topics.add(jsonRow.get("title").toString());
+                                Nodes.add(jsonRow.get("text").toString());
+                                time1s.add(jsonRow.get("start_time").toString());
+                                time2s.add(jsonRow.get("end_time").toString());
                                 Log.d("JsonParse", "->" + value);
 /*                                for (int j = 0; j < jsonRow.length(); j++) {
                                     String value = jsonRow.get(j).toString();

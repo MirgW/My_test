@@ -174,17 +174,19 @@ public class CamActivity extends AppCompatActivity {
         Call call = uploadAPIs.uploadImage(action, text, part);
 
         call.enqueue(new Callback() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call call, Response response) {
                 int kod = response.code();
-                buttSend.setText(Integer.toString(kod));
+                final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress1);
+//                swipeContainer.setRefreshing(false);
+                lyt_progress.setVisibility(View.INVISIBLE);
+                lyt_progress.setAlpha(1.0f);
                 if (response.isSuccessful()) {
                     buttSend.setText("ОК");
 //                    buttSend.setEnabled(false);
-                    final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress1);
-//                swipeContainer.setRefreshing(false);
-                    lyt_progress.setVisibility(View.INVISIBLE);
-                    lyt_progress.setAlpha(1.0f);
+                } else {
+                    buttSend.setText("Ошибка Отправки"); // + Integer.toString(kod)
                 }
 
             }
