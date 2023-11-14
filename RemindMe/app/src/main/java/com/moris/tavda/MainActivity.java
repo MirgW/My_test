@@ -407,7 +407,7 @@ ExampleApplication.setContext(this);
 //                setSupportActionBar(toolbar);
                 switch (pos) {
                     case 0:
-                        fab.show();
+//                        fab.show();
                         toolbar.setTitle("Тавда");
                         break;
                     case 1:

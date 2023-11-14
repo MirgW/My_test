@@ -12,11 +12,12 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
+        
         <com.moris.tavda.ObservableWebView
             android:id="@+id/webview"
             android:layout_width="0dp"
@@ -43,18 +44,18 @@
 <!--        app:backgroundTint="@color/colorPrimary"-->
 <!--        app:layout_constraintBottom_toBottomOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent" />-->
-
+    
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
         android:actionProviderClass="android.support.v7.widget.ShareActionProvider"
-
-        android:src="@android:drawable/ic_menu_share"
+    
+        android:src="?attr/actionModeShareDrawable"
+        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -70,7 +71,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
-
+    
         <ProgressBar
             style="@android:style/Widget.DeviceDefault.ProgressBar"
             android:layout_width="match_parent"

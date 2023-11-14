@@ -9,6 +9,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#191919</color>
     <color name="seed">#ff0000</color>
+    <color name="m3_button_background_color_selector">#0277BD</color>
     <color name="md_theme_light_primary">#C00100</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
     <color name="md_theme_light_primaryContainer">#FFDAD4</color>
