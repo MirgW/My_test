@@ -89,7 +89,7 @@ public class NotificationUtils {
         intent.putExtra("url_DTO", url_DTO);
         Uri data1 = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME));
         intent.setData(data1);
-        PendingIntent notificationIntent = PendingIntent.getActivity(context, lastId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent notificationIntent = PendingIntent.getActivity(context, lastId, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 //        NotificationCompat.Builder nb = new NotificationCompat.Builder(context)
         String imageUri = "http://www.adm-tavda.ru/" + url_not.replaceAll("http://www.adm-tavda.ru/", "").replaceAll("http://adm-tavda.ru/", "");
 
