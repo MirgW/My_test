@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +17,7 @@ import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -117,7 +119,7 @@ public class NotificationUtils {
             if (bitmap != null) {
                 nb.setLargeIcon(bitmap)
                         .setStyle(new NotificationCompat.BigPictureStyle()
-                                .bigLargeIcon(null) //
+                                //      .bigLargeIcon(bitmap) //
                                 .bigPicture(bitmap)
                                 .setSummaryText(message));
             }

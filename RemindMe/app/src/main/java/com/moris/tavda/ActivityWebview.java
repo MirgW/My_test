@@ -152,11 +152,21 @@ public class ActivityWebview extends AppCompatActivity {
                         "    left: 0;\n" +
                         "    width: 100%;\n" +
                         "}" +
-                        "</style>\n<div>" + elements.toString().replace("<span class=\"art-postauthoricon\">admin</span>","<p><a href=\""+param_str+"\"><strong>Источник новости: </strong>www.adm-tavda.ru</a></p>") + "</div>" + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table></body><html>";
+                        "</style>\n<div>" + elements.toString().replace("<span class=\"art-postauthoricon\">admin</span>", "<p><a href=\"" + param_str + "\"><strong>Источник новости: </strong>www.adm-tavda.ru</a></p>") + "</div>" + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table></body><html>";
 //                        "</style>\n<div>" + elements.toString().replace("<span class=\"art-postauthoricon\">admin</span>","<p><a href=\""+param_str+"\"><strong>Источник новости:</strong></a></p><p><a href=\""+param_str+"\">сайт Тавдинского городского округа</a></p><p><a href=\""+param_str+"\">www.adm-tavda.ru</a></p>") + "</div>" + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table></body><html>";
 //            String encodedHtml = Base64.encodeToString(unencodedHtml.getBytes(),
 //                    Base64.NO_PADDING);
+    //            wbNews.clearCache(false);
+    //            String newUA = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
+    //            wbNews.getSettings().setUserAgentString(newUA);
+    //            wbNews.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+    //            if (unencodedHtml.contains("rutube.ru")) {
+    //           wbNews.loadDataWithBaseURL("https://rutube.ru/", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+    //            } else{
                 wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+    //            }
+//                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+//                wbNews.loadDataWithBaseURL("https://rutube.ru/", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
                 floatingActionButton_share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -243,7 +253,7 @@ public class ActivityWebview extends AppCompatActivity {
     public Uri getLocalBitmapUri(Bitmap bmp) {
         Uri bmpUri = null;
 
-        String path = getExternalCacheDir() + "/tavda"+ System.currentTimeMillis()+".jpg";
+        String path = getExternalCacheDir() + "/tavda" + System.currentTimeMillis() + ".jpg";
         java.io.OutputStream out;
         java.io.File file = new java.io.File(path);
         if (!file.exists()) {
@@ -300,6 +310,8 @@ public class ActivityWebview extends AppCompatActivity {
 //        wbset.setDisplayZoomControls(false);
         wbset.setDefaultTextEncodingName("utf-8");
 //        wbNews.setWebViewClient(new SimpleWebViewClientImpl() {
+        wbNews.getSettings().setPluginState(WebSettings.PluginState.ON);
+        wbNews.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
         wbNews.setWebViewClient(new WebViewClient() {
 
 
@@ -342,6 +354,7 @@ public class ActivityWebview extends AppCompatActivity {
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE);
             }
 
+            //mfullScreenContaine.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
             @Override
             public void onHideCustomView() {
 //                super.onHideCustomView();

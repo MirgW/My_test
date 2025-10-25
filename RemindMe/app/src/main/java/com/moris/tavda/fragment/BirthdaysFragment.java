@@ -20,6 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -93,6 +96,13 @@ public class BirthdaysFragment extends AbstractTabFragment {
                             Nodes.clear();
                             time1s.clear();
                             time2s.clear();
+                            try {
+                            response = URLDecoder.decode(URLEncoder.encode(response, "iso8859-1"),"UTF-8");
+                              } catch (UnsupportedEncodingException e) {
+                                // Handle the exception, e.g., log it or provide a fallback
+                                System.err.println("Unsupported encoding: " + e.getMessage());
+                                // You might choose to rethrow a different exception or handle it gracefully
+                            }
                             JSONObject object = new JSONObject("{\"events\":" + response + "}");
                             JSONArray userArray = object.getJSONArray("events");
 //                            JSONArray jsonArray = object.getJSONArray("users");
@@ -101,11 +111,11 @@ public class BirthdaysFragment extends AbstractTabFragment {
 //                            listView.setAdapter(adapter);
                             for (int i = 0; i < userArray.length(); i++) {
                                 JSONObject jsonRow = userArray.getJSONObject(i);
-                                String value = jsonRow.get("id").toString();
-                                Topics.add(jsonRow.get("title").toString());
-                                Nodes.add(jsonRow.get("text").toString());
-                                time1s.add(jsonRow.get("start_time").toString());
-                                time2s.add(jsonRow.get("end_time").toString());
+                                String value = jsonRow.getString("id");
+                                Topics.add(jsonRow.getString("title"));
+                                Nodes.add(jsonRow.get("message").toString());
+                                time1s.add(jsonRow.get("start_ts").toString());
+                                time2s.add(jsonRow.get("end_ts").toString());
                                 Log.d("JsonParse", "->" + value);
 /*                                for (int j = 0; j < jsonRow.length(); j++) {
                                     String value = jsonRow.get(j).toString();
@@ -128,6 +138,9 @@ public class BirthdaysFragment extends AbstractTabFragment {
                         time2s.clear();
 //                        Toast.makeText(context, "Нет соединения с интернетом", Toast.LENGTH_SHORT).show();
                         Topics.add("Нет соединения с интернетом");
+//                      Для старых Телефонов
+//                        https://letsencrypt.org/certs/isrgrootx1.pem
+//                        https://letsencrypt.org/certs/isrgrootx1.der
                         Nodes.add("");
                         time1s.add("");
                         time2s.add("");

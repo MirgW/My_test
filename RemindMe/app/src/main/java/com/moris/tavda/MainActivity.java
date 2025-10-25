@@ -412,7 +412,7 @@ ExampleApplication.setContext(this);
                         break;
                     case 1:
                         fab.hide();
-                        toolbar.setTitle("ЕДДС");
+                        toolbar.setTitle("Единая Дежурно Диспетчерская Служба");
                         break;
                     case 2:
                         fab.hide();

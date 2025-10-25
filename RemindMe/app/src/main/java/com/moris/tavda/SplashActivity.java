@@ -3,6 +3,8 @@ package com.moris.tavda;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.concurrent.TimeUnit;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -15,6 +17,11 @@ public class SplashActivity extends AppCompatActivity {
         //        try {
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 //            Thread.sleep(500);
             finishAffinity();
 //        } catch (InterruptedException e) {
