@@ -4,10 +4,10 @@ import android.app.Application;
 import android.content.Context;
 
 public class ExampleApplication extends Application {
-    private static Context context;
+    private static Context appcontext;
     @Override public void onCreate() {
         super.onCreate();
-        context=this;
+        appcontext=getApplicationContext();
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
 //            // You should not init your app in this process.
@@ -17,9 +17,9 @@ public class ExampleApplication extends Application {
 //        // Normal app init code...
     }
     public static void setContext(Context cntxt) {
-        context = cntxt;
+        appcontext = cntxt;
     }
     public static Context getContext() {
-        return context;}
+        return appcontext;}
 }
 

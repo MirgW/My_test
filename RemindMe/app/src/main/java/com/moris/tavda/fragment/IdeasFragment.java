@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.moris.tavda.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.moris.tavda.R;
-
 public class IdeasFragment extends AbstractTabFragment {
-    private static final int LAYOUT =R.layout.fragment_idea;
+    private static final int LAYOUT = R.layout.fragment_idea;
 
 
     @Nullable
@@ -37,7 +37,7 @@ public class IdeasFragment extends AbstractTabFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(LAYOUT,container,false);
+        view = inflater.inflate(LAYOUT, container, false);
         return view;
     }
 }

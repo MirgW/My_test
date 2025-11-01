@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-ExampleApplication.setContext(this);
+    //ExampleApplication.setContext(this);
 //        lifecycleRegistry = new LifecycleRegistry(this);
 //        lifecycleRegistry.markState(Lifecycle.State.CREATED);
         int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
@@ -382,12 +382,12 @@ ExampleApplication.setContext(this);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_blue_grey_900_24dp);
 //        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_list_bulleted_black_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.baseline_navigation_grey_900_24dp);
+      //  tabLayout.getTabAt(2).setIcon(R.drawable.baseline_navigation_grey_900_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.baseline_error_outline_grey_900_24dp);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
 //        tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
-            tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+      //     tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
             tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
         }
 //        tabLayout.getTabAt(3).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
@@ -412,7 +412,7 @@ ExampleApplication.setContext(this);
                         break;
                     case 1:
                         fab.hide();
-                        toolbar.setTitle("Единая Дежурно Диспетчерская Служба");
+                        toolbar.setTitle("Оповещение");
                         break;
                     case 2:
                         fab.hide();

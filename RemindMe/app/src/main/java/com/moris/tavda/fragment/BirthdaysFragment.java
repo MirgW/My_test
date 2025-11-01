@@ -97,8 +97,8 @@ public class BirthdaysFragment extends AbstractTabFragment {
                             time1s.clear();
                             time2s.clear();
                             try {
-                            response = URLDecoder.decode(URLEncoder.encode(response, "iso8859-1"),"UTF-8");
-                              } catch (UnsupportedEncodingException e) {
+                                response = URLDecoder.decode(URLEncoder.encode(response, "iso8859-1"), "UTF-8");
+                            } catch (UnsupportedEncodingException e) {
                                 // Handle the exception, e.g., log it or provide a fallback
                                 System.err.println("Unsupported encoding: " + e.getMessage());
                                 // You might choose to rethrow a different exception or handle it gracefully

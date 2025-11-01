@@ -14,6 +14,12 @@ public class AbstractTabFragment extends Fragment {
         this.title = ""; // без надписей
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        this.view = null;
+    }
+
     public String getTitle() {
 
         return title;

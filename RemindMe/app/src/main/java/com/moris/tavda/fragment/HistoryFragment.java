@@ -73,6 +73,13 @@ public class HistoryFragment extends AbstractTabFragment implements ClickRecycle
 //        }
 //    }
 
+    @Override
+    public void onDestroyView() {
+        rv = null;
+        adapter = null;
+        super.onDestroyView();
+    }
+
     @Nullable
     @Override
     public Context getContext() {
