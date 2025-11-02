@@ -104,10 +104,13 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+  <component name="TaskProjectConfiguration">
+    <server type="YouTrack" url="http://127.0.0.1" />
+  </component>
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.34169921875" />
+        <option name="scale" value="0.08316894531249999" />
       </ProjectState>
     </option>
   </component>
