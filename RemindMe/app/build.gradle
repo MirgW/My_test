@@ -102,7 +102,7 @@ dependencies {
     // (Java only)
     androidTestImplementation 'com.google.android:android-test:4.1.1.4'
 // !!!!!!!!!
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.8.0-alpha01"
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.10.0-beta01'
 //    implementation "androidx.compose.ui:ui:1.7.0-beta07"
 //   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0-alpha01"
 //    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.0-alpha01"
@@ -120,7 +120,7 @@ dependencies {
     implementation 'androidx.exifinterface:exifinterface:1.4.1'
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.13.0'
-//    implementation "androidx.compose.material3:material3:1.0.0-beta01"
+    implementation 'androidx.compose.material3:material3:1.5.0-alpha07'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     //    implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
@@ -133,11 +133,11 @@ dependencies {
     //    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
 //    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
-    implementation 'androidx.paging:paging-runtime:3.3.6'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.paging:paging-runtime:3.4.0-alpha04'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01'
     implementation 'com.squareup.retrofit2:retrofit:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.14'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.3.0'
     implementation 'com.android.volley:volley:1.2.1'
 }
 

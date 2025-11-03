@@ -221,7 +221,7 @@ public class ActivityWebview extends AppCompatActivity {
                             }
                             path = file.getPath();
 //                            imageUri = Uri.parse("file://" + path);
-                            imageUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
+                            imageUri = FileProvider.getUriForFile(getApplicationContext(), "com.moris.tavda.free" + ".provider", new File(path));
                             Intent sendIntent = new Intent();
                             sendIntent.setType("text/plain");
                             sendIntent.setAction(android.content.Intent.ACTION_SEND);
@@ -267,7 +267,7 @@ public class ActivityWebview extends AppCompatActivity {
             }
         }
         path = file.getPath();
-        bmpUri = FileProvider.getUriForFile(ExampleApplication.getContext(), BuildConfig.APPLICATION_ID + ".provider", new File(path));
+        bmpUri = FileProvider.getUriForFile(ExampleApplication.getContext(), "com.moris.tavda.free" + ".provider", new File(path));
 /*        try {
 //            File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "tavda_" + System.currentTimeMillis() + ".png");
             File file = new File(getExternalCacheDir(), "tavda_" + System.currentTimeMillis() + ".png");

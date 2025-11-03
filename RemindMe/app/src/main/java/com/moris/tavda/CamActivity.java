@@ -141,7 +141,7 @@ public class CamActivity extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this.getApplication(),
-                        BuildConfig.APPLICATION_ID + ".provider",
+                        "com.moris.tavda.free" + ".provider",
                         photoFile);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(cameraIntent, 0);
