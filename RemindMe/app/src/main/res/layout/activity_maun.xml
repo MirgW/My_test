@@ -14,9 +14,10 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
+            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+            
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar" />
@@ -27,7 +28,7 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="52dp"
+            android:paddingBottom="0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -36,10 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="64dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="24dp"
             android:src="@drawable/ic_report_problem_white_24dp"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-            android:visibility="invisible" />
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +51,7 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="1dp"
                 android:background="@drawable/bg_gradient_soft" />
 
             <com.google.android.material.tabs.TabLayout

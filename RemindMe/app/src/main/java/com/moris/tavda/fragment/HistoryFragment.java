@@ -2,6 +2,7 @@ package com.moris.tavda.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.LinearLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.moris.tavda.ActivityWebview;
 import com.moris.tavda.Data.MySourceFactory;
+import com.moris.tavda.IOnOK;
+import com.moris.tavda.MainActivity;
 import com.moris.tavda.R;
 import com.moris.tavda.adapter.ClickRecyclerAdapter;
 
@@ -74,6 +77,11 @@ public class HistoryFragment extends AbstractTabFragment implements ClickRecycle
 //    }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public void onDestroyView() {
         rv = null;
         adapter = null;
@@ -96,6 +104,11 @@ public class HistoryFragment extends AbstractTabFragment implements ClickRecycle
         menu.findItem(R.id.search).setIcon(R.drawable.ic_account_check);
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
     public static HistoryFragment getInstance(Context context) {
         Bundle arg = new Bundle();
         HistoryFragment fragment = new HistoryFragment();
@@ -108,7 +121,10 @@ public class HistoryFragment extends AbstractTabFragment implements ClickRecycle
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(LAYOUT, container, false);
+        ;
+//        flag = ((IOnBackPressed) fragment).onBackPressed();
         rv = view.findViewById(R.id.recyclerView);
         toolbar1 = view.findViewById(R.id.toolbar2);
         toolbar1.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_white_24dp);
@@ -167,7 +183,7 @@ public class HistoryFragment extends AbstractTabFragment implements ClickRecycle
                 if (dy > 0) {
                     fab.hide();
                 } else if (dy < 0) {
-//                    fab.show();
+                    fab.show();
                 }
             }
         });
@@ -199,18 +215,17 @@ public class HistoryFragment extends AbstractTabFragment implements ClickRecycle
 //        rv.setAdapter(adapter);
 //        rv.setAdapter(new RemindListAdapter(creatMockData()));
         // DataSource
-        final DiffUtil.ItemCallback<RemindDTO> DIFF_CALLBACK =
-                new DiffUtil.ItemCallback<RemindDTO>() {
-                    @Override
-                    public boolean areItemsTheSame(RemindDTO oldItem, RemindDTO newItem) {
-                        return ((oldItem.getNode().doubleValue()) == (newItem.getNode().floatValue()));
-                    }
+        final DiffUtil.ItemCallback<RemindDTO> DIFF_CALLBACK = new DiffUtil.ItemCallback<RemindDTO>() {
+            @Override
+            public boolean areItemsTheSame(RemindDTO oldItem, RemindDTO newItem) {
+                return ((oldItem.getNode().doubleValue()) == (newItem.getNode().floatValue()));
+            }
 
-                    @Override
-                    public boolean areContentsTheSame(RemindDTO oldItem, RemindDTO newItem) {
-                        return ((oldItem.getNode().doubleValue()) == (newItem.getNode()).doubleValue());
-                    }
-                };
+            @Override
+            public boolean areContentsTheSame(RemindDTO oldItem, RemindDTO newItem) {
+                return ((oldItem.getNode().doubleValue()) == (newItem.getNode()).doubleValue());
+            }
+        };
         // Adapter
         if (adapter == null) {
             adapter = new ClickRecyclerAdapter(DIFF_CALLBACK);
@@ -235,13 +250,9 @@ public class HistoryFragment extends AbstractTabFragment implements ClickRecycle
 //        DTODataSource dataSource = new DTODataSource();
         sourceFactory = new MySourceFactory();
         // PagedList
-        PagedList.Config config = new PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .setPageSize(15)
-                .build();
+        PagedList.Config config = new PagedList.Config.Builder().setEnablePlaceholders(false).setPageSize(15).build();
 
-        LiveData<PagedList<RemindDTO>> pagedList = new LivePagedListBuilder<>(sourceFactory, config)
-                .setFetchExecutor(Executors.newSingleThreadExecutor())
+        LiveData<PagedList<RemindDTO>> pagedList = new LivePagedListBuilder<>(sourceFactory, config).setFetchExecutor(Executors.newSingleThreadExecutor())
 //                .setFetchExecutor(Executors.newFixedThreadPool(1))
                 .build();
 //
@@ -316,6 +327,7 @@ public class HistoryFragment extends AbstractTabFragment implements ClickRecycle
         // RecyclerView
         rv.setAdapter(adapter);
         rv.addItemDecoration(new SimpleBlueDivider(context));
+        ((IOnOK)(MainActivity) getActivity()).onOK();
         return view;
     }
 

@@ -1,15 +1,18 @@
 package com.moris.tavda;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -19,6 +22,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,6 +47,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.splashscreen.SplashScreen;
+import androidx.core.view.WindowCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -54,7 +61,7 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 
-public class MainActivity extends AppCompatActivity implements LifecycleOwner {
+public class MainActivity extends AppCompatActivity implements IOnOK, LifecycleOwner {
     private static final int LAYOUT = R.layout.activity_maun;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 //    private LifecycleRegistry lifecycleRegistry;
 
     final String LOG_TAG = "myLog";
-
+    boolean fl_splash = false;
     boolean bound = false;
     //    ServiceConnection sConn;
     Intent intent;
@@ -98,18 +105,27 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-    //ExampleApplication.setContext(this);
+        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
+        super.onCreate(savedInstanceState);
+        WindowCompat.enableEdgeToEdge(getWindow());
+        //ExampleApplication.setContext(this);
 //        lifecycleRegistry = new LifecycleRegistry(this);
 //        lifecycleRegistry.markState(Lifecycle.State.CREATED);
+
         int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
         if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
             //readContacts();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_CODE_PERMISSION_INTERNET);
         }
-       setTheme(R.style.AppTheme);
-        super.onCreate(savedInstanceState);
+//       setTheme(R.style.AppTheme);
+
         Intent intentWeb = getIntent();
         String fileName = intentWeb.getStringExtra("url_DTO");
         if (!TextUtils.isEmpty(fileName)) {
@@ -130,6 +146,48 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 //        int day = calendar.get(Calendar.DAY_OF_MONTH);
 //        if (year < 2021) {
         setContentView(LAYOUT);
+        final View content = findViewById(android.R.id.content);
+        content.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        // Check whether the initial data is ready.
+                        if (fl_splash){
+//                            ((IOnOK)(MainActivity) getActivity()).onOK();
+//                            if (mViewModel.isReady()) {
+                            // The content is ready. Start drawing.
+                            content.getViewTreeObserver().removeOnPreDrawListener(this);
+                            return true;
+                        } else {
+                            // The content isn't ready. Suspend.
+                            return false;
+                        }
+                    }
+                });
+
+        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    -splashScreenView.getHeight()
+            );
+            slideUp.setInterpolator(new AnticipateInterpolator());
+            slideUp.setDuration(200L);
+
+            // Call SplashScreenView.remove at the end of your custom animation.
+            slideUp.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    splashScreenView.remove();
+                }
+            });
+
+            // Run your animation.
+            slideUp.start();
+        });
+
+
 //        }
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -281,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
             try {
                 myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-                ((TextView) findViewById(R.id.textView)).setText(myVersionName);
+//                ((TextView) findViewById(R.id.textView)).setText(myVersionName);
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
@@ -333,12 +391,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                 pos = tabLayout.getSelectedTabPosition();
                 List<Fragment> list = getSupportFragmentManager().getFragments();
 //            FragmentManager.BackStackEntry fragment = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1);
-                Fragment fragment=null;
+                Fragment fragment = null;
 //                list.get(1).isMenuVisible()
 //                list.get(0).getClass().getSimpleName()
-                for(Fragment f : list){
-                    if(f != null && f.isMenuVisible())
-                        fragment=f;
+                for (Fragment f : list) {
+                    if (f != null && f.isMenuVisible())
+                        fragment = f;
                 }
 
                 if (!(fragment instanceof IOnBackPressed)) {
@@ -382,13 +440,13 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_blue_grey_900_24dp);
 //        tabLayout.getTabAt(1).setIcon(R.drawable.ic_format_list_bulleted_black_24dp);
-      //  tabLayout.getTabAt(2).setIcon(R.drawable.baseline_navigation_grey_900_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.baseline_error_outline_grey_900_24dp);
+        //  tabLayout.getTabAt(2).setIcon(R.drawable.baseline_navigation_grey_900_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.content_ic_paste_icon);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
+            //         tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.design_default_color_error, null), PorterDuff.Mode.SRC_IN);
 //        tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
-      //     tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
-            tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+            //     tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+            //       tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.cardview_dark_background, null), PorterDuff.Mode.SRC_IN);
         }
 //        tabLayout.getTabAt(3).getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
 
@@ -397,7 +455,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    tab.getIcon().setColorFilter(getResources().getColor(R.color.deep_orange_500, null), PorterDuff.Mode.SRC_IN);
+                    //                  tab.getIcon().setColorFilter(getResources().getColor(R.color.design_default_color_error, null), PorterDuff.Mode.SRC_IN);
                 }
 //                ViewAnimation.fadeOutIn(nested_scroll_view);
                 int pos;
@@ -407,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 //                setSupportActionBar(toolbar);
                 switch (pos) {
                     case 0:
-//                        fab.show();
+                        fab.show();
                         toolbar.setTitle("Тавда");
                         break;
                     case 1:
@@ -428,13 +486,15 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    tab.getIcon().setColorFilter(getResources().getColor(R.color.grey_60, null), PorterDuff.Mode.SRC_IN);
+//                    tab.getIcon().setColorFilter(getResources().getColor(R.color.md_theme_surfaceDim_highContrast, null), PorterDuff.Mode.SRC_IN);
                 }
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    tab.getIcon().setColorFilter(getResources().getColor(R.color.md_theme_onPrimaryContainer, null), PorterDuff.Mode.SRC_IN);
+                }
             }
         });
     }
@@ -575,6 +635,17 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOK() {
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        fl_splash=true;
+        return fl_splash;
     }
 
 

@@ -16,8 +16,8 @@
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="50dp"
-        android:paddingTop="50dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp"
         app:layout_constraintTop_toTopOf="parent">
         
         <com.moris.tavda.ObservableWebView
@@ -52,15 +52,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="64dp"
         android:layout_marginEnd="24dp"
         android:actionProviderClass="android.support.v7.widget.ShareActionProvider"
     
-        android:src="?attr/actionModeShareDrawable"
-        app:fabSize="mini"
+        android:src="@drawable/share_fill0_wght400_grad0_opsz24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
+    <!--        app:fabSize="mini"-->
     <LinearLayout
         android:id="@+id/lyt_progress"
         android:layout_width="wrap_content"

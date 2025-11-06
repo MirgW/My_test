@@ -66,7 +66,7 @@ public class ActivityWebview extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.ST);
+//        setTheme(R.style.ST);
         setContentView(R.layout.activity_web);
 //        floatingActionButton = findViewById(R.id.fab2);
         swipeContainer = findViewById(R.id.swipeContainer);
@@ -127,7 +127,7 @@ public class ActivityWebview extends AppCompatActivity {
             Document document;
             try {
                 document = Jsoup.connect(params[0]).get();
-                elements = document.select(".node.story");
+                elements = document.select(".node.story.promote");
             } catch (IOException e) {
                 e.printStackTrace();
                 return "";
@@ -147,12 +147,12 @@ public class ActivityWebview extends AppCompatActivity {
                         "    width:auto;\n" +
                         "    height: auto;\n" +
                         "}\n" + " iframe {\n" +
-                        "    position: absolute;\n" +
-                        "    top: 0;\n" +
-                        "    left: 0;\n" +
+//                        "    position: absolute;\n" +
+//                        "    top: 0;\n" +
+//                        "    left: 0;\n" +
                         "    width: 100%;\n" +
                         "}" +
-                        "</style>\n<div>" + elements.toString().replace("<span class=\"art-postauthoricon\">admin</span>", "<p><a href=\"" + param_str + "\"><strong>Источник новости: </strong>www.adm-tavda.ru</a></p>") + "</div>" + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table></body><html>";
+                        "</style>\n<div><p>---></p>" + elements.toString().replace("<span class=\"art-postauthoricon\">admin</span>", "<p><a href=\"" + param_str + "\"><strong>Источник новости: </strong>www.adm-tavda.ru</a></p>") + "</div>" + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table></body><html>";
 //                        "</style>\n<div>" + elements.toString().replace("<span class=\"art-postauthoricon\">admin</span>","<p><a href=\""+param_str+"\"><strong>Источник новости:</strong></a></p><p><a href=\""+param_str+"\">сайт Тавдинского городского округа</a></p><p><a href=\""+param_str+"\">www.adm-tavda.ru</a></p>") + "</div>" + "<table align=\"center\" border=\"0\" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td><td style=\"text-align: center;\"><p>Материалы с официального сайта Тавдинского городского округа</p><p><a href=\"http://www.adm-tavda.ru/\">www.adm-tavda.ru</a></p></td></tr></tbody></table></body><html>";
 //            String encodedHtml = Base64.encodeToString(unencodedHtml.getBytes(),
 //                    Base64.NO_PADDING);
@@ -160,11 +160,12 @@ public class ActivityWebview extends AppCompatActivity {
     //            String newUA = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
     //            wbNews.getSettings().setUserAgentString(newUA);
     //            wbNews.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
-    //            if (unencodedHtml.contains("rutube.ru")) {
-    //           wbNews.loadDataWithBaseURL("https://rutube.ru/", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
-    //            } else{
+                if (unencodedHtml.contains("rutube.ru")) {
+
+               wbNews.loadDataWithBaseURL("https://rutube.ru/", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
+                } else{
                 wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
-    //            }
+                }
 //                wbNews.loadDataWithBaseURL("http://www.adm-tavda.ru", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
 //                wbNews.loadDataWithBaseURL("https://rutube.ru/", unencodedHtml, "text/html; charset=utf-8", "base64", "http://www.adm-tavda.ru");
                 floatingActionButton_share.setOnClickListener(new View.OnClickListener() {

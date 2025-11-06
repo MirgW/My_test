@@ -1,6 +1,7 @@
 package com.moris.tavda.fragment;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,9 +51,15 @@ public class TODOFragment extends AbstractTabFragment implements IOnBackPressed 
         return fragment;
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(LAYOUT, container, false);
         wv = (WebView) view.findViewById(R.id.webviewmag);
 //        WebSettings webSettings = webView.getSettings();
