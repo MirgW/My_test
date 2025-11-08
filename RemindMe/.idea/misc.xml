@@ -104,9 +104,6 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
-  <component name="TaskProjectConfiguration">
-    <server type="YouTrack" url="http://127.0.0.1" />
-  </component>
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>

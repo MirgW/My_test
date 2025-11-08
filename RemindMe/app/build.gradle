@@ -84,6 +84,13 @@ android {
     }
 
     packagingOptions {
+        exclude 'AndroidManifest.xml'
+        exclude 'resources.arsc'
+        resources.excludes.add("res/drawable/*")
+        resources.excludes.add("res/layout/*")
+    }
+
+    packagingOptions {
 //        exclude 'META-INF/notice.txt'
 //        exclude 'META-INF/license.txt'
 //        exclude 'META-INF/NOTICE'
