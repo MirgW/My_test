@@ -40,7 +40,7 @@ public class CamActivity extends AppCompatActivity {
     //    Uri selectedImage ;
     Bitmap thumbnailBitmap;
     private ImageView imageView;
-    private Button buttSend;
+    private Button sendButton;
     private TextInputEditText editText;
     String currentPhotoPath;
 
@@ -76,13 +76,46 @@ public class CamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cam);
+
+        // Initialize Views using the modern layout structure
         imageView = findViewById(R.id.imageView3);
-        buttSend = findViewById(R.id.button2);
+
+        // Assuming IDs in the new XML are:
+        // Photo button: R.id.button_photo (or the container element if it's a single click)
+        // Paste button: R.id.button_paste
+        // Send button: R.id.button_send
+        // Username field: R.id.username
+        // Progress bar: R.id.lyt_progress1
+
+        // Attempting to find the three buttons based on the new layout's structure
+        // The XML structure suggests a container, but I'll map directly to the actions.
+        Button photoButton = findViewById(R.id.button_photo);
+        Button pasteButton = findViewById(R.id.button_paste);
+         sendButton = findViewById(R.id.button_send);
+
         editText = findViewById(R.id.username);
-        final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress1);
-//        final LinearLayout lyt_progress1 = (LinearLayout) findViewById(R.id.);
-        lyt_progress.setVisibility(View.INVISIBLE);
-        lyt_progress.setAlpha(1.0f);
+        LinearLayout progressBarContainer = findViewById(R.id.lyt_progress1);
+
+        // Initial State
+        progressBarContainer.setVisibility(View.INVISIBLE);
+        progressBarContainer.setAlpha(1.0f);
+
+        // 1. Set up Listeners
+
+        // Photo button click -> Camera Capture
+        if (photoButton != null) {
+            photoButton.setOnClickListener(v -> onClick(v));
+        }
+
+        // Paste button click -> Read clipboard
+        if (pasteButton != null) {
+            pasteButton.setOnClickListener(v -> pasteTextFromClipboard());
+        }
+
+        // Send button click -> Upload
+        if (sendButton != null) {
+            sendButton.setOnClickListener(v -> uploadToServer());
+        }
     }
 
     @Override
@@ -183,10 +216,10 @@ public class CamActivity extends AppCompatActivity {
                 lyt_progress.setVisibility(View.INVISIBLE);
                 lyt_progress.setAlpha(1.0f);
                 if (response.isSuccessful()) {
-                    buttSend.setText("ОК");
+                    sendButton.setText("ОК");
 //                    buttSend.setEnabled(false);
                 } else {
-                    buttSend.setText("Ошибка Отправки"); // + Integer.toString(kod)
+                    sendButton.setText("Ошибка Отправки"); // + Integer.toString(kod)
                 }
 
             }
@@ -194,14 +227,24 @@ public class CamActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, Throwable t) {
 
-            }
-        });
-    }
+                        }
+        });}
+    /**
+     * Handles pasting text from the system clipboard.
+     */
+    private void pasteTextFromClipboard() {
+        // Use ClipboardManager to read text from the clipboard
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+        android.content.ClipData clip = clipboard.getPrimaryClip();
 
-    public void onClickPost(View v) {
-        final LinearLayout lyt_progress = (LinearLayout) findViewById(R.id.lyt_progress1);
-        lyt_progress.setVisibility(View.VISIBLE);
-        lyt_progress.setAlpha(1.0f);
-        uploadToServer();
-    }
-}
+        if (clip != null && clip.getItemCount() > 0) {
+            String pastedText = clip.getItemAt(0).getText().toString();
+            // Check if the retrieved text is non-empty before setting it.
+            if (!pastedText.isEmpty()) {
+                editText.setText(pastedText);
+                // Optional: Provide user feedback (e.g., a Toast)
+            }
+        } else {
+            // Handle case where clipboard is empty or text is not available
+        }
+    }}

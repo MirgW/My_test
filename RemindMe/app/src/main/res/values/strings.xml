@@ -17,7 +17,8 @@
     <string name="nav_header_subtitle">mail@tavda.pro</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Настройки</string>
-
+    <string name="photo_placeholder">Photo content</string>
+    <string name="message_placeholder">Message</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
